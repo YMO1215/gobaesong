@@ -35,7 +35,7 @@
     if (b.checked && $$('[data-ck]', b.closest('.gate')).every((x) => x.checked)) GB.toast(b.closest('.gate').querySelector('.gate__no').textContent + ' 준비 완료');
   });
   $('#ck-reset').addEventListener('click', () => { GB.store.del(KEY); boxes.forEach((b) => { b.checked = false; }); render(); });
-  $$('[data-guide-addr]').forEach((b) => b.addEventListener('click', () => GB.showAddress && GB.showAddress()));
+  $$('[data-guide-addr]').forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); if (GB.showAddress) GB.showAddress(); }));
 
   // Show the member's own mailbox in the example shipping form
   const fill = (u) => $$('[data-auth-box-fallback]').forEach((el) => { el.textContent = u ? u.mailbox : 'GB-000000'; });

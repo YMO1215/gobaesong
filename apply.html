@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
 <link rel="stylesheet" href="assets/css/tokens.css?v=af816627">
 <link rel="stylesheet" href="assets/css/base.css?v=1489ea39">
-<link rel="stylesheet" href="assets/css/apply.css?v=a9d0533e">
+<link rel="stylesheet" href="assets/css/apply.css?v=4e5a0a18">
 <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('gb.user'))document.documentElement.classList.add('is-authed')}catch(e){}</script>
 </head>
 <body class="page-apply">
@@ -274,6 +274,22 @@
           <p class="muted">쇼핑몰에서 받은 주문 정보를 옮겨 주세요. 상품명은 영문으로, 금액은 달러 단가로 적습니다.</p>
         </header>
 
+        <fieldset class="whpick" id="whpick">
+          <legend class="whpick__title">배대지(미국 물류센터) 선택 <span class="req">필수</span></legend>
+          <p class="whpick__lead">쇼핑몰 배송지에 적은 센터를 고르세요. 다른 센터 주소로 보낸 상자는 이 신청서와 매칭되지 않습니다.</p>
+          <div class="whpick__row">
+            <label class="choice whpick__opt"><input type="radio" name="center" value="NJ" checked><span class="choice__mark" aria-hidden="true"></span>
+              <span class="choice__body"><span class="choice__title"><span class="mono">NJ</span> 뉴저지 EWR</span>
+                <span class="choice__desc">평일 09:00–17:00 ET · 의류·신발 물량이 많은 센터</span>
+                <span class="whpick__state" data-wh-state="NJ"></span></span></label>
+            <label class="choice whpick__opt"><input type="radio" name="center" value="DE"><span class="choice__mark" aria-hidden="true"></span>
+              <span class="choice__body"><span class="choice__title"><span class="mono">DE</span> 델라웨어 ILG</span>
+                <span class="choice__desc">평일 09:00–15:00 ET · 판매세 0% 주 · 전자기기·고가품 추천</span>
+                <span class="whpick__state" data-wh-state="DE"></span></span></label>
+          </div>
+          <p class="whpick__addr"><button type="button" class="btn-text" id="wh-addr">선택한 센터 주소 확인하기</button> <span id="wh-note"></span></p>
+        </fieldset>
+
         <div class="autofill">
           <div class="autofill__head">
             <h3 class="h3">간편 자동입력</h3>
@@ -395,14 +411,6 @@
           <div class="ev-pick__list" id="ev-list" role="radiogroup" aria-label="배송비 이벤트"></div>
           <label class="tick ev-pick__box" id="ev-box18" hidden><input type="checkbox" name="box18"><span>18호 박스(8×6×4in)에 들어가도록 주문했습니다</span></label>
           <div class="ev-pick__detail" id="ev-detail" aria-live="polite"></div>
-        </fieldset>
-
-        <fieldset class="opt-group">
-          <legend class="opt-group__title">받을 센터</legend>
-          <div class="opt-group__row">
-            <label class="choice"><input type="radio" name="center" value="NJ" checked><span class="choice__mark" aria-hidden="true"></span><span class="choice__body"><span class="choice__title">뉴저지 EWR</span><span class="choice__desc">당일 입고 마감 17:00 · 의류·신발 물량이 많은 센터</span></span></label>
-            <label class="choice"><input type="radio" name="center" value="DE"><span class="choice__mark" aria-hidden="true"></span><span class="choice__body"><span class="choice__title">델라웨어 ILG</span><span class="choice__desc">판매세 0% 주 · 전자기기·고가품 추천</span></span></label>
-          </div>
         </fieldset>
 
         <fieldset class="opt-group">
@@ -675,6 +683,6 @@
 <script src="assets/js/chat.js?v=4cc07a87"></script>
 <script src="assets/js/specials.js?v=7341765c"></script>
 <script src="assets/js/specials-ui.js?v=83d5c023"></script>
-<script src="assets/js/apply.js?v=a44f1fd7"></script>
+<script src="assets/js/apply.js?v=5f568cd5"></script>
 </body>
 </html>

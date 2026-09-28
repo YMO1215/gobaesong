@@ -465,9 +465,9 @@
       $('#ev-agree-desc').textContent = ev.core.join(' · ') + ' — 조건과 다르게 입고되면 일반 요금으로 다시 계산됩니다.';
     }
     $('#review').innerHTML =
-      block('GATE 01', '상품정보', `<dl><dt>쇼핑몰</dt><dd>${esc(f.shop.value)}</dd><dt>주문번호</dt><dd class="mono">${esc(f.order.value)}</dd><dt>트래킹</dt><dd class="mono">${esc(f.tracking.value || '나중에 등록')}</dd></dl><ul class="review__items" style="margin-top:12px">${itemsHTML}</ul>`, 1) +
+      block('GATE 01', '배대지·상품정보', `<dl><dt>배대지</dt><dd><b>${center.name} ${center.code}</b></dd><dt>쇼핑몰</dt><dd>${esc(f.shop.value)}</dd><dt>주문번호</dt><dd class="mono">${esc(f.order.value)}</dd><dt>트래킹</dt><dd class="mono">${esc(f.tracking.value || '나중에 등록')}</dd></dl><ul class="review__items" style="margin-top:12px">${itemsHTML}</ul>`, 1) +
       block('GATE 02', '수취인·통관', `<dl><dt>수취인</dt><dd>${esc(f.rname.value)} · ${esc(f.reng.value)}</dd><dt>휴대폰</dt><dd class="mono">${esc(f.rtel.value)}</dd><dt>통관부호</dt><dd class="mono">${esc(f.pccc.value.replace(/^(P\d{4})\d{5}/i, '$1*****'))}</dd><dt>주소</dt><dd>(${esc(f.zip.value)}) ${esc(f.addr.value)} ${esc(f.addr2.value)}</dd></dl>`, 2) +
-      block('GATE 03', '옵션', `<dl><dt>센터</dt><dd>${center.name} ${center.code}</dd><dt>배송비 이벤트</dt><dd>${ev ? esc(ev.name) + ' · ' + SP.priceLabel(ev) + '<br><span class="review__sub">' + esc(ev.core.join(' · ')) + '</span>' : '해당사항 없음'}</dd><dt>선택</dt><dd>${optionLabels().join(' · ')}</dd>${f.memo.value ? `<dt>요청사항</dt><dd>${esc(f.memo.value)}</dd>` : ''}</dl>`, 3) +
+      block('GATE 03', '옵션', `<dl><dt>배송비 이벤트</dt><dd>${ev ? esc(ev.name) + ' · ' + SP.priceLabel(ev) + '<br><span class="review__sub">' + esc(ev.core.join(' · ')) + '</span>' : '해당사항 없음'}</dd><dt>선택</dt><dd>${optionLabels().join(' · ')}</dd>${f.memo.value ? `<dt>요청사항</dt><dd>${esc(f.memo.value)}</dd>` : ''}</dl>`, 3) +
       `<div class="review__fee" aria-label="예상 배송비">${lines.map(([l, p]) => `<div class="row"><span>${l}</span><b>${GB.usd(p)}</b></div>`).join('')}<div class="row total"><span>예상 합계 · 입고 후 확정</span><b>${sp.pending ? GB.usd(sp.total) + '부터' : GB.usd(sp.total)}</b></div><p class="review__dutynote">관부가세는 배송비와 별도입니다.</p></div>`;
   }
   $('#review').addEventListener('click', (e) => {
@@ -505,7 +505,32 @@
 
   /* ---------- Boot ---------- */
   initEvents();
+  /* ---------- Warehouse (배대지) choice — step 1 ---------- */
+  function paintWarehouse() {
+    const code = form.elements.center.value;
+    if (window.GBHours) {
+      $$('[data-wh-state]').forEach((el) => {
+        const st = window.GBHours.status(el.dataset.whState);
+        el.textContent = `현지 ${st.clock} · ${st.short}`;
+        el.dataset.state = st.state;
+      });
+    }
+    const box = (GB.auth && GB.auth.user && GB.auth.user.mailbox) || mailbox;
+    $('#wh-note').textContent = code === 'DE' ? `델라웨어 주소 + Address 2 에 ${box}` : `뉴저지 주소 + Address 2 에 ${box}`;
+  }
+  // stopPropagation: the same click would otherwise reach member.js's "click outside closes the panel"
+  $('#wh-addr').addEventListener('click', (e) => { e.stopPropagation(); if (GB.showAddress) GB.showAddress(form.elements.center.value); });
+  let centerTouched = false; // user choice or deep link wins over the member default
+  form.addEventListener('change', (e) => { if (e.target.name === 'center') { centerTouched = true; paintWarehouse(); } });
+  setInterval(paintWarehouse, 30000);
+
+  const hadDraft = !!GB.store.get(DRAFT_KEY, null);
   let startStep = loadDraft();
+  // New application: start from the member's own warehouse (chosen at signup), not always NJ
+  const setCenter = (c) => { if (c === 'NJ' || c === 'DE') Array.from(form.elements.center).forEach((r) => { r.checked = r.value === c; }); };
+  if (!hadDraft && GB.auth && GB.auth.user) setCenter(GB.auth.user.center);
+  document.addEventListener('gb:auth', (e) => { if (!hadDraft && !centerTouched && e.detail.user && current === 1) { setCenter(e.detail.user.center); update(); paintWarehouse(); } });
+  paintWarehouse();
 
   // Deep link from the hot deal radar: apply.html?shop=&item=&price=&cat=&url=&center=&w=
   const qs = new URLSearchParams(location.search);
@@ -514,7 +539,7 @@
     addItem({ name: qs.get('item'), price: qs.get('price') || '', qty: '1', cat: qs.get('cat') || '', url: qs.get('url') || '' });
     if (qs.get('shop')) form.elements.shop.value = qs.get('shop');
     const c = qs.get('center');
-    if (c === 'NJ' || c === 'DE') Array.from(form.elements.center).forEach((r) => { r.checked = r.value === c; });
+    if (c === 'NJ' || c === 'DE') { Array.from(form.elements.center).forEach((r) => { r.checked = r.value === c; }); centerTouched = true; paintWarehouse(); }
     if (Number(qs.get('w')) > 0) form.elements.estWeight.value = qs.get('w');
     startStep = 1;
     history.replaceState(null, '', location.pathname);
