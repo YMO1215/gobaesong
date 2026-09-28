@@ -149,9 +149,9 @@
     if (!S || !box || !GB.specialHTML) return;
     const live = S.active(TODAY);
     $('#sp-count').textContent = `진행 중 ${live.length}건`;
-    // live first (ending soonest first), ended last
+    // display order comes from specials.js (최저가부터 → 할인 → 고정가); ended events go last
     const list = S.EVENTS.filter((e) => kind === 'all' || e.kind === kind)
-      .slice().sort((a, b) => (S.isEnded(a, TODAY) - S.isEnded(b, TODAY)) || ((a.end || '9999') < (b.end || '9999') ? -1 : 1));
+      .slice().sort((a, b) => S.isEnded(a, TODAY) - S.isEnded(b, TODAY)); // kind order from specials.js, ended last
     box.innerHTML = list.map((e) => GB.specialHTML(e, 'card')).join('');
   }
   $$('[data-spk]').forEach((b) => b.addEventListener('click', () => {

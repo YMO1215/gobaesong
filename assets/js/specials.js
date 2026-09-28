@@ -95,6 +95,9 @@
   const fits = (e, type) => !e.types || e.types.includes(type);
 
   const KIND_LABEL = { fixed: '고정가', discount: '일반 요금 할인', from: '최저가부터' };
+  // Display order everywhere (dropdown, pricing list, apply list, event cards): 최저가부터 → 일반 요금 할인 → 고정가
+  const KIND_ORDER = ['from', 'discount', 'fixed'];
+  EVENTS.sort((a, b) => KIND_ORDER.indexOf(a.kind) - KIND_ORDER.indexOf(b.kind)); // stable: keeps order within a kind
   const byId = (id) => EVENTS.find((e) => e.id === id) || null;
   const usd = (n) => '$' + (Math.round(n * 100) / 100).toFixed(2);
 
@@ -203,5 +206,5 @@
 
   function active(today) { return EVENTS.filter((e) => !isEnded(e, today)); }
 
-  root.GBSpecials = { EVENTS, TYPES, KIND_LABEL, NO_CONSOLIDATE, NO_INSPECT, NEEDS_TRACKING, fits, byId, priceLabel, check, evaluate, candidates, active, isEnded };
+  root.GBSpecials = { EVENTS, TYPES, KIND_LABEL, KIND_ORDER, NO_CONSOLIDATE, NO_INSPECT, NEEDS_TRACKING, fits, byId, priceLabel, check, evaluate, candidates, active, isEnded };
 })(typeof window !== 'undefined' ? window : globalThis);

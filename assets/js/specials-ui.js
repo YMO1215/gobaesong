@@ -42,7 +42,7 @@
     const today = GB.today();
     const group = (kind, label) => `<optgroup label="${label}">` + S.EVENTS.filter((e) => e.kind === kind && !S.isEnded(e, today))
       .map((e) => `<option value="${e.id}"${e.id === selected ? ' selected' : ''}>${esc(e.name)} · ${S.priceLabel(e)}</option>`).join('') + '</optgroup>';
-    return `<option value="">해당사항 없음 · 일반 요금</option>` + group('fixed', '고정가') + group('discount', '일반 요금 할인') + group('from', '최저가부터');
+    return `<option value="">해당사항 없음 · 일반 요금</option>` + S.KIND_ORDER.map((k) => group(k, S.KIND_LABEL[k])).join('');
   };
 
   /* Result block: 기본요금 → 이벤트 조정 → 예상 최종 (+ reasons & alternatives) */
