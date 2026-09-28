@@ -33,7 +33,8 @@
   let reached = 1;
 
   /* ---------- Paste buttons on every required text field ---------- */
-  const PASTABLE = 'input.input[required]:not([type="checkbox"]):not([type="radio"]):not([data-nopaste])';
+  // required text fields + optional ones that opt in with data-paste-opt (e.g. 상품 주소)
+  const PASTABLE = 'input.input[required]:not([type="checkbox"]):not([type="radio"]):not([data-nopaste]), input.input[data-paste-opt]';
   function addPasteButtons(root) {
     $$(PASTABLE, root).forEach((input) => {
       if (input.dataset.paste) return;
