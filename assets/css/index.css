@@ -392,6 +392,8 @@
 /* Real listings (tools/fetch_wornwear.py): product photo + size/condition */
 /* Worn Wear photos are square PNGs with transparent bands: no frame/tint around them,
    so the transparent part blends into the white card instead of showing as a longer box */
-.deal__img { display: block; width: 100%; height: auto; background: transparent; border: 0; margin-top: 6px; }
+/* every card gets the same square photo area (object-fit keeps the product whole), so one
+   portrait photo can't stretch the whole rail and leave a gap above the buttons on the others */
+.deal__img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: contain; background: transparent; border: 0; margin-top: 6px; }
 .deal__meta { font-size: 13px; font-weight: 600; color: var(--steel-ink); margin-top: -4px; }
 .radar__mock.is-real { color: var(--ok); }
