@@ -26,7 +26,7 @@ def version_assets(src: str) -> str:
     return ASSET_REF.sub(stamp, src)
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-PAGES = ["index.html", "apply.html", "mypage.html", "pricing.html", "support.html"]
+PAGES = ["index.html", "guide.html", "pricing.html", "customs.html", "events.html", "support.html", "apply.html", "mypage.html"]
 BLOCKS = {
     "HEADER": ROOT / "partials" / "header.html",
     "FOOTER": ROOT / "partials" / "footer.html",

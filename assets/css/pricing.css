@@ -147,3 +147,39 @@
   .addons td:nth-child(2) { grid-column: 1 / -1; grid-row: 2; font-size: var(--fs-small); }
   .addons td.num { grid-column: 2; grid-row: 1; }
 }
+
+/* ---------- Duty & tax ---------- */
+.duty .grid12 { align-items: start; row-gap: var(--s-7); }
+.duty__copy { grid-column: 1 / span 7; }
+.duty__copy .h1 { margin: var(--s-3) 0 var(--s-5); }
+.duty__rules { grid-column: 1 / span 6; margin: 0; padding: 0; border-top: var(--bw-strong) solid var(--navy); }
+.duty__rules li { display: grid; grid-template-columns: 36px 1fr; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.duty__rules li > .mono { color: var(--orange-ink); font-weight: 700; }
+.duty__rules b { display: block; }
+.duty__rules p { font-size: var(--fs-small); color: var(--steel-ink); margin-top: 2px; }
+.dutycalc { grid-column: 8 / span 5; grid-row: 2; position: sticky; top: calc(var(--header-h) + 24px); background: var(--white); border: 1px solid var(--line); border-top: 6px solid var(--orange); }
+.dutycalc__head { display: flex; justify-content: space-between; padding: 14px 20px; border-bottom: 1px dashed var(--line); font-size: 12px; letter-spacing: .08em; }
+.dutycalc__head h3 { font-size: 12px; font-weight: 700; }
+.dutycalc__body { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 18px 20px; }
+.dutycalc__full { grid-column: 1 / -1; }
+.dutycalc__body .field:nth-of-type(4) { grid-column: 1 / -1; }
+.dutycalc__opts { border: 0; margin: 0; padding: 0; display: grid; gap: 8px; min-width: 0; }
+.dutycalc__opts .tick { display: flex; gap: 10px; align-items: center; cursor: pointer; font-size: .9375rem; }
+.dutycalc__opts .tick input { width: 18px; height: 18px; accent-color: var(--navy); margin: 0; flex: none; }
+.dutycalc__opts .tick b { font-weight: 600; font-size: 12px; color: var(--steel-ink); }
+.dutycalc__out { padding: 16px 20px; display: grid; gap: 10px; }
+.dutycalc__verdict { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; font-size: var(--fs-small); font-weight: 600; }
+.dutycalc__lines > div { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px dotted var(--line); font-size: var(--fs-small); }
+.dutycalc__lines dt { color: var(--steel-ink); }
+.dutycalc__lines dd { font-family: var(--font-mono); font-weight: 600; }
+.dutycalc__total { display: flex; justify-content: space-between; align-items: baseline; font-weight: 800; }
+.dutycalc__total b { font-size: 2rem; }
+.dutycalc__all { font-size: 12px; color: var(--steel-ink); }
+.dutycalc__note { padding: 12px 20px; background: var(--paper-2); font-size: 12px; color: var(--steel-ink); }
+@media (max-width: 960px) {
+  .duty__copy, .duty__rules, .dutycalc { grid-column: 1 / -1; grid-row: auto; position: static; }
+}
+@media (max-width: 640px) {
+  .dutycalc__body { grid-template-columns: 1fr; padding-inline: 16px; }
+  .dutycalc__head, .dutycalc__out, .dutycalc__note { padding-inline: 16px; }
+}

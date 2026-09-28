@@ -132,7 +132,39 @@
 
   window.addEventListener('resize', placeTag);
 
+  /* ---------- Duty & VAT estimate (rules in duty.js) ---------- */
+  function initDuty() {
+    const f = $('#duty-form');
+    if (!f || !window.GBDuty) return;
+    const draw = () => {
+      const r = window.GBDuty.estimate({
+        cat: f.elements.cat.value, price: f.elements.price.value, local: f.elements.local.value,
+        ship: f.elements.ship.value, fx: f.elements.fx.value, post: f.elements.post.checked, fta: f.elements.fta.checked,
+      });
+      const st = $('#d-stamp');
+      st.dataset.status = r.taxed ? '결제대기' : '완료';
+      st.textContent = r.taxed ? '과세' : '면세';
+      $('#d-verdict').textContent = `판정 금액 ${GB.usd(r.judged)} · 기준 $${r.limit} ${r.taxed ? '초과 → 전액 과세' : '이하'}` +
+        (r.excluded ? ' · 목록통관 배제 품목' : '');
+      const lines = r.taxed
+        ? [['과세가격 (물품+배송)×환율', GB.krw(r.customsValue)], [`관세 ${(r.rate * 100).toFixed(1).replace('.0', '')}%`, GB.krw(r.duty)], ['부가세 10%', GB.krw(r.vat)]]
+        : [['물품+배송 원화', GB.krw(r.goodsKrw)], ['관세·부가세', '없음']];
+      $('#d-lines').innerHTML = lines.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
+      $('#d-tax').textContent = GB.krw(r.tax);
+      $('#d-all').textContent = `물품 + 배송 + 세금 = 약 ${GB.krw(r.totalKrw)}`;
+    };
+    f.addEventListener('input', draw);
+    f.addEventListener('change', draw);
+    f.addEventListener('submit', (e) => e.preventDefault());
+    $('#d-pull').addEventListener('click', () => {
+      const v = parseFloat(String($('#p-total').textContent).replace(/[^0-9.]/g, ''));
+      if (v > 0) { f.elements.ship.value = v.toFixed(2); draw(); GB.toast('위 견적의 배송비 ' + GB.usd(v) + '를 넣었습니다'); }
+    });
+    draw();
+  }
+
   drawRuler();
   renderTable();
   setLb(5);
+  initDuty();
 })();

@@ -127,7 +127,8 @@
     let rows = Array.from({ length: 8 }, (_, i) => makeRow(i, now));
 
     body.innerHTML = rows.map((r) => `<tr>${rowHTML(r)}</tr>`).join('');
-    if (timeEl) timeEl.textContent = now.label;
+    const stamp = () => { if (timeEl) timeEl.textContent = `기준 ${now.label} EST`; };
+    stamp();
 
     if (GB.reduceMotion) return;
 
@@ -137,7 +138,7 @@
     setInterval(() => {
       if (!visible || document.hidden) return;
       now = nyNow();
-      if (timeEl) timeEl.textContent = now.label;
+      stamp();
       if (Math.random() < 0.35) {
         // a new parcel arrives at the top of the board
         const r = makeRow(0, now);
@@ -177,6 +178,7 @@
       actual: $('#q-actual'), vol: $('#q-vol'), bill: $('#q-bill'), base: $('#q-base'),
       extra: $('#q-extra'), total: $('#q-total'), krw: $('#q-krw'), points: $('#q-points'),
     };
+    const set = (el, v) => { if (el) el.textContent = v; };
     function calc() {
       const fd = new FormData(form);
       const q = GB.quote({
@@ -184,14 +186,14 @@
         l: fd.get('l'), w: fd.get('w'), h: fd.get('h'), partner: !!fd.get('partner'),
         options: { consolidate: !!fd.get('consolidate'), inspect: !!fd.get('inspect'), repack: !!fd.get('repack') },
       });
-      out.actual.textContent = q.actualLb.toFixed(2) + 'lb';
-      out.vol.textContent = q.volLb ? q.volLb.toFixed(2) + 'lb' : '—';
-      out.bill.textContent = q.billable + 'lb' + (q.usesVolume ? ' · 부피 적용' : '');
-      out.base.textContent = GB.usd(q.base);
-      out.extra.textContent = GB.usd(q.extras);
-      out.total.textContent = GB.usd(q.total);
-      out.krw.textContent = '약 ' + GB.krw(q.krw);
-      out.points.textContent = `완료 시 ${GB.num(q.points)}P 적립 예정 · 환율 ₩${GB.num(GB.KRW_PER_USD)}/$ 가정`;
+      set(out.actual, q.actualLb.toFixed(2) + 'lb');
+      set(out.vol, q.volLb ? q.volLb.toFixed(2) + 'lb' : '—');
+      set(out.bill, q.billable + 'lb' + (q.usesVolume ? ' · 부피 적용' : ''));
+      set(out.base, GB.usd(q.base));
+      set(out.extra, GB.usd(q.extras));
+      set(out.total, GB.usd(q.total));
+      set(out.krw, '약 ' + GB.krw(q.krw));
+      set(out.points, `완료 시 ${GB.num(q.points)}P 적립 예정 · 환율 ₩${GB.num(GB.KRW_PER_USD)}/$ 가정`);
     }
     form.addEventListener('input', calc);
     form.addEventListener('change', calc);
@@ -214,7 +216,56 @@
     el.textContent = open ? '지금 상담 가능' : lunch && weekday ? '점심시간 · 13:30 재개' : '상담 시간 외 · 1:1 문의를 남겨 주세요';
   }
 
+  /* ---------- Hot deal radar: hand-curated list in deals-data.js ---------- */
+  const DOW = ['일', '월', '화', '수', '목', '금', '토'];
+  const fmtDay = (iso) => { const d = new Date(iso + 'T12:00:00Z'); return `${iso.replace(/-/g, '.')}(${DOW[d.getUTCDay()]})`; };
+  const escH = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  function initRadar() {
+    const rail = $('#radar-rail');
+    const data = window.GB_DEALS;
+    if (!rail || !data) return;
+    const today = new Date().toISOString().slice(0, 10);
+    const live = data.deals.filter((d) => !d.expires || d.expires >= today); // stale deals never show
+    $('#radar-cadence').textContent = data.cadence.replace(' 업데이트', '');
+    $('#radar-updated').textContent = fmtDay(data.updated);
+    $('#radar-next').textContent = fmtDay(data.nextUpdate);
+    $('#radar-affiliate').textContent = data.affiliate ? '일부 링크는 제휴 링크이며 구매 시 수수료를 받을 수 있습니다.' : '제휴·광고 링크가 아닙니다.';
+    $('#radar-count').textContent = live.length ? `딜 ${live.length}개 · 끝난 딜은 자동으로 내려갑니다` : '';
+    if (!live.length) {
+      rail.innerHTML = '<p class="radar__empty">이번 주 딜을 고르는 중입니다. 다음 갱신일에 다시 확인해 주세요.</p>';
+      return;
+    }
+    rail.innerHTML = live.map((d) => {
+      const off = Math.round((1 - d.price / d.was) * 100);
+      const q = GB.quote({ center: d.center, weight: d.lb, unit: 'lb' });
+      const link = 'apply.html?' + new URLSearchParams({ shop: d.shop, item: d.item, price: d.price.toFixed(2), cat: d.cat, url: d.url, center: d.center, w: String(d.lb) }).toString();
+      return `<article class="deal" role="listitem" aria-labelledby="deal-${d.id}">
+        <span class="deal__hole" aria-hidden="true"></span>
+        <p class="deal__shop mono">${escH(d.shop)} · ${escH(d.cat)}</p>
+        <span class="deal__off stamp" data-status="결제대기" style="--stamp-rot:${off % 2 ? 4 : -4}deg">−${off}%</span>
+        <h3 class="deal__title" id="deal-${d.id}">${escH(d.title)}</h3>
+        <p class="deal__price"><b class="mono">${GB.usd(d.price)}</b><s class="mono" aria-label="정가">${GB.usd(d.was)}</s></p>
+        <dl class="deal__ship">
+          <div><dt>예상 배송비</dt><dd class="mono">${GB.usd(q.total)} · ${d.lb}lb · ${d.center}</dd></div>
+          <div><dt>딜 종료</dt><dd class="mono">${d.expires ? d.expires.slice(5).replace('-', '.') + '까지' : '재고 소진 시'}</dd></div>
+        </dl>
+        ${d.note ? `<p class="deal__note">${escH(d.note)}</p>` : ''}
+        <div class="deal__cta">
+          <a class="deal__src" href="${escH(d.url)}" target="_blank" rel="noopener noreferrer">원문 보기<span class="sr-only"> (${escH(d.shop)}, 새 창)</span> ↗</a>
+          <a class="btn btn--primary btn--sm" href="${escH(link)}">이 상품으로 신청서</a>
+        </div>
+      </article>`;
+    }).join('');
+    $$('[data-rail]').forEach((b) => b.addEventListener('click', () => {
+      const card = rail.querySelector('.deal');
+      const step = card ? card.getBoundingClientRect().width + 16 : 300;
+      rail.scrollBy({ left: Number(b.dataset.rail) * step * 2, behavior: GB.reduceMotion ? 'auto' : 'smooth' });
+    }));
+  }
+
   initRoute();
+  initRadar();
   initIssue();
   initBoard();
   initCalc();

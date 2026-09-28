@@ -353,7 +353,21 @@
   $('#again').addEventListener('click', () => { window.location.reload(); });
 
   /* ---------- Boot ---------- */
-  const startStep = loadDraft();
+  let startStep = loadDraft();
+
+  // Deep link from the hot deal radar: apply.html?shop=&item=&price=&cat=&url=&center=&w=
+  const qs = new URLSearchParams(location.search);
+  if (qs.get('item')) {
+    itemsEl.innerHTML = '';
+    addItem({ name: qs.get('item'), price: qs.get('price') || '', qty: '1', cat: qs.get('cat') || '', url: qs.get('url') || '' });
+    if (qs.get('shop')) form.elements.shop.value = qs.get('shop');
+    const c = qs.get('center');
+    if (c === 'NJ' || c === 'DE') Array.from(form.elements.center).forEach((r) => { r.checked = r.value === c; });
+    if (Number(qs.get('w')) > 0) form.elements.estWeight.value = qs.get('w');
+    startStep = 1;
+    history.replaceState(null, '', location.pathname);
+    GB.toast('핫딜 상품 정보를 채웠습니다. 주문번호만 넣으면 됩니다');
+  }
   goTo(startStep || 1, false);
   update();
 })();

@@ -273,7 +273,7 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') { set(false); btn.focus(); }
     });
-    window.matchMedia('(min-width: 961px)').addEventListener('change', (m) => { if (m.matches) set(false); });
+    window.matchMedia('(min-width: 1181px)').addEventListener('change', (m) => { if (m.matches) set(false); });
   }
 
   /* Center-hours timer in the top bar lives in hours.js + member.js */

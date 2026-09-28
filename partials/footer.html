@@ -7,11 +7,20 @@
     </div>
     <div class="footer__cols">
       <div class="footer__col">
-        <h2>서비스</h2>
+        <h2>처음이라면</h2>
+        <ul>
+          <li><a href="guide.html">이용방법 8단계</a></li>
+          <li><a href="customs.html">개인통관고유부호 발급</a></li>
+          <li><a href="pricing.html">요금표·배송비 계산</a></li>
+          <li><a href="pricing.html#duty">관부가세·면세 기준</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h2>이용 중이라면</h2>
         <ul>
           <li><a href="apply.html">배송대행 신청서</a></li>
-          <li><a href="pricing.html">요금표·견적 계산</a></li>
           <li><a href="mypage.html">내 화물 여정</a></li>
+          <li><a href="events.html">이벤트·쿠폰·세일 캘린더</a></li>
           <li><a href="pricing.html#partners">파트너스(사업자)</a></li>
         </ul>
       </div>
@@ -22,18 +31,19 @@
         <ul style="margin-top:12px">
           <li><a href="support.html#faq">자주 묻는 질문</a></li>
           <li><a href="support.html#ask">1:1 문의</a></li>
+          <li><button type="button" class="footer__chat" data-chat-open>카카오톡·실시간 채팅 상담</button></li>
         </ul>
       </div>
-      <div class="footer__col footer__col--wide">
+      <div class="footer__col">
         <h2>물류센터</h2>
-        <dl class="footer__addr">
+        <dl class="footer__addr footer__addr--stack">
           <div>
-            <dt>뉴저지 센터 EWR</dt>
-            <dd>000 Logistics Ave, Unit GB<br>Edison, NJ 08800, USA<br>당일 입고 마감 17:00 EST</dd>
+            <dt>뉴저지 EWR</dt>
+            <dd>000 Logistics Ave Unit B<br>Edison, NJ 08800<br>평일 09:00–17:00 ET</dd>
           </div>
           <div>
-            <dt>델라웨어 센터 ILG · 면세주</dt>
-            <dd>000 Harbor Rd, Suite GB<br>New Castle, DE 19700, USA<br>판매세 0% 주</dd>
+            <dt>델라웨어 ILG · 면세주</dt>
+            <dd>000 Harbor Rd Suite B<br>New Castle, DE 19700<br>평일 09:00–15:00 ET</dd>
           </div>
         </dl>
       </div>
@@ -43,7 +53,58 @@
       <span>© 2026 고배송 GOBAESONG</span>
       <span>사업자등록번호 000-00-00000</span>
       <span>통신판매업 제0000-서울-0000호</span>
-      <span class="mock">리뉴얼 디자인 목업 — 실제 접수·결제·전송은 이뤄지지 않습니다.</span>
+      <span class="mock">리뉴얼 디자인 목업 — 회원가입만 실제 계정이 만들어지고, 신청·결제·문의·상담은 전송되지 않습니다.</span>
     </div>
   </div>
 </footer>
+
+<!-- Consultation: floating button on every page -->
+<div class="chatfab" id="chatfab">
+  <button type="button" class="chatfab__btn" id="chatfab-btn" aria-expanded="false" aria-controls="chatpanel" data-chat-toggle>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8 9.5h8M8 12.5h5" stroke="currentColor" stroke-width="2"/></svg>
+    <span class="chatfab__label">상담</span>
+    <span class="chatfab__dot" aria-hidden="true"></span>
+  </button>
+  <section class="chatpanel" id="chatpanel" hidden aria-labelledby="chatpanel-title">
+    <header class="chatpanel__head">
+      <div>
+        <p class="chatpanel__code mono">HELP DESK · 상담 창구</p>
+        <h2 class="chatpanel__title" id="chatpanel-title">무엇을 도와드릴까요?</h2>
+        <p class="chatpanel__state" data-chat-state>상담 시간 확인 중</p>
+      </div>
+      <button type="button" class="chatpanel__close" data-chat-toggle aria-label="상담 창 닫기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 2l12 12M14 2L2 14" stroke="currentColor" stroke-width="2"/></svg></button>
+    </header>
+
+    <div class="chatpanel__menu" data-chat-view="menu">
+      <button type="button" class="chatpanel__entry" data-chat-kakao>
+        <span class="chatpanel__icon chatpanel__icon--kakao" aria-hidden="true">K</span>
+        <span><b>카카오톡 상담</b><span>@고배송 채널 · 평일 10:00–18:00 · 평균 답변 12분</span></span>
+      </button>
+      <button type="button" class="chatpanel__entry" data-chat-live>
+        <span class="chatpanel__icon" aria-hidden="true">LIVE</span>
+        <span><b>실시간 채팅</b><span>사서함·배송비·통관부호는 바로 답해 드립니다</span></span>
+      </button>
+      <a class="chatpanel__entry" href="support.html#ask">
+        <span class="chatpanel__icon" aria-hidden="true">1:1</span>
+        <span><b>1:1 문의 남기기</b><span>사진 첨부 · 평일 평균 3시간 안에 이메일 답변</span></span>
+      </a>
+      <p class="chatpanel__tel">전화 <b class="mono">1588-0000</b> · 점심 12:30–13:30 · 주말·공휴일 휴무</p>
+    </div>
+
+    <div class="chatpanel__live" data-chat-view="live" hidden>
+      <ol class="chatlog" id="chatlog" aria-live="polite" role="log"></ol>
+      <div class="chatquick" id="chatquick">
+        <button type="button" data-chat-q="addr">내 미국 주소</button>
+        <button type="button" data-chat-q="fee">배송비 얼마?</button>
+        <button type="button" data-chat-q="pccc">통관부호</button>
+        <button type="button" data-chat-q="track">내 화물 위치</button>
+      </div>
+      <form class="chatinput" id="chatinput">
+        <label class="sr-only" for="chat-text">메시지</label>
+        <input class="input" id="chat-text" autocomplete="off" maxlength="300" placeholder="메시지를 입력하세요">
+        <button class="btn btn--primary btn--sm" type="submit">보내기</button>
+      </form>
+      <button type="button" class="btn-text chatpanel__back" data-chat-back>← 상담 방법 다시 고르기</button>
+    </div>
+  </section>
+</div>

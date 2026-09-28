@@ -13,8 +13,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
 <link rel="stylesheet" href="assets/css/tokens.css?v=af816627">
-<link rel="stylesheet" href="assets/css/base.css?v=16387caf">
-<link rel="stylesheet" href="assets/css/index.css?v=12b4b461">
+<link rel="stylesheet" href="assets/css/base.css?v=2e53640c">
+<link rel="stylesheet" href="assets/css/index.css?v=3a8c29e2">
 <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('gb.user'))document.documentElement.classList.add('is-authed')}catch(e){}</script>
 </head>
 <body class="page-index">
@@ -112,8 +112,11 @@
     </a>
     <nav class="gnav" id="gnav" aria-label="주 메뉴">
       <ul>
-        <li><a href="apply.html">배송대행 신청</a></li>
-        <li><a href="pricing.html">요금 안내</a></li>
+        <li><a href="guide.html">이용방법</a></li>
+        <li><a href="pricing.html">요금</a></li>
+        <li><a href="customs.html">통관 가이드</a></li>
+        <li><a href="events.html">이벤트</a></li>
+        <li><a href="apply.html">신청서</a></li>
         <li><a href="mypage.html">마이페이지</a></li>
         <li><a href="support.html">고객센터</a></li>
       </ul>
@@ -389,6 +392,43 @@
     </div>
   </section>
 
+  <!-- ============ HOT DEAL RADAR (hand-picked, never crawled) ============ -->
+  <section class="radar section" id="deals" aria-labelledby="radar-title">
+    <div class="wrap">
+      <div class="radar__head">
+        <div class="radar__dial" aria-hidden="true">
+          <svg viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="56" class="radar__ring"/>
+            <circle cx="60" cy="60" r="38" class="radar__ring"/>
+            <circle cx="60" cy="60" r="20" class="radar__ring"/>
+            <path d="M60 4v112M4 60h112" class="radar__cross"/>
+            <g class="radar__sweep"><path d="M60 60 L60 4 A56 56 0 0 1 108 32 Z"/></g>
+            <circle cx="84" cy="38" r="4" class="radar__blip"/><circle cx="40" cy="78" r="3" class="radar__blip"/><circle cx="74" cy="88" r="3.5" class="radar__blip"/>
+          </svg>
+        </div>
+        <div class="radar__title">
+          <p class="eyebrow">HOT DEAL RADAR · 사람이 직접 고른 딜</p>
+          <h2 class="h1" id="radar-title">이번 주, 미국에서 싸게 나온 것들.</h2>
+        </div>
+        <dl class="radar__meta">
+          <div><dt>업데이트</dt><dd><b id="radar-cadence">매주 월·목</b></dd></div>
+          <div><dt>이번 목록</dt><dd class="mono" id="radar-updated">2026.09.28(월)</dd></div>
+          <div><dt>다음 갱신</dt><dd class="mono" id="radar-next">2026.10.01(목)</dd></div>
+        </dl>
+      </div>
+      <p class="radar__disclaimer">가격과 재고는 판매처 사정에 따라 변동될 수 있습니다. 담당자가 매주 월·목 직접 확인해 올리며, 끝난 딜은 바로 내립니다. <b id="radar-affiliate">제휴·광고 링크가 아닙니다.</b> <span class="radar__mock">목업 예시 가격</span></p>
+      <div class="radar__rail" id="radar-rail" role="list" aria-label="이번 주 핫딜"></div>
+      <div class="radar__foot">
+        <p class="small muted" id="radar-count">딜 8개</p>
+        <div class="radar__nav">
+          <button type="button" class="radar__arrow" data-rail="-1" aria-label="이전 딜"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+          <button type="button" class="radar__arrow" data-rail="1" aria-label="다음 딜"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+        </div>
+      </div>
+      <noscript><p class="radar__disclaimer">자바스크립트를 켜면 이번 주 딜 목록이 보입니다.</p></noscript>
+    </div>
+  </section>
+
   <!-- ============ ISSUE MAILBOX (core conversion) ============ -->
   <section class="issue section band" id="issue" aria-labelledby="issue-title">
     <div class="wrap grid12">
@@ -451,33 +491,42 @@
           <div><dt>오늘 출고</dt><dd class="mono" id="bt-out">386</dd></div>
         </dl>
       </div>
-      <div class="board__frame" role="region" aria-label="실시간 배송 현황표" tabindex="0">
+      <div class="board__frame" role="region" aria-label="배송 현황표" tabindex="0">
         <table class="fids">
-          <caption class="sr-only">최근 처리된 화물 8건의 상태. 목업 데이터이며 몇 초마다 한 줄씩 갱신됩니다.</caption>
+          <caption class="sr-only">최근 처리된 화물 8건의 상태. 샘플 데이터이며 몇 초마다 한 줄씩 바뀝니다.</caption>
           <thead>
             <tr><th scope="col">시각 EST</th><th scope="col">사서함</th><th scope="col">품목</th><th scope="col" class="num">무게</th><th scope="col" class="hide-md">항공편</th><th scope="col">상태</th></tr>
           </thead>
-          <tbody id="board-body"></tbody>
+          <tbody id="board-body">
+            <tr><td><span class="tiles" aria-label="14:28"><i aria-hidden="true">1</i><i aria-hidden="true">4</i>:<i aria-hidden="true">2</i><i aria-hidden="true">8</i></span></td><td>GB-04****</td><td class="item">러닝화<span>Nike</span></td><td class="num">3.2lb</td><td class="hide-md">KE0092</td><td><span class="flap"><span class="stamp" data-status="입고완료">입고완료</span></span></td></tr>
+            <tr><td><span class="tiles" aria-label="14:21"><i aria-hidden="true">1</i><i aria-hidden="true">4</i>:<i aria-hidden="true">2</i><i aria-hidden="true">1</i></span></td><td>GB-17****</td><td class="item">캐시미어 니트<span>J.Crew</span></td><td class="num">1.8lb</td><td class="hide-md">KE0082</td><td><span class="flap"><span class="stamp" data-status="검수중">검수중</span></span></td></tr>
+            <tr><td><span class="tiles" aria-label="14:12"><i aria-hidden="true">1</i><i aria-hidden="true">4</i>:<i aria-hidden="true">1</i><i aria-hidden="true">2</i></span></td><td>GB-52****</td><td class="item">비타민 D3 3병<span>iHerb</span></td><td class="num">2.1lb</td><td class="hide-md">OZ0221</td><td><span class="flap"><span class="stamp" data-status="검수중">검수중</span></span></td></tr>
+            <tr><td><span class="tiles" aria-label="14:05"><i aria-hidden="true">1</i><i aria-hidden="true">4</i>:<i aria-hidden="true">0</i><i aria-hidden="true">5</i></span></td><td>GB-33****</td><td class="item">무선 이어폰<span>Best Buy</span></td><td class="num">1.1lb</td><td class="hide-md">KE0092</td><td><span class="flap"><span class="stamp" data-status="결제대기">결제대기</span></span></td></tr>
+            <tr><td><span class="tiles" aria-label="13:56"><i aria-hidden="true">1</i><i aria-hidden="true">3</i>:<i aria-hidden="true">5</i><i aria-hidden="true">6</i></span></td><td>GB-08****</td><td class="item">캠핑 체어<span>REI</span></td><td class="num">6.4lb</td><td class="hide-md">KE0094</td><td><span class="flap"><span class="stamp" data-status="결제대기">결제대기</span></span></td></tr>
+            <tr><td><span class="tiles" aria-label="13:47"><i aria-hidden="true">1</i><i aria-hidden="true">3</i>:<i aria-hidden="true">4</i><i aria-hidden="true">7</i></span></td><td>GB-61****</td><td class="item">레고 테크닉<span>Target</span></td><td class="num">2.7lb</td><td class="hide-md">KE0082</td><td><span class="flap"><span class="stamp" data-status="출고">출고</span></span></td></tr>
+            <tr><td><span class="tiles" aria-label="13:39"><i aria-hidden="true">1</i><i aria-hidden="true">3</i>:<i aria-hidden="true">3</i><i aria-hidden="true">9</i></span></td><td>GB-29****</td><td class="item">백팩<span>Patagonia</span></td><td class="num">2.3lb</td><td class="hide-md">KE0092</td><td><span class="flap"><span class="stamp" data-status="통관중">통관중</span></span></td></tr>
+            <tr><td><span class="tiles" aria-label="13:30"><i aria-hidden="true">1</i><i aria-hidden="true">3</i>:<i aria-hidden="true">3</i><i aria-hidden="true">0</i></span></td><td>GB-75****</td><td class="item">핸드크림 세트<span>Sephora</span></td><td class="num">1.4lb</td><td class="hide-md">OZ0221</td><td><span class="flap"><span class="stamp" data-status="배송중">배송중</span></span></td></tr>
+          </tbody>
         </table>
       </div>
-      <p class="board__note mono">갱신 <span id="board-time">--:--:--</span> EST · 사서함 번호 일부는 가려서 표시 · 목업 데이터</p>
+      <p class="board__note mono"><span id="board-time">오늘 뉴저지 센터 샘플</span> · 몇 초마다 한 줄씩 바뀜 · 사서함 번호 일부는 가려서 표시 · 목업 데이터</p>
     </div>
   </section>
 
-  <!-- ============ CALCULATOR ============ -->
+  <!-- ============ CALCULATOR TEASER ============ -->
   <section class="calc section" id="calc" aria-labelledby="calc-title">
     <div class="wrap grid12">
       <div class="calc__copy">
         <p class="eyebrow">배송비 미리보기</p>
-        <h2 class="h1" id="calc-title">상자 크기까지 넣으면 부피무게로 정확하게.</h2>
-        <p class="lead">실무게와 부피무게(가로×세로×높이÷166) 가운데 큰 값을 1lb 단위로 올려 계산합니다. 확정 금액은 입고 후 실측으로 정해집니다.</p>
-        <a class="link-arrow" href="pricing.html">무게별 전체 요금표
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8h12M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+        <h2 class="h1" id="calc-title">무게만 넣으면, 금액이 바로 나옵니다.</h2>
+        <p class="lead">여기서는 센터와 무게만 넣는 간편 계산입니다. 상자 크기(부피무게)·옵션·관부가세까지 넣는 전체 계산은 요금 페이지에서 할 수 있습니다.</p>
+        <a class="btn btn--ghost" href="pricing.html">상세 요금표 보기
+          <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 9h13M10 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
       </div>
 
-      <form class="receipt" id="calc-form" aria-labelledby="calc-form-title" novalidate>
+      <form class="receipt receipt--teaser" id="calc-form" aria-labelledby="calc-form-title" novalidate>
         <div class="receipt__head">
-          <h3 class="mono" id="calc-form-title">ESTIMATE · 견적서</h3>
+          <h3 class="mono" id="calc-form-title">QUICK ESTIMATE · 간편 견적</h3>
           <span class="mono" id="calc-date">2026.09.28</span>
         </div>
         <div class="receipt__body">
@@ -490,7 +539,7 @@
           </fieldset>
           <div class="receipt__row receipt__weight">
             <div class="field">
-              <label class="field__label" for="c-weight">실무게</label>
+              <label class="field__label" for="c-weight">예상 무게</label>
               <input class="input mono" id="c-weight" name="weight" type="number" inputmode="decimal" min="0" step="0.1" value="3.2">
             </div>
             <fieldset class="seg receipt__unit" aria-label="무게 단위">
@@ -498,35 +547,69 @@
               <label><input type="radio" name="unit" value="kg">kg</label>
             </fieldset>
           </div>
-          <fieldset class="receipt__row">
-            <legend class="field__label">상자 크기 <span class="opt">inch · 선택</span></legend>
-            <div class="receipt__dims">
-              <label class="sr-only" for="c-l">가로</label><input class="input mono" id="c-l" name="l" type="number" inputmode="decimal" min="0" placeholder="가로" value="14">
-              <span aria-hidden="true">×</span>
-              <label class="sr-only" for="c-w">세로</label><input class="input mono" id="c-w" name="w" type="number" inputmode="decimal" min="0" placeholder="세로" value="10">
-              <span aria-hidden="true">×</span>
-              <label class="sr-only" for="c-h">높이</label><input class="input mono" id="c-h" name="h" type="number" inputmode="decimal" min="0" placeholder="높이" value="5">
-            </div>
-          </fieldset>
-          <fieldset class="receipt__row receipt__opts">
-            <legend class="field__label">옵션</legend>
-            <label class="tick"><input type="checkbox" name="consolidate"><span>합배송 <b class="mono">+$3.00</b></span></label>
-            <label class="tick"><input type="checkbox" name="inspect"><span>정밀검수 <b class="mono">+$2.00</b></span></label>
-            <label class="tick"><input type="checkbox" name="repack"><span>보강 재포장 <b class="mono">+$3.00</b></span></label>
-            <label class="tick"><input type="checkbox" name="partner"><span>파트너스 요금 <b class="mono">−7%</b></span></label>
-          </fieldset>
         </div>
         <div class="receipt__tear" aria-hidden="true"></div>
         <dl class="receipt__sum" aria-live="polite">
-          <div><dt>실무게</dt><dd class="mono" id="q-actual">3.20lb</dd></div>
-          <div><dt>부피무게</dt><dd class="mono" id="q-vol">4.22lb</dd></div>
-          <div class="is-strong"><dt>적용무게</dt><dd class="mono" id="q-bill">5lb</dd></div>
-          <div><dt>기본요금</dt><dd class="mono" id="q-base">$18.10</dd></div>
-          <div><dt>옵션</dt><dd class="mono" id="q-extra">$0.00</dd></div>
-          <div class="receipt__total"><dt>예상 합계</dt><dd><b class="mono" id="q-total">$18.10</b><span class="mono" id="q-krw">약 ₩25,160</span></dd></div>
+          <div><dt>입력 무게</dt><dd class="mono" id="q-actual">3.20lb</dd></div>
+          <div class="is-strong"><dt>적용무게 · 1lb 올림</dt><dd class="mono" id="q-bill">4lb</dd></div>
+          <div class="receipt__total"><dt>예상 배송비</dt><dd><b class="mono" id="q-total">$15.80</b><span class="mono" id="q-krw">약 ₩21,960</span></dd></div>
         </dl>
-        <p class="receipt__foot mono" id="q-points">완료 시 251P 적립 예정</p>
+        <a class="receipt__foot receipt__link" href="pricing.html">상세 요금표 보기 — 부피무게·옵션·관부가세까지 →</a>
       </form>
+    </div>
+  </section>
+
+  <!-- ============ PARTNER MALLS ============ -->
+  <section class="malls section band" id="malls" aria-labelledby="malls-title">
+    <div class="wrap grid12">
+      <div class="malls__title">
+        <p class="eyebrow">SHOP GATES · 쇼핑몰 바로가기</p>
+        <h2 class="h2" id="malls-title">자주 쓰는 미국 쇼핑몰 10곳.</h2>
+        <p class="muted">어느 센터로 받으면 좋은지 함께 적었습니다. 링크는 새 창으로 열리며 제휴·광고 링크가 아닙니다.</p>
+      </div>
+      <ol class="malls__list" role="list">
+        <li><a href="https://www.amazon.com" target="_blank" rel="noopener noreferrer"><span class="malls__gate mono">A01</span><b>Amazon</b><span class="malls__cat">종합 · 전자기기</span><span class="malls__center mono">DE</span></a></li>
+        <li><a href="https://www.walmart.com" target="_blank" rel="noopener noreferrer"><span class="malls__gate mono">A02</span><b>Walmart</b><span class="malls__cat">종합 · 생활</span><span class="malls__center mono">NJ</span></a></li>
+        <li><a href="https://www.target.com" target="_blank" rel="noopener noreferrer"><span class="malls__gate mono">A03</span><b>Target</b><span class="malls__cat">완구 · 유아 · 생활</span><span class="malls__center mono">NJ</span></a></li>
+        <li><a href="https://www.bestbuy.com" target="_blank" rel="noopener noreferrer"><span class="malls__gate mono">A04</span><b>Best Buy</b><span class="malls__cat">전자기기</span><span class="malls__center mono">DE</span></a></li>
+        <li><a href="https://www.costco.com" target="_blank" rel="noopener noreferrer"><span class="malls__gate mono">A05</span><b>Costco</b><span class="malls__cat">대용량 · 식품</span><span class="malls__center mono">NJ</span></a></li>
+        <li><a href="https://www.iherb.com" target="_blank" rel="noopener noreferrer"><span class="malls__gate mono">B01</span><b>iHerb</b><span class="malls__cat">건강기능식품 · $150 기준</span><span class="malls__center mono">NJ</span></a></li>
+        <li><a href="https://www.nike.com" target="_blank" rel="noopener noreferrer"><span class="malls__gate mono">B02</span><b>Nike</b><span class="malls__cat">신발 · 의류</span><span class="malls__center mono">NJ</span></a></li>
+        <li><a href="https://www.patagonia.com" target="_blank" rel="noopener noreferrer"><span class="malls__gate mono">B03</span><b>Patagonia</b><span class="malls__cat">아웃도어 의류</span><span class="malls__center mono">NJ</span></a></li>
+        <li><a href="https://www.sephora.com" target="_blank" rel="noopener noreferrer"><span class="malls__gate mono">B04</span><b>Sephora</b><span class="malls__cat">화장품</span><span class="malls__center mono">NJ</span></a></li>
+        <li><a href="https://www.6pm.com" target="_blank" rel="noopener noreferrer"><span class="malls__gate mono">B05</span><b>6pm</b><span class="malls__cat">신발·가방 아울렛</span><span class="malls__center mono">NJ</span></a></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ REVIEWS ============ -->
+  <section class="reviews section" id="reviews" aria-labelledby="reviews-title">
+    <div class="wrap">
+      <div class="reviews__head">
+        <div>
+          <p class="eyebrow">ARRIVAL NOTES · 고객 후기</p>
+          <h2 class="h1" id="reviews-title">도착한 사람들이 남긴 말.</h2>
+        </div>
+        <p class="reviews__score"><b class="mono">4.8</b><span>/ 5 · 후기 3,214건 평균</span><span class="reviews__mock">목업 예시 후기</span></p>
+      </div>
+      <div class="reviews__grid">
+        <figure class="review review--lead">
+          <blockquote>“금요일 밤에 결제했는데 화요일 오후에 현관 앞에 있었어요. 검수 사진에 신발 사이즈 라벨까지 찍혀 있어서 안심했습니다.”</blockquote>
+          <figcaption><span class="mono">gd****</span> · 러닝화 · <span class="mono">EWR→서울 4일</span></figcaption>
+        </figure>
+        <figure class="review">
+          <blockquote>“상자 세 개를 합배송으로 묶었더니 부피가 절반이 됐어요. 요금 계산기 숫자랑 실제 청구액 차이가 $0.40이었습니다.”</blockquote>
+          <figcaption><span class="mono">mi****</span> · 합배송 3건 · <span class="mono">4.1lb 절감</span></figcaption>
+        </figure>
+        <figure class="review">
+          <blockquote>“통관부호 명의가 달라 보류됐는데, 채팅으로 물어보니 10분 만에 정정 방법을 알려 줬어요.”</blockquote>
+          <figcaption><span class="mono">ks****</span> · 통관 보류 해결 · <span class="mono">+1일</span></figcaption>
+        </figure>
+        <figure class="review review--wide">
+          <blockquote>“사업자라 한 달에 200건 넘게 보내는데, 엑셀 업로드랑 자동결제 덕분에 결제 대기로 멈추는 날이 없어졌습니다.”</blockquote>
+          <figcaption><span class="mono">bz****</span> · 파트너스 회원 · <span class="mono">월 200건</span></figcaption>
+        </figure>
+      </div>
     </div>
   </section>
 
@@ -538,9 +621,9 @@
         <h2 class="h2" id="partners-title">한 달 100건이 넘는다면.</h2>
       </div>
       <ol class="partners__list" role="list">
-        <li><span class="mono">A</span><div><b>엑셀 한 장으로 500건 신청</b><p>템플릿에 붙여넣고 올리면 신청서가 한 번에 만들어집니다.</p></div></li>
-        <li><span class="mono">B</span><div><b>검수 완료 즉시 자동결제</b><p>등록한 카드로 바로 결제되어 출고 대기가 생기지 않습니다.</p></div></li>
-        <li><span class="mono">C</span><div><b>기본요금 7% 할인, 전담 매니저</b><p>통관 서류와 반품 건을 한 사람이 끝까지 챙깁니다.</p></div></li>
+        <li><span class="mono">01</span><div><b>대량 신청</b><p>한 번에 최대 500건까지 신청서를 만들고, 오류가 난 줄만 다시 표시합니다.</p></div></li>
+        <li><span class="mono">02</span><div><b>엑셀 업로드</b><p>템플릿에 주문 목록을 붙여넣고 올리면 상품·수취인·통관정보가 한 번에 채워집니다.</p></div></li>
+        <li><span class="mono">03</span><div><b>자동결제</b><p>검수가 끝나는 즉시 등록한 카드로 결제되어 출고 대기가 생기지 않습니다. 기본요금 7% 할인.</p></div></li>
       </ol>
       <a class="link-arrow partners__link" href="pricing.html#partners">파트너스 요금 보기
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8h12M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
@@ -560,7 +643,7 @@
           <li><time class="mono" datetime="2026-09-24">2026.09.24</time><span class="badge badge--navy">출고</span><a href="support.html#notice">추석 연휴 인천세관 통관 일정 안내 (10.3–10.9)</a></li>
           <li><time class="mono" datetime="2026-09-19">2026.09.19</time><span class="badge">요금</span><a href="support.html#notice">델라웨어 센터 10월 유류할증료 동결</a></li>
           <li><time class="mono" datetime="2026-09-11">2026.09.11</time><span class="badge">서비스</span><a href="support.html#notice">안심뷰 사진 기본 제공 1장 → 2장으로 변경</a></li>
-          <li><time class="mono" datetime="2026-09-02">2026.09.02</time><span class="badge">통관</span><a href="support.html#notice">건강기능식품 6병 초과 시 일반통관 전환 기준 안내</a></li>
+          <li><time class="mono" datetime="2026-09-02">2026.09.02</time><span class="badge">통관</span><a href="support.html#notice">건강기능식품은 $150 기준 · 6병 초과 시 수입 요건 확인</a></li>
         </ol>
       </div>
       <aside class="desk__help" aria-labelledby="help-title">
@@ -569,7 +652,7 @@
         <p class="desk__tel mono">1588-0000</p>
         <p class="desk__hours">평일 10:00–18:00 · 점심 12:30–13:30<br><span class="desk__open" data-open-status>상담 가능 여부 확인 중</span></p>
         <ul class="desk__links" role="list">
-          <li><a href="support.html#faq">자주 묻는 질문 16개</a></li>
+          <li><a href="support.html#faq">자주 묻는 질문 17개</a></li>
           <li><a href="support.html#ask">1:1 문의 남기기</a></li>
           <li><a href="mypage.html">내 화물 위치 보기</a></li>
         </ul>
@@ -588,11 +671,20 @@
     </div>
     <div class="footer__cols">
       <div class="footer__col">
-        <h2>서비스</h2>
+        <h2>처음이라면</h2>
+        <ul>
+          <li><a href="guide.html">이용방법 8단계</a></li>
+          <li><a href="customs.html">개인통관고유부호 발급</a></li>
+          <li><a href="pricing.html">요금표·배송비 계산</a></li>
+          <li><a href="pricing.html#duty">관부가세·면세 기준</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h2>이용 중이라면</h2>
         <ul>
           <li><a href="apply.html">배송대행 신청서</a></li>
-          <li><a href="pricing.html">요금표·견적 계산</a></li>
           <li><a href="mypage.html">내 화물 여정</a></li>
+          <li><a href="events.html">이벤트·쿠폰·세일 캘린더</a></li>
           <li><a href="pricing.html#partners">파트너스(사업자)</a></li>
         </ul>
       </div>
@@ -603,18 +695,19 @@
         <ul style="margin-top:12px">
           <li><a href="support.html#faq">자주 묻는 질문</a></li>
           <li><a href="support.html#ask">1:1 문의</a></li>
+          <li><button type="button" class="footer__chat" data-chat-open>카카오톡·실시간 채팅 상담</button></li>
         </ul>
       </div>
-      <div class="footer__col footer__col--wide">
+      <div class="footer__col">
         <h2>물류센터</h2>
-        <dl class="footer__addr">
+        <dl class="footer__addr footer__addr--stack">
           <div>
-            <dt>뉴저지 센터 EWR</dt>
-            <dd>000 Logistics Ave, Unit GB<br>Edison, NJ 08800, USA<br>당일 입고 마감 17:00 EST</dd>
+            <dt>뉴저지 EWR</dt>
+            <dd>000 Logistics Ave Unit B<br>Edison, NJ 08800<br>평일 09:00–17:00 ET</dd>
           </div>
           <div>
-            <dt>델라웨어 센터 ILG · 면세주</dt>
-            <dd>000 Harbor Rd, Suite GB<br>New Castle, DE 19700, USA<br>판매세 0% 주</dd>
+            <dt>델라웨어 ILG · 면세주</dt>
+            <dd>000 Harbor Rd Suite B<br>New Castle, DE 19700<br>평일 09:00–15:00 ET</dd>
           </div>
         </dl>
       </div>
@@ -624,15 +717,68 @@
       <span>© 2026 고배송 GOBAESONG</span>
       <span>사업자등록번호 000-00-00000</span>
       <span>통신판매업 제0000-서울-0000호</span>
-      <span class="mock">리뉴얼 디자인 목업 — 실제 접수·결제·전송은 이뤄지지 않습니다.</span>
+      <span class="mock">리뉴얼 디자인 목업 — 회원가입만 실제 계정이 만들어지고, 신청·결제·문의·상담은 전송되지 않습니다.</span>
     </div>
   </div>
 </footer>
+
+<!-- Consultation: floating button on every page -->
+<div class="chatfab" id="chatfab">
+  <button type="button" class="chatfab__btn" id="chatfab-btn" aria-expanded="false" aria-controls="chatpanel" data-chat-toggle>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8 9.5h8M8 12.5h5" stroke="currentColor" stroke-width="2"/></svg>
+    <span class="chatfab__label">상담</span>
+    <span class="chatfab__dot" aria-hidden="true"></span>
+  </button>
+  <section class="chatpanel" id="chatpanel" hidden aria-labelledby="chatpanel-title">
+    <header class="chatpanel__head">
+      <div>
+        <p class="chatpanel__code mono">HELP DESK · 상담 창구</p>
+        <h2 class="chatpanel__title" id="chatpanel-title">무엇을 도와드릴까요?</h2>
+        <p class="chatpanel__state" data-chat-state>상담 시간 확인 중</p>
+      </div>
+      <button type="button" class="chatpanel__close" data-chat-toggle aria-label="상담 창 닫기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 2l12 12M14 2L2 14" stroke="currentColor" stroke-width="2"/></svg></button>
+    </header>
+
+    <div class="chatpanel__menu" data-chat-view="menu">
+      <button type="button" class="chatpanel__entry" data-chat-kakao>
+        <span class="chatpanel__icon chatpanel__icon--kakao" aria-hidden="true">K</span>
+        <span><b>카카오톡 상담</b><span>@고배송 채널 · 평일 10:00–18:00 · 평균 답변 12분</span></span>
+      </button>
+      <button type="button" class="chatpanel__entry" data-chat-live>
+        <span class="chatpanel__icon" aria-hidden="true">LIVE</span>
+        <span><b>실시간 채팅</b><span>사서함·배송비·통관부호는 바로 답해 드립니다</span></span>
+      </button>
+      <a class="chatpanel__entry" href="support.html#ask">
+        <span class="chatpanel__icon" aria-hidden="true">1:1</span>
+        <span><b>1:1 문의 남기기</b><span>사진 첨부 · 평일 평균 3시간 안에 이메일 답변</span></span>
+      </a>
+      <p class="chatpanel__tel">전화 <b class="mono">1588-0000</b> · 점심 12:30–13:30 · 주말·공휴일 휴무</p>
+    </div>
+
+    <div class="chatpanel__live" data-chat-view="live" hidden>
+      <ol class="chatlog" id="chatlog" aria-live="polite" role="log"></ol>
+      <div class="chatquick" id="chatquick">
+        <button type="button" data-chat-q="addr">내 미국 주소</button>
+        <button type="button" data-chat-q="fee">배송비 얼마?</button>
+        <button type="button" data-chat-q="pccc">통관부호</button>
+        <button type="button" data-chat-q="track">내 화물 위치</button>
+      </div>
+      <form class="chatinput" id="chatinput">
+        <label class="sr-only" for="chat-text">메시지</label>
+        <input class="input" id="chat-text" autocomplete="off" maxlength="300" placeholder="메시지를 입력하세요">
+        <button class="btn btn--primary btn--sm" type="submit">보내기</button>
+      </form>
+      <button type="button" class="btn-text chatpanel__back" data-chat-back>← 상담 방법 다시 고르기</button>
+    </div>
+  </section>
+</div>
 <!-- FOOTER:END -->
 
 <script src="assets/js/hours.js?v=754dcf87"></script>
-<script src="assets/js/common.js?v=9d338078"></script>
+<script src="assets/js/common.js?v=69ef406c"></script>
 <script src="assets/js/member.js?v=3395ab68"></script>
-<script src="assets/js/index.js?v=24233a37"></script>
+<script src="assets/js/chat.js?v=4cc07a87"></script>
+<script src="assets/js/deals-data.js?v=f41ea5b7"></script>
+<script src="assets/js/index.js?v=d27292af"></script>
 </body>
 </html>

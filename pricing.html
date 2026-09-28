@@ -13,8 +13,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
 <link rel="stylesheet" href="assets/css/tokens.css?v=af816627">
-<link rel="stylesheet" href="assets/css/base.css?v=16387caf">
-<link rel="stylesheet" href="assets/css/pricing.css?v=1ea91a08">
+<link rel="stylesheet" href="assets/css/base.css?v=2e53640c">
+<link rel="stylesheet" href="assets/css/pricing.css?v=c6821e88">
 <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('gb.user'))document.documentElement.classList.add('is-authed')}catch(e){}</script>
 </head>
 <body class="page-pricing">
@@ -112,8 +112,11 @@
     </a>
     <nav class="gnav" id="gnav" aria-label="주 메뉴">
       <ul>
-        <li><a href="apply.html">배송대행 신청</a></li>
-        <li><a href="pricing.html" aria-current="page">요금 안내</a></li>
+        <li><a href="guide.html">이용방법</a></li>
+        <li><a href="pricing.html" aria-current="page">요금</a></li>
+        <li><a href="customs.html">통관 가이드</a></li>
+        <li><a href="events.html">이벤트</a></li>
+        <li><a href="apply.html">신청서</a></li>
         <li><a href="mypage.html">마이페이지</a></li>
         <li><a href="support.html">고객센터</a></li>
       </ul>
@@ -371,6 +374,81 @@
     </div>
   </section>
 
+  <!-- Duty & tax: $200 list-clearance rule + calculator -->
+  <section class="section duty" id="duty" aria-labelledby="duty-title">
+    <div class="wrap grid12">
+      <div class="duty__copy">
+        <p class="eyebrow">관부가세 · 면세 기준</p>
+        <h2 class="h1" id="duty-title">$200까지는 세금 없이.<br>넘으면 전액에 붙습니다.</h2>
+        <p class="lead">미국에서 특송으로 들어오는 자가사용 물품은 물품가격 <b class="mono">$200</b> 이하면 목록통관으로 관세·부가세 없이 통과합니다. 1달러라도 넘으면 초과분이 아니라 <b>전체 금액</b>에 세금이 붙습니다.</p>
+      </div>
+
+      <ol class="duty__rules" role="list">
+        <li><span class="mono">01</span><div><b>미국발 특송 · 목록통관 <span class="mono">$200</span></b><p>자가사용 목적, 목록통관 대상 품목일 때만 적용됩니다.</p></div></li>
+        <li><span class="mono">02</span><div><b>우편물·목록통관 배제 품목 <span class="mono">$150</span></b><p>건강기능식품·식품·의약품·기능성 화장품 등은 미국발이어도 수입신고 대상이며 $150 기준입니다.</p></div></li>
+        <li><span class="mono">03</span><div><b>판정 금액 = 물품가 + 미국 판매세 + 미국 내 배송비</b><p>한국까지의 국제 배송비는 판정 금액에서 빠집니다.</p></div></li>
+        <li><span class="mono">04</span><div><b>넘으면 국제 배송비까지 과세</b><p>과세가격(물품가 + 국제 배송비) × 관세율 = 관세, (과세가격 + 관세) × 10% = 부가세.</p></div></li>
+        <li><span class="mono">05</span><div><b>합산과세 주의</b><p>같은 날 같은 나라에서 들어온 여러 건은 합쳐서 판정될 수 있습니다. 합배송으로 묶은 상자도 한 건입니다.</p></div></li>
+        <li><span class="mono">06</span><div><b>건강기능식품 6병 초과</b><p>금액과 관계없이 수입 요건 확인과 과세 대상이 됩니다.</p></div></li>
+        <li><span class="mono">07</span><div><b>저가 신고는 관세법 위반</b><p>신청서의 신고 금액은 실제 결제 금액 그대로 적어 주세요.</p></div></li>
+      </ol>
+
+      <form class="dutycalc" id="duty-form" novalidate aria-labelledby="duty-form-title">
+        <div class="dutycalc__head">
+          <h3 class="mono" id="duty-form-title">CUSTOMS ESTIMATE · 관부가세 계산</h3>
+          <span class="mono">참고용</span>
+        </div>
+        <div class="dutycalc__body">
+          <div class="field dutycalc__full">
+            <label class="field__label" for="d-cat">품목</label>
+            <select class="select" id="d-cat" name="cat">
+              <option value="clothing">의류 · 관세 13%</option>
+              <option value="shoes">신발 · 관세 13%</option>
+              <option value="bag">가방·잡화 · 관세 8%</option>
+              <option value="cosmetic">화장품(일반) · 관세 6.5%</option>
+              <option value="electronics">전자기기(ITA) · 관세 0%</option>
+              <option value="toy">완구·유아 · 관세 8%</option>
+              <option value="supplement">건강기능식품 · 관세 8% · $150 기준</option>
+              <option value="food">식품 · 관세 8% · $150 기준</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field__label" for="d-price">물품가격 <span class="opt">USD</span></label>
+            <input class="input mono" id="d-price" name="price" type="number" min="0" step="0.01" inputmode="decimal" value="180">
+          </div>
+          <div class="field">
+            <label class="field__label" for="d-local">미국 판매세·내륙 배송비 <span class="opt">USD</span></label>
+            <input class="input mono" id="d-local" name="local" type="number" min="0" step="0.01" inputmode="decimal" value="0">
+          </div>
+          <div class="field">
+            <label class="field__label" for="d-ship">국제 배송비 <span class="opt">USD · 고배송 요금</span></label>
+            <div class="input-group">
+              <input class="input mono" id="d-ship" name="ship" type="number" min="0" step="0.01" inputmode="decimal" value="18.10">
+              <button class="btn btn--sm" type="button" id="d-pull">위 견적 가져오기</button>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field__label" for="d-fx">환율 <span class="opt">₩/$</span></label>
+            <input class="input mono" id="d-fx" name="fx" type="number" min="500" step="1" inputmode="numeric" value="1390">
+          </div>
+          <fieldset class="dutycalc__full dutycalc__opts">
+            <legend class="field__label">조건</legend>
+            <label class="tick"><input type="checkbox" name="post"><span>우편으로 받음 <b class="mono">$150 기준</b></span></label>
+            <label class="tick"><input type="checkbox" name="fta"><span>미국산 · 한미 FTA 원산지 증명 <b class="mono">관세 0%</b></span></label>
+          </fieldset>
+        </div>
+        <div class="receipt__tear" aria-hidden="true"></div>
+        <div class="dutycalc__out" aria-live="polite">
+          <p class="dutycalc__verdict"><span class="stamp stamp--lg" id="d-stamp" data-status="완료">면세</span><span id="d-verdict">판정 금액 $180.00 · 기준 $200 이하</span></p>
+          <dl class="dutycalc__lines" id="d-lines"></dl>
+          <div class="dutycalc__total"><span>세금 합계</span><b class="mono" id="d-tax">₩0</b></div>
+          <p class="dutycalc__all mono" id="d-all">물품 + 배송 + 세금 = 약 ₩275,360</p>
+        </div>
+        <p class="dutycalc__note">품목별 대표 관세율로 계산한 참고용 금액입니다. 실제 세율은 품목 분류(HS코드)와 세관 판단에 따라 달라집니다.</p>
+      </form>
+    </div>
+  </section>
+
   <!-- Add-ons -->
   <section class="section addons" aria-labelledby="addons-title">
     <div class="wrap grid12">
@@ -424,11 +502,20 @@
     </div>
     <div class="footer__cols">
       <div class="footer__col">
-        <h2>서비스</h2>
+        <h2>처음이라면</h2>
+        <ul>
+          <li><a href="guide.html">이용방법 8단계</a></li>
+          <li><a href="customs.html">개인통관고유부호 발급</a></li>
+          <li><a href="pricing.html">요금표·배송비 계산</a></li>
+          <li><a href="pricing.html#duty">관부가세·면세 기준</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h2>이용 중이라면</h2>
         <ul>
           <li><a href="apply.html">배송대행 신청서</a></li>
-          <li><a href="pricing.html">요금표·견적 계산</a></li>
           <li><a href="mypage.html">내 화물 여정</a></li>
+          <li><a href="events.html">이벤트·쿠폰·세일 캘린더</a></li>
           <li><a href="pricing.html#partners">파트너스(사업자)</a></li>
         </ul>
       </div>
@@ -439,18 +526,19 @@
         <ul style="margin-top:12px">
           <li><a href="support.html#faq">자주 묻는 질문</a></li>
           <li><a href="support.html#ask">1:1 문의</a></li>
+          <li><button type="button" class="footer__chat" data-chat-open>카카오톡·실시간 채팅 상담</button></li>
         </ul>
       </div>
-      <div class="footer__col footer__col--wide">
+      <div class="footer__col">
         <h2>물류센터</h2>
-        <dl class="footer__addr">
+        <dl class="footer__addr footer__addr--stack">
           <div>
-            <dt>뉴저지 센터 EWR</dt>
-            <dd>000 Logistics Ave, Unit GB<br>Edison, NJ 08800, USA<br>당일 입고 마감 17:00 EST</dd>
+            <dt>뉴저지 EWR</dt>
+            <dd>000 Logistics Ave Unit B<br>Edison, NJ 08800<br>평일 09:00–17:00 ET</dd>
           </div>
           <div>
-            <dt>델라웨어 센터 ILG · 면세주</dt>
-            <dd>000 Harbor Rd, Suite GB<br>New Castle, DE 19700, USA<br>판매세 0% 주</dd>
+            <dt>델라웨어 ILG · 면세주</dt>
+            <dd>000 Harbor Rd Suite B<br>New Castle, DE 19700<br>평일 09:00–15:00 ET</dd>
           </div>
         </dl>
       </div>
@@ -460,15 +548,68 @@
       <span>© 2026 고배송 GOBAESONG</span>
       <span>사업자등록번호 000-00-00000</span>
       <span>통신판매업 제0000-서울-0000호</span>
-      <span class="mock">리뉴얼 디자인 목업 — 실제 접수·결제·전송은 이뤄지지 않습니다.</span>
+      <span class="mock">리뉴얼 디자인 목업 — 회원가입만 실제 계정이 만들어지고, 신청·결제·문의·상담은 전송되지 않습니다.</span>
     </div>
   </div>
 </footer>
+
+<!-- Consultation: floating button on every page -->
+<div class="chatfab" id="chatfab">
+  <button type="button" class="chatfab__btn" id="chatfab-btn" aria-expanded="false" aria-controls="chatpanel" data-chat-toggle>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8 9.5h8M8 12.5h5" stroke="currentColor" stroke-width="2"/></svg>
+    <span class="chatfab__label">상담</span>
+    <span class="chatfab__dot" aria-hidden="true"></span>
+  </button>
+  <section class="chatpanel" id="chatpanel" hidden aria-labelledby="chatpanel-title">
+    <header class="chatpanel__head">
+      <div>
+        <p class="chatpanel__code mono">HELP DESK · 상담 창구</p>
+        <h2 class="chatpanel__title" id="chatpanel-title">무엇을 도와드릴까요?</h2>
+        <p class="chatpanel__state" data-chat-state>상담 시간 확인 중</p>
+      </div>
+      <button type="button" class="chatpanel__close" data-chat-toggle aria-label="상담 창 닫기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 2l12 12M14 2L2 14" stroke="currentColor" stroke-width="2"/></svg></button>
+    </header>
+
+    <div class="chatpanel__menu" data-chat-view="menu">
+      <button type="button" class="chatpanel__entry" data-chat-kakao>
+        <span class="chatpanel__icon chatpanel__icon--kakao" aria-hidden="true">K</span>
+        <span><b>카카오톡 상담</b><span>@고배송 채널 · 평일 10:00–18:00 · 평균 답변 12분</span></span>
+      </button>
+      <button type="button" class="chatpanel__entry" data-chat-live>
+        <span class="chatpanel__icon" aria-hidden="true">LIVE</span>
+        <span><b>실시간 채팅</b><span>사서함·배송비·통관부호는 바로 답해 드립니다</span></span>
+      </button>
+      <a class="chatpanel__entry" href="support.html#ask">
+        <span class="chatpanel__icon" aria-hidden="true">1:1</span>
+        <span><b>1:1 문의 남기기</b><span>사진 첨부 · 평일 평균 3시간 안에 이메일 답변</span></span>
+      </a>
+      <p class="chatpanel__tel">전화 <b class="mono">1588-0000</b> · 점심 12:30–13:30 · 주말·공휴일 휴무</p>
+    </div>
+
+    <div class="chatpanel__live" data-chat-view="live" hidden>
+      <ol class="chatlog" id="chatlog" aria-live="polite" role="log"></ol>
+      <div class="chatquick" id="chatquick">
+        <button type="button" data-chat-q="addr">내 미국 주소</button>
+        <button type="button" data-chat-q="fee">배송비 얼마?</button>
+        <button type="button" data-chat-q="pccc">통관부호</button>
+        <button type="button" data-chat-q="track">내 화물 위치</button>
+      </div>
+      <form class="chatinput" id="chatinput">
+        <label class="sr-only" for="chat-text">메시지</label>
+        <input class="input" id="chat-text" autocomplete="off" maxlength="300" placeholder="메시지를 입력하세요">
+        <button class="btn btn--primary btn--sm" type="submit">보내기</button>
+      </form>
+      <button type="button" class="btn-text chatpanel__back" data-chat-back>← 상담 방법 다시 고르기</button>
+    </div>
+  </section>
+</div>
 <!-- FOOTER:END -->
 
 <script src="assets/js/hours.js?v=754dcf87"></script>
-<script src="assets/js/common.js?v=9d338078"></script>
+<script src="assets/js/common.js?v=69ef406c"></script>
 <script src="assets/js/member.js?v=3395ab68"></script>
-<script src="assets/js/pricing.js?v=e9f649dd"></script>
+<script src="assets/js/chat.js?v=4cc07a87"></script>
+<script src="assets/js/duty.js?v=3378221c"></script>
+<script src="assets/js/pricing.js?v=57cce7ae"></script>
 </body>
 </html>

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>고객센터 — 고배송</title>
-<meta name="description" content="자주 묻는 질문, 1:1 문의, 공지사항. 운송장번호만 알려주시면 됩니다.">
+<title>이벤트·쿠폰 — 고배송</title>
+<meta name="description" content="진행 중인 시즌 프로모션과 배송비 할인 쿠폰, 블랙프라이데이·프라임데이 등 미국 세일 캘린더.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#0B1F3A">
 <link rel="icon" href="favicon.svg?v=de0650b7" type="image/svg+xml">
@@ -14,10 +14,10 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
 <link rel="stylesheet" href="assets/css/tokens.css?v=af816627">
 <link rel="stylesheet" href="assets/css/base.css?v=2e53640c">
-<link rel="stylesheet" href="assets/css/support.css?v=11cac0b8">
+<link rel="stylesheet" href="assets/css/events.css?v=c656f668">
 <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('gb.user'))document.documentElement.classList.add('is-authed')}catch(e){}</script>
 </head>
-<body class="page-support">
+<body class="page-events">
 <!-- HEADER:START -->
 <a class="skip" href="#main">본문 바로가기</a>
 <div class="topbar on-navy">
@@ -115,10 +115,10 @@
         <li><a href="guide.html">이용방법</a></li>
         <li><a href="pricing.html">요금</a></li>
         <li><a href="customs.html">통관 가이드</a></li>
-        <li><a href="events.html">이벤트</a></li>
+        <li><a href="events.html" aria-current="page">이벤트</a></li>
         <li><a href="apply.html">신청서</a></li>
         <li><a href="mypage.html">마이페이지</a></li>
-        <li><a href="support.html" aria-current="page">고객센터</a></li>
+        <li><a href="support.html">고객센터</a></li>
       </ul>
       <a class="btn btn--primary gnav__join" href="index.html#issue" data-auth="out" data-auth-open="signup">무료 사서함 발급</a>
     </nav>
@@ -227,166 +227,63 @@
 <!-- HEADER:END -->
 
 <main id="main">
-  <section class="pagehead sup-head">
+  <section class="pagehead ev-head">
     <div class="wrap grid12">
-      <div class="sup-head__title">
-        <p class="pagehead__crumb"><a href="index.html">홈</a> / 고객센터</p>
-        <h1 class="h1">무엇이든,<br>운송장번호부터 알려주세요.</h1>
-        <form class="sup-search" role="search" id="faq-search-form">
-          <label class="sr-only" for="faq-q">자주 묻는 질문 검색</label>
-          <input class="input sup-search__input" id="faq-q" type="search" placeholder="예) 통관부호, 합배송, 보관기간" autocomplete="off">
-          <button class="btn" type="submit">검색</button>
-        </form>
-        <p class="sup-search__hot small">많이 찾는 말 ·
-          <button type="button" class="btn-text" data-q="통관">통관</button>
-          <button type="button" class="btn-text" data-q="트래킹">트래킹</button>
-          <button type="button" class="btn-text" data-q="포인트">포인트</button>
-          <button type="button" class="btn-text" data-q="반품">반품</button>
-        </p>
+      <div class="ev-head__title">
+        <p class="pagehead__crumb"><a href="index.html">홈</a> / 이벤트·쿠폰</p>
+        <h1 class="h1">쿠폰은 결제 직전에,<br>세일 날짜는 미리.</h1>
       </div>
-
-      <!-- Signature: counter sign with split-flap state -->
-      <aside class="counter on-navy" aria-labelledby="counter-title">
-        <p class="counter__label mono">HELP DESK · 상담 창구</p>
-        <h2 class="sr-only" id="counter-title">상담 창구 운영 상태</h2>
-        <p class="counter__flap" id="counter-flap" aria-live="polite"><span class="mono">OPEN</span></p>
-        <p class="counter__state" id="counter-state">지금 상담 가능</p>
-        <dl class="counter__rows">
-          <div><dt>전화</dt><dd class="mono">1588-0000</dd></div>
-          <div><dt>평일</dt><dd class="mono">10:00–18:00</dd></div>
-          <div><dt>점심</dt><dd class="mono">12:30–13:30</dd></div>
-          <div><dt>1:1 문의 평균 답변</dt><dd class="mono">3시간 12분</dd></div>
-        </dl>
-        <div class="counter__bar" data-barcode="HELPDESK-1588-0000" data-barcode-h="28" aria-hidden="true"></div>
-      </aside>
+      <p class="lead ev-head__lead">배송비 쿠폰은 마이페이지에서 결제할 때 적용됩니다. 미국 세일 주간에는 센터 입고가 몰리니, 캘린더에 적힌 출고 안내도 함께 확인하세요.</p>
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section class="section faq" id="faq" aria-labelledby="faq-title">
-    <div class="wrap grid12">
-      <div class="faq__side">
-        <h2 class="h2" id="faq-title">자주 묻는 질문</h2>
-        <div class="faq__cats" role="group" aria-label="분류">
-          <button type="button" class="cat" aria-pressed="true" data-cat="all">전체 <span class="mono" data-n="all"></span></button>
-          <button type="button" class="cat" aria-pressed="false" data-cat="box">가입·사서함 <span class="mono" data-n="box"></span></button>
-          <button type="button" class="cat" aria-pressed="false" data-cat="apply">신청서 <span class="mono" data-n="apply"></span></button>
-          <button type="button" class="cat" aria-pressed="false" data-cat="check">입고·검수 <span class="mono" data-n="check"></span></button>
-          <button type="button" class="cat" aria-pressed="false" data-cat="pay">요금·결제 <span class="mono" data-n="pay"></span></button>
-          <button type="button" class="cat" aria-pressed="false" data-cat="customs">통관 <span class="mono" data-n="customs"></span></button>
-          <button type="button" class="cat" aria-pressed="false" data-cat="ship">배송·반품 <span class="mono" data-n="ship"></span></button>
-        </div>
-      </div>
-
-      <div class="faq__main">
-        <p class="faq__count small" id="faq-count" role="status">전체 17개</p>
-        <div class="faq__list" id="faq-list">
-          <details class="qa" data-cat="box"><summary><span class="qa__q mono">Q</span>사서함 번호는 쇼핑몰 주소 어디에 적나요?</summary><div class="qa__a"><p>배송지의 두 번째 줄(Address 2)에 <b class="mono">GB-000000</b> 형식 그대로 적습니다. 두 번째 줄이 없는 쇼핑몰은 받는 사람 이름 뒤에 한 칸 띄우고 붙여도 됩니다.</p></div></details>
-          <details class="qa" data-cat="box"><summary><span class="qa__q mono">Q</span>뉴저지와 델라웨어 중 어디로 받아야 하나요?</summary><div class="qa__a"><p>델라웨어는 판매세가 없는 주라 전자기기와 고가품에 유리합니다. 의류·신발은 뉴저지도 판매세 면제 품목이 많아 차이가 작고, 당일 입고 마감이 17:00로 빠릅니다.</p></div></details>
-          <details class="qa" data-cat="box"><summary><span class="qa__q mono">Q</span>사서함 번호를 바꿀 수 있나요?</summary><div class="qa__a"><p>번호는 계정마다 하나로 고정됩니다. 가족 명의로 따로 받으려면 각자 가입해 주세요.</p></div></details>
-          <details class="qa" data-cat="apply"><summary><span class="qa__q mono">Q</span>트래킹번호를 모르면 신청서를 못 쓰나요?</summary><div class="qa__a"><p>비워 두고 제출해도 됩니다. 입고 때 주문번호와 영문 이름으로 매칭하고, 번호를 받으면 마이페이지에서 등록할 수 있습니다.</p></div></details>
-          <details class="qa" data-cat="apply"><summary><span class="qa__q mono">Q</span>제출한 신청서를 고칠 수 있나요?</summary><div class="qa__a"><p>입고 전까지는 모든 항목을 마이페이지에서 고칠 수 있습니다. 입고 후에는 수취인·통관정보만 수정할 수 있습니다.</p></div></details>
-          <details class="qa" data-cat="apply"><summary><span class="qa__q mono">Q</span>여러 건을 엑셀로 한 번에 신청할 수 있나요?</summary><div class="qa__a"><p>파트너스 회원은 템플릿 업로드로 최대 500건을 한 번에 신청할 수 있습니다. 오류가 있는 행만 다시 표시됩니다.</p></div></details>
-          <details class="qa" data-cat="check"><summary><span class="qa__q mono">Q</span>검수는 어디까지 해 주나요?</summary><div class="qa__a"><p>모든 상자를 열어 수량과 외관 파손을 확인합니다. 정밀검수(<span class="mono">$2.00</span>)를 고르면 사이즈·색상·구성품까지 주문 내역과 대조합니다.</p></div></details>
-          <details class="qa" data-cat="check"><summary><span class="qa__q mono">Q</span>안심뷰 사진은 언제 볼 수 있나요?</summary><div class="qa__a"><p>검수가 끝나는 즉시 마이페이지 여정 지도 옆에 올라옵니다. 기본 2장이며 옵션으로 5장을 더 받을 수 있습니다.</p></div></details>
-          <details class="qa" data-cat="check"><summary><span class="qa__q mono">Q</span>입고 후 무료 보관 기간은 얼마인가요?</summary><div class="qa__a"><p>입고일부터 30일 무료입니다. 이후에는 하루 <span class="mono">$0.50</span>가 배송비에 합산됩니다.</p></div></details>
-          <details class="qa" data-cat="pay"><summary><span class="qa__q mono">Q</span>배송비는 언제 확정되나요?</summary><div class="qa__a"><p>입고·검수 뒤 실무게와 부피무게 중 큰 값을 1lb 단위로 올려 확정하고 알림을 보냅니다. <a href="pricing.html">요금표</a>에서 미리 계산해 볼 수 있습니다.</p></div></details>
-          <details class="qa" data-cat="pay"><summary><span class="qa__q mono">Q</span>포인트는 어떻게 쌓이고 쓰나요?</summary><div class="qa__a"><p>거래완료 시 결제액의 1%가 적립되고, 배송비 결제 때 <span class="mono">1P = ₩1</span>로 씁니다. 유효기간은 적립일부터 2년입니다.</p></div></details>
-          <details class="qa" data-cat="customs"><summary><span class="qa__q mono">Q</span>목록통관과 일반통관은 무엇이 다른가요?</summary><div class="qa__a"><p>미국에서 온 자가사용 물품은 물품가격 <span class="mono">$200</span> 이하면 목록통관으로 관·부가세 없이 통과합니다. 한도를 넘거나 건강기능식품·의약품이면 일반통관으로 신고합니다.</p></div></details>
-          <details class="qa" data-cat="customs"><summary><span class="qa__q mono">Q</span>개인통관고유부호 명의와 수취인 이름이 달라요.</summary><div class="qa__a"><p>이름이 다르면 인천세관에서 보류됩니다. 출고 전이라면 마이페이지에서 수취인 정보를 고쳐 주세요. 출고 후라면 1:1 문의로 알려 주시면 세관 정정을 대신 요청합니다.</p></div></details>
-          <details class="qa" data-cat="customs"><summary><span class="qa__q mono">Q</span>건강기능식품은 몇 병까지 보낼 수 있나요?</summary><div class="qa__a"><p>건강기능식품은 목록통관 대상이 아니어서 미국에서 와도 수입신고를 하고, 면세 기준도 <span class="mono">$150</span>입니다. 자가사용 기준 6병까지 들여올 수 있고, 6병을 넘으면 금액과 관계없이 수입 요건 확인과 과세 대상이 됩니다.</p></div></details>
-          <details class="qa" data-cat="customs"><summary><span class="qa__q mono">Q</span>2026년부터 개인통관고유부호에 유효기간이 생겼나요?</summary><div class="qa__a"><p>네. 2026년부터 유효기간 1년이 적용되어 매년 갱신해야 합니다. 그 전에 발급받았다면 2027년 본인 생일이 만료일입니다. 또 2026년 2월 2일부터는 이름·전화번호에 더해 <b>배송지 우편번호</b>까지 맞아야 통관됩니다. 자세한 순서는 <a href="customs.html">통관 가이드</a>에 있습니다.</p></div></details>
-          <details class="qa" data-cat="ship"><summary><span class="qa__q mono">Q</span>국내 택배는 어디로 오나요?</summary><div class="qa__a"><p>통관이 끝나면 우체국택배로 인계됩니다. 국내 운송장번호는 마이페이지 여정 지도의 ‘배송중’ 단계에 표시됩니다.</p></div></details>
-          <details class="qa" data-cat="ship"><summary><span class="qa__q mono">Q</span>미국 쇼핑몰로 반품할 수 있나요?</summary><div class="qa__a"><p>입고 후 출고 전이라면 센터에서 반품 라벨을 붙여 보내 드립니다. 반품 대행 수수료는 <span class="mono">$5.00</span>이며 쇼핑몰 반품 라벨은 직접 받아 주셔야 합니다.</p></div></details>
-        </div>
-        <p class="faq__none" id="faq-none" hidden>찾는 답이 없나요? <a href="#ask">1:1 문의</a>로 남겨 주세요.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 1:1 inquiry — customs declaration card -->
-  <section class="section ask band" id="ask" aria-labelledby="ask-title">
-    <div class="wrap grid12">
-      <div class="ask__copy">
-        <p class="eyebrow">1:1 문의</p>
-        <h2 class="h1" id="ask-title">세관신고서처럼,<br>칸만 채우면 됩니다.</h2>
-        <p class="lead">신청번호를 함께 적어 주시면 담당자가 화물을 먼저 찾아본 뒤 답합니다. 평일 평균 3시간 안에 이메일로 답변을 보냅니다.</p>
-      </div>
-
-      <form class="declare" id="ask-form" novalidate aria-labelledby="ask-form-title">
-        <div class="declare__head">
-          <h3 class="mono" id="ask-form-title">INQUIRY DECLARATION · 문의 신고서</h3>
-          <span class="mono" id="ask-date">No. Q-—</span>
-        </div>
-        <div class="declare__grid">
-          <div class="field declare__cell">
-            <label class="field__label" for="q-type"><span class="declare__no mono">1</span>문의 유형 <span class="req">필수</span></label>
-            <select class="select" id="q-type" name="type" required>
-              <option value="">선택</option>
-              <option>입고·검수</option><option>배송비·결제</option><option>통관</option><option>국내 배송</option><option>반품·폐기</option><option>파트너스</option><option>기타</option>
-            </select>
-          </div>
-          <div class="field declare__cell">
-            <label class="field__label" for="q-no"><span class="declare__no mono">2</span>신청번호 <span class="opt">있으면</span></label>
-            <input class="input mono" id="q-no" name="no" data-rule="mailbox" placeholder="GB-000417-03">
-          </div>
-          <div class="field declare__cell">
-            <label class="field__label" for="q-name"><span class="declare__no mono">3</span>이름 <span class="req">필수</span></label>
-            <input class="input" id="q-name" name="name" required minlength="2" autocomplete="name">
-          </div>
-          <div class="field declare__cell">
-            <label class="field__label" for="q-email"><span class="declare__no mono">4</span>답변 받을 이메일 <span class="req">필수</span></label>
-            <input class="input" id="q-email" name="email" type="email" required data-rule="email" autocomplete="email" placeholder="you@example.com">
-          </div>
-          <div class="field declare__cell declare__cell--full">
-            <label class="field__label" for="q-subject"><span class="declare__no mono">5</span>제목 <span class="req">필수</span></label>
-            <input class="input" id="q-subject" name="subject" required maxlength="60">
-          </div>
-          <div class="field declare__cell declare__cell--full">
-            <label class="field__label" for="q-body"><span class="declare__no mono">6</span>내용 <span class="req">필수</span> <span class="opt" id="q-len">0/1000</span></label>
-            <textarea class="textarea" id="q-body" name="body" required minlength="10" maxlength="1000" rows="6" placeholder="언제, 어떤 화물에서, 무엇이 문제인지 적어 주세요."></textarea>
-          </div>
-          <div class="field declare__cell declare__cell--full">
-            <label class="field__label" for="q-file"><span class="declare__no mono">7</span>사진 첨부 <span class="opt">최대 3장 · 5MB</span></label>
-            <input class="declare__file" id="q-file" name="file" type="file" accept="image/*" multiple>
-            <p class="field__hint" id="q-file-list">파손 부위나 라벨 사진이 있으면 답이 빨라집니다.</p>
-          </div>
-        </div>
-        <div class="declare__foot">
-          <label class="choice choice--flat field">
-            <input type="checkbox" name="agree" required data-msg-required="개인정보 수집·이용에 동의해 주세요.">
-            <span class="choice__mark" aria-hidden="true"></span>
-            <span class="choice__body"><span class="choice__desc">답변을 위한 개인정보 수집·이용에 동의합니다. (필수, 답변 후 1년 보관)</span></span>
-          </label>
-          <button class="btn btn--primary btn--lg" type="submit">문의 접수</button>
-        </div>
-        <div class="declare__done" id="ask-done" hidden tabindex="-1">
-          <span class="stamp stamp--lg" data-status="완료" style="--stamp-rot:-7deg">접수완료</span>
-          <div>
-            <p class="h3">문의 <span class="mono" id="ask-no">Q-260928-0042</span> 접수</p>
-            <p class="muted">입력한 이메일로 답변을 보냅니다. 목업이라 실제로 전송되지는 않습니다.</p>
-          </div>
-          <button class="btn btn--ghost" type="button" id="ask-again">새 문의 쓰기</button>
-        </div>
-      </form>
-    </div>
-  </section>
-
-  <!-- Notices -->
-  <section class="section notice" id="notice" aria-labelledby="notice-title">
+  <!-- Seasonal promotions -->
+  <section class="section ev-promos" aria-labelledby="promo-title">
     <div class="wrap">
-      <div class="notice__head">
-        <h2 class="h2" id="notice-title">공지</h2>
-        <div class="seg" role="group" aria-label="공지 분류">
-          <button type="button" aria-pressed="true" data-ncat="all">전체</button>
-          <button type="button" aria-pressed="false" data-ncat="출고">출고</button>
-          <button type="button" aria-pressed="false" data-ncat="요금">요금</button>
-          <button type="button" aria-pressed="false" data-ncat="통관">통관</button>
-          <button type="button" aria-pressed="false" data-ncat="서비스">서비스</button>
+      <div class="ev-sec-head">
+        <h2 class="h2" id="promo-title">시즌 프로모션</h2>
+        <div class="seg" role="group" aria-label="상태로 거르기">
+          <button type="button" aria-pressed="true" data-pf="all">전체</button>
+          <button type="button" aria-pressed="false" data-pf="live">진행중</button>
+          <button type="button" aria-pressed="false" data-pf="soon">예정</button>
+          <button type="button" aria-pressed="false" data-pf="ended">종료</button>
         </div>
       </div>
-      <div class="notice__list" id="notice-list"></div>
-      <button class="btn btn--ghost notice__more" type="button" id="notice-more">공지 더 보기</button>
+      <div class="promos" id="promos"></div>
+    </div>
+  </section>
+
+  <!-- Coupon wallet -->
+  <section class="section ev-coupons band" id="coupons" aria-labelledby="coupon-title">
+    <div class="wrap">
+      <div class="ev-sec-head">
+        <div>
+          <h2 class="h2" id="coupon-title">배송비 할인 쿠폰</h2>
+          <p class="muted small">쿠폰은 한 화물에 한 장만 쓸 수 있고, 포인트와는 함께 쓸 수 있습니다. 받은 쿠폰은 이 브라우저에 보관됩니다(목업).</p>
+        </div>
+      </div>
+      <div class="coupons" id="coupons-list" role="list"></div>
+    </div>
+  </section>
+
+  <!-- Signature: sale departures board -->
+  <section class="section ev-cal on-navy" id="calendar" aria-labelledby="cal-title">
+    <div class="wrap">
+      <div class="ev-sec-head">
+        <div>
+          <p class="eyebrow">SALE DEPARTURES · 미국 세일 캘린더</p>
+          <h2 class="h1" id="cal-title">다음 세일까지</h2>
+        </div>
+        <p class="ev-next" id="ev-next" aria-live="polite"></p>
+      </div>
+      <div class="ev-board" role="region" aria-labelledby="cal-title" tabindex="0">
+        <table class="salet">
+          <caption class="sr-only">미국 주요 세일 일정. 날짜가 발표되지 않은 행사는 예상으로 표시합니다.</caption>
+          <thead><tr><th scope="col">날짜</th><th scope="col">세일</th><th scope="col">어디서</th><th scope="col">고배송 팁</th><th scope="col" class="num">남은 날</th></tr></thead>
+          <tbody id="sale-body"></tbody>
+        </table>
+      </div>
+      <p class="ev-cal__note small">날짜는 미국 동부 기준입니다. <b>예상</b> 표시는 판매처가 아직 공식 일정을 발표하지 않은 행사입니다.</p>
     </div>
   </section>
 </main>
@@ -508,6 +405,6 @@
 <script src="assets/js/common.js?v=69ef406c"></script>
 <script src="assets/js/member.js?v=3395ab68"></script>
 <script src="assets/js/chat.js?v=4cc07a87"></script>
-<script src="assets/js/support.js?v=ada3ca1a"></script>
+<script src="assets/js/events.js?v=aadb879e"></script>
 </body>
 </html>

@@ -1,0 +1,94 @@
+/* ==========================================================================
+   Events — promotions, coupon wallet (ticket stubs), sale departures board
+   ========================================================================== */
+.ev-head .grid12 { align-items: end; row-gap: var(--s-5); }
+.ev-head__title { grid-column: 1 / span 7; }
+.ev-head__lead { grid-column: 8 / span 5; }
+.ev-sec-head { display: flex; justify-content: space-between; align-items: end; gap: var(--s-5); flex-wrap: wrap; margin-bottom: var(--s-6); }
+.ev-sec-head .h1 { margin-top: var(--s-3); }
+
+/* Promotions: asymmetric — the live lead promo spans wide */
+.promos { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--s-6) var(--col-gap); }
+.promo { grid-column: span 4; display: flex; flex-direction: column; gap: 10px; border-top: var(--bw-strong) solid var(--navy); padding-top: var(--s-4); }
+.promo--lead { grid-column: span 8; grid-row: span 2; background: var(--navy); color: var(--paper); padding: var(--s-6); border-top: 0; box-shadow: inset 0 -6px 0 var(--orange); }
+.promo--lead .promo__title { font-family: var(--font-serif); font-size: var(--fs-h2); line-height: 1.25; }
+.promo--lead .promo__lead, .promo--lead dt { color: var(--steel); }
+.promo--lead .stamp { --stamp-c: #7FD4A8; }
+.promo--lead .link-arrow { border-color: var(--orange); color: var(--paper); }
+.promo--ended { opacity: .6; }
+.promo__head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.promo__period { font-size: 13px; font-weight: 600; }
+.promo__title { font-size: 1.25rem; font-weight: 800; line-height: 1.35; }
+.promo__lead { color: var(--steel-ink); font-size: var(--fs-small); }
+.promo__terms { display: grid; gap: 4px; margin: 4px 0 0; font-size: var(--fs-small); }
+.promo__terms > div { display: grid; grid-template-columns: 72px 1fr; gap: 8px; }
+.promo__terms dt { color: var(--steel-ink); }
+.promo__terms dd { font-weight: 600; }
+.promo .link-arrow { align-self: flex-start; margin-top: auto; font-size: var(--fs-small); }
+
+/* Coupons: perforated ticket stubs */
+.coupons { display: grid; gap: 12px; }
+.coupon { display: grid; grid-template-columns: 150px minmax(0, 1fr) auto; background: var(--white); border: 1px solid var(--line); position: relative; }
+.coupon__value { display: grid; align-content: center; justify-items: start; gap: 2px; padding: 16px 18px; background: var(--navy); color: var(--paper); border-right: 2px dashed var(--paper-2); }
+.coupon__value b { font-size: 2rem; line-height: 1; color: var(--orange); }
+.coupon__value span { font-size: 12px; color: var(--steel); }
+.coupon__body { padding: 14px 18px; min-width: 0; }
+.coupon__code { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+.coupon__code > .mono { font-size: 1.125rem; font-weight: 700; letter-spacing: .08em; }
+.coupon__terms { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0; font-size: 13px; }
+.coupon__terms > div { display: flex; gap: 6px; }
+.coupon__terms dt { color: var(--steel-ink); }
+.coupon__terms dd { font-weight: 600; }
+.coupon__act { display: grid; place-items: center; padding: 14px 18px; border-left: 1px solid var(--line); min-width: 150px; }
+.coupon__got { font-size: 13px; font-weight: 700; color: var(--ok); }
+.coupon__ended { font-size: 12px; color: var(--steel-ink); }
+.coupon--ended .coupon__value { background: var(--steel-ink); }
+.coupon--ended .coupon__value b { color: var(--paper); }
+.coupon--ended { opacity: .7; }
+.coupon:target { outline: 3px solid var(--orange); outline-offset: 3px; }
+
+/* Signature: sale departures board */
+.ev-next { font-size: 1.125rem; color: var(--steel); }
+.ev-next b { color: var(--paper); }
+.ev-next .mono { color: var(--orange); font-weight: 700; }
+.ev-board { border: 1px solid var(--navy-line); overflow-x: auto; }
+.salet { width: 100%; min-width: 760px; }
+.salet th, .salet td { padding: 12px 16px; border-bottom: 1px solid var(--navy-line); text-align: left; font-size: 14px; }
+.salet thead th { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; color: var(--steel); font-weight: 600; }
+.salet tbody th { font-weight: 800; color: var(--paper); }
+.salet td { color: var(--paper); }
+.salet td.mono { white-space: nowrap; font-weight: 600; }
+.salet .num { text-align: right; }
+.salet__tip { color: var(--steel) !important; font-size: 13px !important; }
+.salet__tba { display: inline-block; font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--orange); border: 1px solid var(--orange); padding: 0 6px; margin-left: 4px; }
+.salet__done { font-family: var(--font-mono); font-size: 12px; color: var(--steel); }
+.salet tr.is-past td, .salet tr.is-past th { opacity: .45; }
+.salet tr.is-next td, .salet tr.is-next th { background: var(--navy-2); }
+.salet tr.is-next th { box-shadow: inset 4px 0 0 var(--orange); }
+.dtiles { display: inline-flex; gap: 2px; }
+.dtiles i { font-style: normal; font-family: var(--font-mono); font-weight: 700; display: inline-grid; place-items: center; width: 1.3em; height: 1.7em; background: #06132A; border-top: 1px solid #1C3257; color: var(--paper); }
+.ev-cal__note { margin-top: var(--s-4); color: var(--steel); }
+
+@media (max-width: 960px) {
+  .ev-head__title, .ev-head__lead { grid-column: 1 / -1; }
+  .promo, .promo--lead { grid-column: 1 / -1; grid-row: auto; }
+}
+@media (max-width: 640px) {
+  .promo--lead { padding: var(--s-5); }
+  .coupon { grid-template-columns: 96px minmax(0, 1fr); }
+  .coupon__value { padding: 12px; }
+  .coupon__value b { font-size: 1.5rem; }
+  .coupon__body { padding: 12px; }
+  .coupon__act { grid-column: 1 / -1; border-left: 0; border-top: 1px dashed var(--line); padding: 10px 12px; place-items: center stretch; }
+  .coupon__act .btn { width: 100%; }
+  .salet { min-width: 0; }
+  .salet thead { display: none; }
+  .salet, .salet tbody, .salet tr { display: block; }
+  .salet tr { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 12px 14px; border-bottom: 1px solid var(--navy-line); }
+  .salet th, .salet td { border: 0; padding: 0; }
+  .salet td.mono { grid-column: 1; grid-row: 1; font-size: 12px; color: var(--steel); }
+  .salet tbody th { grid-column: 1; grid-row: 2; }
+  .salet td:nth-of-type(2) { grid-column: 1; grid-row: 3; font-size: 13px; }
+  .salet__tip { grid-column: 1 / -1; grid-row: 4; }
+  .salet .num { grid-column: 2; grid-row: 1 / span 3; align-self: center; }
+}

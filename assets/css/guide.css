@@ -1,0 +1,70 @@
+/* ==========================================================================
+   Guide — check-in counter meter + gates with prep checklists
+   ========================================================================== */
+.guide-head .grid12 { align-items: end; row-gap: var(--s-5); }
+.guide-head__title { grid-column: 1 / span 6; }
+.guide-head__meta { grid-column: 8 / span 5; }
+.guide-head__facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: var(--s-5); border-top: var(--bw-strong) solid var(--navy); }
+.guide-head__facts > div { padding: 10px 12px 0; border-left: 1px solid var(--line); }
+.guide-head__facts > div:first-child { border-left: 0; padding-left: 0; }
+.guide-head__facts dt { font-size: 12px; color: var(--steel-ink); }
+.guide-head__facts dd { font-size: 1.375rem; font-weight: 700; }
+
+.guide { align-items: start; padding-block: var(--s-8) var(--s-9); }
+.checkin { grid-column: 1 / span 3; position: sticky; top: calc(var(--header-h) + 24px); background: var(--navy); color: var(--paper); padding: var(--s-5); }
+.checkin__code { font-size: 10px; letter-spacing: .14em; color: var(--steel); }
+.checkin__title { font-size: 1.125rem; font-weight: 800; margin-top: 4px; }
+.checkin__count { margin-top: var(--s-4); color: var(--steel); font-size: 13px; }
+.checkin__count b { font-size: 2.5rem; color: var(--paper); line-height: 1; margin-right: 4px; }
+.checkin__bar { height: 6px; background: var(--navy-line); margin: 10px 0 var(--s-4); position: relative; }
+.checkin__bar span { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--orange); transition: width var(--dur-3) var(--ease); }
+.checkin__gates { margin: 0 0 var(--s-4); padding: 0; border-top: 1px solid var(--navy-line); }
+.checkin__gates a { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--navy-line); text-decoration: none; font-size: var(--fs-small); color: var(--steel); }
+.checkin__gates a .mono { font-size: 11px; width: 22px; }
+.checkin__gates a:hover, .checkin__gates a.is-here { color: var(--paper); }
+.checkin__gates a.is-here { box-shadow: inset 3px 0 0 var(--orange); padding-left: 8px; }
+.checkin__gates li.is-done a { color: #7FD4A8; }
+.checkin__gates li.is-done a::after { content: "OK"; margin-left: auto; font-family: var(--font-mono); font-size: 10px; font-weight: 700; }
+.checkin .btn-text { color: var(--steel); }
+.checkin .btn-text:hover { color: var(--paper); }
+
+.gates { grid-column: 5 / span 8; margin: 0; padding: 0; display: grid; gap: var(--s-8); }
+.gate { scroll-margin-top: calc(var(--header-h) + 24px); border-top: var(--bw-strong) solid var(--navy); padding-top: var(--s-4); display: grid; gap: var(--s-4); }
+.gate--us { border-top-style: dashed; }
+.gate__head { display: flex; justify-content: space-between; gap: 12px; }
+.gate__no { font-size: 12px; font-weight: 700; letter-spacing: .12em; color: var(--orange-ink); }
+.gate--us .gate__no { color: var(--steel-ink); }
+.gate__who { font-size: 12px; color: var(--steel-ink); font-weight: 600; }
+.gate.is-done .gate__no::after { content: " · 준비 완료"; color: var(--ok); letter-spacing: 0; font-family: var(--font-sans); }
+.gate > p { max-width: 40em; }
+.prep { border: 0; margin: 0; padding: 12px 16px; background: var(--white); border-left: 4px solid var(--navy); display: grid; gap: 8px; min-width: 0; }
+.gate--us .prep { border-left-color: var(--steel); }
+.prep legend { float: left; width: 100%; font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; color: var(--steel-ink); margin-bottom: 4px; padding: 0; }
+.prep label { display: flex; gap: 10px; align-items: center; cursor: pointer; font-weight: 600; }
+.prep input { width: 20px; height: 20px; accent-color: var(--ok); margin: 0; flex: none; }
+.prep input:checked + span { text-decoration: line-through; text-decoration-color: var(--ok); color: var(--steel-ink); }
+.gate__trap { font-size: var(--fs-small); color: var(--steel-ink); padding-left: 12px; border-left: 2px solid var(--orange); }
+.gate__trap b { color: var(--orange-ink); margin-right: 6px; }
+.gate__cta { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* Example US checkout form */
+.shipform { margin: 0; background: var(--white); border: 1px solid var(--line); padding: 12px 16px; font-size: var(--fs-small); max-width: 560px; }
+.shipform__row { display: grid; grid-template-columns: 120px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.shipform__row > span { color: var(--steel-ink); font-size: 12px; }
+.shipform__row b { background: var(--paper); padding: 4px 8px; border-bottom: 2px solid var(--navy); overflow-wrap: anywhere; }
+.shipform__row.is-hot b { background: #FFF1EA; border-bottom-color: var(--orange); }
+.shipform__row em { font-style: normal; font-size: 12px; font-weight: 700; color: var(--orange-ink); white-space: nowrap; }
+.shipform__row--split { grid-template-columns: auto minmax(0, 1.4fr) auto minmax(0, .5fr) auto minmax(0, .8fr); }
+.shipform figcaption { font-size: 12px; color: var(--steel-ink); padding-top: 8px; }
+
+@media (max-width: 960px) {
+  .guide-head__title, .guide-head__meta { grid-column: 1 / -1; }
+  .checkin { grid-column: 1 / -1; position: static; }
+  .checkin__gates { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--s-4); }
+  .gates { grid-column: 1 / -1; margin-top: var(--s-7); }
+}
+@media (max-width: 640px) {
+  .shipform__row { grid-template-columns: 1fr; gap: 4px; }
+  .shipform__row--split { grid-template-columns: auto 1fr; }
+  .shipform__row em { justify-self: start; }
+}
