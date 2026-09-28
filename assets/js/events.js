@@ -142,6 +142,24 @@
       </tr>`).join('');
   }
 
+  /* ---------- Shipping-fee specials (data in specials.js) ---------- */
+  function renderSpecials(kind) {
+    const S = window.GBSpecials;
+    const box = $('#spc-cards');
+    if (!S || !box || !GB.specialHTML) return;
+    const live = S.active(TODAY);
+    $('#sp-count').textContent = `진행 중 ${live.length}건`;
+    // live first (ending soonest first), ended last
+    const list = S.EVENTS.filter((e) => kind === 'all' || e.kind === kind)
+      .slice().sort((a, b) => (S.isEnded(a, TODAY) - S.isEnded(b, TODAY)) || ((a.end || '9999') < (b.end || '9999') ? -1 : 1));
+    box.innerHTML = list.map((e) => GB.specialHTML(e, 'card')).join('');
+  }
+  $$('[data-spk]').forEach((b) => b.addEventListener('click', () => {
+    $$('[data-spk]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    renderSpecials(b.dataset.spk);
+  }));
+
+  renderSpecials('all');
   renderPromos('all');
   renderCoupons();
   renderSales();

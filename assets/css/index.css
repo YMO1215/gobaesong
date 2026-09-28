@@ -380,3 +380,25 @@
   .radar__rail { grid-auto-columns: 82%; }
   .malls__list { grid-template-columns: 1fr; }
 }
+
+/* ---------- Shipping-fee specials strip (separate from the product hot-deal radar) ---------- */
+.spstrip { padding-block: var(--s-6); border-top: 4px solid var(--orange); }
+.spstrip__in { display: grid; grid-template-columns: minmax(200px, 3fr) minmax(0, 8fr) auto; gap: var(--s-5); align-items: center; }
+.spstrip__head .h3 { color: var(--paper); margin-top: 6px; }
+.spstrip__head .mono { color: var(--orange); font-size: 1rem; margin-left: 4px; }
+.spstrip__list { margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+.spstrip__list li + li { border-left: 1px solid var(--navy-line); }
+.spstrip__list a { display: grid; gap: 4px; padding: 4px 18px; text-decoration: none; color: var(--paper); }
+.spstrip__list a:hover b { text-decoration: underline; text-underline-offset: 3px; }
+.spstrip__list .spc__kind { justify-self: start; }
+.spstrip__list .spc__kind--fixed { background: var(--paper); color: var(--navy); border-color: var(--paper); }
+.spstrip__list .spc__kind--discount { background: transparent; color: var(--orange); }
+.spstrip__price { font-size: 13px; color: var(--steel); }
+.spstrip__all { color: var(--paper); white-space: nowrap; }
+@media (max-width: 960px) {
+  .spstrip__in { grid-template-columns: 1fr; }
+  .spstrip__list { grid-template-columns: 1fr; }
+  .spstrip__list li + li { border-left: 0; border-top: 1px solid var(--navy-line); }
+  .spstrip__list a { padding: 12px 0; }
+  .spstrip__all { justify-self: start; }
+}

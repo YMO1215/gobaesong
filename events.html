@@ -13,8 +13,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
 <link rel="stylesheet" href="assets/css/tokens.css?v=af816627">
-<link rel="stylesheet" href="assets/css/base.css?v=8b4a8ba7">
-<link rel="stylesheet" href="assets/css/events.css?v=c656f668">
+<link rel="stylesheet" href="assets/css/base.css?v=0f38df08">
+<link rel="stylesheet" href="assets/css/events.css?v=ec488b6e">
 <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('gb.user'))document.documentElement.classList.add('is-authed')}catch(e){}</script>
 </head>
 <body class="page-events">
@@ -253,6 +253,25 @@
     </div>
   </section>
 
+  <!-- Shipping-fee specials -->
+  <section class="section ev-specials" id="specials" aria-labelledby="sp-title">
+    <div class="wrap">
+      <div class="ev-sec-head">
+        <div>
+          <h2 class="h2" id="sp-title">배송비 스페셜 <span class="mono ev-count" id="sp-count"></span></h2>
+          <p class="muted small">조건이 맞으면 일반 요금 대신 적용됩니다. <b>고정가</b>는 적힌 금액 그대로, <b>일반 요금 할인</b>은 무게 요금표 금액에서 % 할인입니다.</p>
+        </div>
+        <div class="seg" role="group" aria-label="요금 방식으로 거르기">
+          <button type="button" aria-pressed="true" data-spk="all">전체</button>
+          <button type="button" aria-pressed="false" data-spk="fixed">고정가</button>
+          <button type="button" aria-pressed="false" data-spk="discount">일반 요금 할인</button>
+        </div>
+      </div>
+      <div class="spc-grid" id="spc-cards"></div>
+      <p class="small muted ev-sp-src">근거: 고배송 신청서 화면의 이벤트 옵션. 운영 투입 전 관리자 기준 요금·종료일과 다시 대조해야 합니다.</p>
+    </div>
+  </section>
+
   <!-- Coupon wallet -->
   <section class="section ev-coupons band" id="coupons" aria-labelledby="coupon-title">
     <div class="wrap">
@@ -405,6 +424,8 @@
 <script src="assets/js/common.js?v=69ef406c"></script>
 <script src="assets/js/member.js?v=3395ab68"></script>
 <script src="assets/js/chat.js?v=4cc07a87"></script>
-<script src="assets/js/events.js?v=aadb879e"></script>
+<script src="assets/js/specials.js?v=5ffa3d05"></script>
+<script src="assets/js/specials-ui.js?v=0b3339f7"></script>
+<script src="assets/js/events.js?v=143a7ac7"></script>
 </body>
 </html>

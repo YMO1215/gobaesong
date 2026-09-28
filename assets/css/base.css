@@ -624,3 +624,24 @@ html:not(.is-authed) [data-auth="in"], html.is-authed [data-auth="out"] { displa
   .topbar, .site-header, .site-footer, .toast, .authdlg { display: none !important; }
   body { background: #fff; }
 }
+
+/* ---------- Shipping-fee specials (shared: pricing · events · apply · index) ---------- */
+.spc__kind { display: inline-flex; align-items: center; padding: 2px 8px; font-size: 11px; font-weight: 800; letter-spacing: .02em; border: 1.5px solid currentColor; white-space: nowrap; }
+.spc__kind--fixed { background: var(--navy); color: var(--paper); border-color: var(--navy); }
+.spc__kind--discount { color: var(--orange-ink); background: var(--white); }
+.spc__kind--from { color: var(--steel-ink); background: var(--white); border-style: dashed; }
+.spc__head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.spc__end { font-size: 12px; font-weight: 700; color: var(--orange-ink); }
+.spc__name { font-size: 1.0625rem; font-weight: 800; line-height: 1.35; margin-top: 6px; }
+.spc__price { font-size: 1.375rem; font-weight: 700; line-height: 1.2; margin-top: 2px; }
+.spc[data-kind="discount"] .spc__price { color: var(--orange-ink); }
+.spc__facts { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 6px 16px; margin: 0; font-size: 13px; }
+.spc__facts dt { font-size: 11px; color: var(--steel-ink); font-weight: 600; }
+.spc__facts dd { font-weight: 600; line-height: 1.45; }
+.spc__facts .is-end dd { color: var(--orange-ink); font-weight: 800; }
+.spc.is-ended { opacity: .55; }
+.spc-res { padding: 12px 14px; font-size: var(--fs-small); border-left: 4px solid var(--ok); background: var(--white); }
+.spc-res--fail { border-left-color: var(--danger); background: #FFF6F3; }
+.spc-res ul { margin: 6px 0 0; padding-left: 18px; }
+.spc-res__alt { margin-top: 6px; color: var(--steel-ink); }
+.spc-res .btn-text { font-size: var(--fs-small); color: var(--navy); }

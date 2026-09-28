@@ -13,8 +13,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
 <link rel="stylesheet" href="assets/css/tokens.css?v=af816627">
-<link rel="stylesheet" href="assets/css/base.css?v=8b4a8ba7">
-<link rel="stylesheet" href="assets/css/pricing.css?v=c6821e88">
+<link rel="stylesheet" href="assets/css/base.css?v=0f38df08">
+<link rel="stylesheet" href="assets/css/pricing.css?v=75b6d49b">
 <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('gb.user'))document.documentElement.classList.add('is-authed')}catch(e){}</script>
 </head>
 <body class="page-pricing">
@@ -248,7 +248,7 @@
   <section class="scale-sec band" aria-labelledby="scale-title">
     <div class="wrap">
       <div class="scale-sec__head">
-        <h2 class="h2" id="scale-title">저울에 올려 보세요.</h2>
+        <div><p class="eyebrow">A · 일반 배송비</p><h2 class="h2" id="scale-title">저울에 올려 보세요.</h2></div>
         <div class="scale-sec__ctrl">
           <div class="seg" role="group" aria-label="센터 선택">
             <button type="button" aria-pressed="true" data-center="NJ">뉴저지</button>
@@ -296,6 +296,29 @@
               </div>
             </fieldset>
           </div>
+          <fieldset class="p-event">
+            <legend class="field__label">배송비 이벤트 <span class="opt">선택 · 기본은 일반 요금</span></legend>
+            <div class="p-event__grid">
+              <div class="field p-event__pick">
+                <label class="sr-only" for="p-event">적용할 이벤트</label>
+                <select class="select" id="p-event" name="event"><option value="">해당사항 없음 · 일반 요금</option></select>
+              </div>
+              <div class="field">
+                <label class="field__label" for="p-type">상품 종류</label>
+                <select class="select" id="p-type" name="ptype"></select>
+              </div>
+              <div class="field">
+                <label class="field__label" for="p-qty">수량</label>
+                <input class="input mono" id="p-qty" name="pqty" type="number" min="1" max="99" value="1" inputmode="numeric">
+              </div>
+              <div class="field">
+                <label class="field__label" for="p-trk">트래킹 개수</label>
+                <input class="input mono" id="p-trk" name="ptrk" type="number" min="0" max="20" value="1" inputmode="numeric">
+              </div>
+              <label class="tick p-event__box"><input type="checkbox" id="p-box18" name="box18"><span>18호 박스(8×6×4in)에 들어감</span></label>
+            </div>
+            <p class="p-event__hint" id="p-event-hint">이벤트를 고르면 판정에 필요한 칸만 켜집니다. 조건 설명은 아래 B 구획에 모두 있습니다.</p>
+          </fieldset>
           <fieldset class="p-opts">
             <legend class="field__label">선택 옵션</legend>
             <label class="tick"><input type="checkbox" name="consolidate"><span>합배송 <b class="mono">+$3.00</b></span></label>
@@ -309,12 +332,14 @@
 
         <div class="scale-calc__out" aria-live="polite">
           <dl class="p-lines" id="p-lines"></dl>
+          <div id="p-special"></div>
           <div class="p-total">
             <span>예상 배송비</span>
             <b class="mono" id="p-total">$18.10</b>
             <span class="mono" id="p-krw">약 ₩25,160</span>
           </div>
-          <a class="btn btn--primary btn--block" href="apply.html">이 조건으로 신청서 쓰기</a>
+          <p class="p-dutynote">관부가세는 배송비와 따로 계산합니다 — <a href="#duty">관부가세 계산</a></p>
+          <a class="btn btn--primary btn--block" id="p-apply" href="apply.html">이 조건으로 신청서 쓰기</a>
         </div>
       </div>
     </div>
@@ -325,7 +350,7 @@
     <div class="wrap grid12">
       <div class="rates__main">
         <div class="rates__head">
-          <h2 class="h2" id="rates-title">무게별 요금표</h2>
+          <div><p class="eyebrow">A · 일반 배송비</p><h2 class="h2" id="rates-title">무게별 요금표</h2></div>
           <p class="mono small muted" id="rates-caption">뉴저지 EWR · USD</p>
         </div>
         <div class="rates__frame" tabindex="0" role="region" aria-labelledby="rates-title">
@@ -344,6 +369,30 @@
           <li><span class="mono">04</span><div><b>50lb 초과는 문의.</b><p>가구·자전거 등 대형 화물은 해상 또는 특송 견적으로 안내합니다.</p></div></li>
         </ol>
       </aside>
+    </div>
+  </section>
+
+  <!-- B: event shipping fees -->
+  <section class="section specials band" id="specials" aria-labelledby="specials-title">
+    <div class="wrap">
+      <div class="specials__head">
+        <div>
+          <p class="eyebrow">B · 이벤트 배송비</p>
+          <h2 class="h2" id="specials-title">조건이 맞으면 일반 요금 대신.</h2>
+        </div>
+        <div class="seg" role="group" aria-label="요금 방식으로 거르기">
+          <button type="button" aria-pressed="true" data-sk="all">전체</button>
+          <button type="button" aria-pressed="false" data-sk="fixed">고정가</button>
+          <button type="button" aria-pressed="false" data-sk="discount">일반 요금 할인</button>
+        </div>
+      </div>
+      <ul class="specials__legend" role="list">
+        <li><span class="spc__kind spc__kind--fixed">고정가</span> 무게와 관계없이 적힌 금액 (조건 안에서)</li>
+        <li><span class="spc__kind spc__kind--discount">일반 요금 할인</span> A 요금표로 계산한 금액에서 % 할인</li>
+        <li><span class="spc__kind spc__kind--from">최저가부터</span> 최종 금액은 입고 후 확정</li>
+      </ul>
+      <div class="specials__list" id="spc-list"></div>
+      <p class="specials__src small muted">근거: 고배송 신청서 화면의 이벤트 옵션. 운영 투입 전 관리자 기준 요금·종료일과 다시 대조해야 합니다. 옵션 요금(정밀검수·재포장 등)은 별도입니다.</p>
     </div>
   </section>
 
@@ -609,7 +658,9 @@
 <script src="assets/js/common.js?v=69ef406c"></script>
 <script src="assets/js/member.js?v=3395ab68"></script>
 <script src="assets/js/chat.js?v=4cc07a87"></script>
+<script src="assets/js/specials.js?v=5ffa3d05"></script>
+<script src="assets/js/specials-ui.js?v=0b3339f7"></script>
 <script src="assets/js/duty.js?v=3378221c"></script>
-<script src="assets/js/pricing.js?v=57cce7ae"></script>
+<script src="assets/js/pricing.js?v=46d52c2d"></script>
 </body>
 </html>

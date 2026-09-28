@@ -66,19 +66,84 @@
       l: $('#p-l').value, w: $('#p-w').value, h: $('#p-h').value,
       partner: state.partner, options: readOptions(), declared: $('#p-declared').value,
     });
+    // Event special: 기본요금 → 이벤트 조정 → 예상 최종 (options stay separate on top)
+    const S = window.GBSpecials;
+    const evId = $('#p-event') ? $('#p-event').value : '';
+    const input = specialInput();
+    const res = S && evId ? S.evaluate(evId, input, q.base, GB.today()) : null;
+    const shipping = res && res.ok ? (res.final == null ? res.from : res.final) : q.base;
+    const total = Math.round((shipping + q.extras) * 100) / 100;
+    const pending = res && res.ok && res.final == null;
+
     $('#tag-w').textContent = (state.unit === 'kg' ? (state.lb * KG_PER_LB).toFixed(1) + 'kg' : fmtLb(state.lb) + 'lb');
     $('#tag-p').textContent = GB.usd(q.total);
     const rows = [
       ['실무게', q.actualLb.toFixed(2) + 'lb'],
       ['부피무게', q.volLb ? q.volLb.toFixed(2) + 'lb' : '—'],
       ['적용무게', q.billable + 'lb' + (q.usesVolume ? ' · 부피' : ''), true],
-      [`기본요금${state.partner ? ' · 파트너스' : ''}`, GB.usd(q.base)],
-    ].concat(q.lines.map((l) => [l.label, GB.usd(l.price)]));
+      [`① 기본요금${state.partner ? ' · 파트너스' : ''}`, GB.usd(q.base)],
+    ];
+    if (res && res.ok && res.kind !== 'from') rows.push([`② ${res.name} ${res.kind === 'fixed' ? '고정가 적용' : '할인'}`, (shipping - q.base < 0 ? '−' : '+') + GB.usd(Math.abs(shipping - q.base)), true]);
+    if (pending) rows.push(['② 착한배송 (부피무게 면제)', GB.usd(res.from) + '부터', true]);
+    q.lines.forEach((l) => rows.push(['옵션 · ' + l.label, GB.usd(l.price)]));
     $('#p-lines').innerHTML = rows.map(([k, v, strong]) => `<div${strong ? ' class="is-strong"' : ''}><dt>${k}</dt><dd>${v}</dd></div>`).join('');
-    $('#p-total').textContent = GB.usd(q.total);
-    $('#p-krw').textContent = '약 ' + GB.krw(q.krw);
+    $('#p-special').innerHTML = res ? GB.specialResultHTML(res, S.candidates(input, q.base, GB.today())) : '';
+    $('#p-total').textContent = GB.usd(total) + (pending ? '부터' : '');
+    $('#p-krw').textContent = pending ? '입고 후 실측으로 확정' : '약 ' + GB.krw(Math.round(total * GB.KRW_PER_USD / 10) * 10);
+    $('#p-apply').href = 'apply.html' + (res && res.ok ? '?event=' + res.id : '');
     placeTag();
     highlightRow(q.billable);
+  }
+
+  /* ---------- Special (event) inputs: only the ones an event needs are enabled ---------- */
+  const NEEDS = {
+    health_box: ['type', 'box18'], goodship: ['trk'], vacuum: ['type', 'trk'], consolidate: ['trk'], clothing: ['type'],
+    shoe1: ['type', 'qty', 'trk'], watch: ['type', 'qty', 'trk'], headphone: ['type', 'qty', 'trk'], shoes2: ['type', 'qty'],
+    tablet: ['type', 'trk'], vitamin: ['type', 'qty'],
+  };
+  function specialInput() {
+    return {
+      type: $('#p-type') ? $('#p-type').value : 'general',
+      weight: state.lb, qty: Number($('#p-qty') && $('#p-qty').value) || 1, trackings: Number($('#p-trk') && $('#p-trk').value) || 0,
+      consolidate: form.elements.consolidate.checked, needInspect: form.elements.inspect.checked,
+      box18: !!($('#p-box18') && $('#p-box18').checked),
+    };
+  }
+  function initSpecials() {
+    const S = window.GBSpecials;
+    const sel = $('#p-event');
+    if (!S || !sel) return;
+    sel.innerHTML = GB.specialOptions('');
+    $('#p-type').innerHTML = Object.entries(S.TYPES).map(([k, v]) => `<option value="${k}">${v}</option>`).join('');
+    const toggle = () => {
+      const need = NEEDS[sel.value] || [];
+      [['type', '#p-type'], ['qty', '#p-qty'], ['trk', '#p-trk'], ['box18', '#p-box18']].forEach(([k, s]) => {
+        const el = $(s);
+        el.disabled = !!sel.value && !need.includes(k);
+        el.closest('.field, .tick').classList.toggle('is-off', el.disabled);
+      });
+      const e = S.byId(sel.value);
+      $('#p-event-hint').textContent = e ? `${e.name} — ${e.core.join(' · ')}` : '이벤트를 고르면 판정에 필요한 칸만 켜집니다. 조건 설명은 아래 B 구획에 모두 있습니다.';
+    };
+    sel.addEventListener('change', () => { toggle(); render(); });
+    document.addEventListener('click', (ev) => {
+      const b = ev.target.closest('[data-pick-special]');
+      if (!b) return;
+      sel.value = b.dataset.pickSpecial; toggle(); render();
+    });
+    toggle();
+
+    // B section: every event with its price and all limits visible (no hidden conditions on mobile)
+    const list = $('#spc-list');
+    const draw = (kind) => {
+      list.innerHTML = S.EVENTS.filter((e) => kind === 'all' || e.kind === kind)
+        .map((e) => GB.specialHTML(e, 'table')).join('');
+    };
+    $$('[data-sk]').forEach((b) => b.addEventListener('click', () => {
+      $$('[data-sk]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      draw(b.dataset.sk);
+    }));
+    draw('all');
   }
   const fmtLb = (v) => (Number.isInteger(v) ? String(v) : v.toFixed(1));
 
@@ -165,6 +230,7 @@
 
   drawRuler();
   renderTable();
+  initSpecials();
   setLb(5);
   initDuty();
 })();

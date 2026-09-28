@@ -176,6 +176,140 @@
     return out;
   }
 
+
+  /* ---------- Shipping-fee special (event) — rules in specials.js ---------- */
+  const SP = window.GBSpecials;
+  const TRACKING_RE = /^(1Z[0-9A-Z]{16}|\d{12,22}|[A-Z]{2}\d{9}US|TBA\d{12})$/i;
+  GB.RULES.trackings = { re: { test: (v) => String(v).split(/[\s,]+/).filter(Boolean).every((t) => TRACKING_RE.test(t)) }, msg: '트래킹번호 형식을 확인해 주세요. 여러 개면 쉼표로 구분합니다. 예: 1Z999AA10123456784' };
+  const CAT_TO_TYPE = { '의류': 'clothing', '신발': 'shoes', '가방·잡화': 'hat_bag', '건강기능식품': 'supplement' };
+  const trackingList = () => String(form.elements.tracking.value || '').split(/[\s,]+/).filter(Boolean);
+  const selectedEvent = () => (form.elements.event ? form.elements.event.value : '') || '';
+  let evKind = 'all';
+  let typeTouched = false;
+
+  function specialInput() {
+    const f = form.elements;
+    return {
+      type: f.ptype.value || 'general',
+      weight: Number(f.estWeight.value) || 1,
+      qty: readItems().reduce((s, i) => s + (Number(i.qty) || 0), 0) || 1,
+      trackings: trackingList().length,
+      consolidate: f.ship.value === 'consolidate',
+      needInspect: f.inspect.value === 'precise',
+      box18: !!(f.box18 && f.box18.checked),
+    };
+  }
+  function specialResult(q) {
+    const id = selectedEvent();
+    return SP && id ? SP.evaluate(id, specialInput(), q.base, GB.today()) : null;
+  }
+  // Shipping after the event: fixed price / % off / "from" (not estimated), options stay on top
+  function feeWithSpecial(q) {
+    const r = specialResult(q);
+    const ship = r && r.ok ? (r.final == null ? r.from : r.final) : q.base;
+    return { r, ship, total: Math.round((ship + q.extras) * 100) / 100, pending: !!(r && r.ok && r.final == null) };
+  }
+
+  function renderEventList() {
+    const box = $('#ev-list');
+    if (!SP || !box) return;
+    const cur = selectedEvent();
+    const type = form.elements.ptype.value || 'general';
+    const fitOnly = $('#ev-fit').checked;
+    const today = GB.today();
+    const list = SP.EVENTS.filter((e) => !SP.isEnded(e, today))
+      .filter((e) => e.id === cur || evKind === 'all' || (evKind === 'general' ? e.kind === 'from' : e.kind === evKind))
+      .filter((e) => e.id === cur || !fitOnly || SP.fits(e, type));
+    const row = (value, title, desc, price, kind) => `<label class="choice ev-choice"><input type="radio" name="event" value="${value}"${value === cur ? ' checked' : ''}>
+      <span class="choice__mark" aria-hidden="true"></span>
+      <span class="choice__body"><span class="choice__title">${title}${kind ? ` <span class="spc__kind spc__kind--${kind}">${SP.KIND_LABEL[kind]}</span>` : ''}</span><span class="choice__desc">${desc}</span></span>
+      <span class="choice__price">${price}</span></label>`;
+    box.innerHTML = row('', '해당사항 없음', '일반 무게 요금으로 계산합니다.', '일반 요금', null) +
+      (list.length ? list.map((e) => row(e.id, esc(e.name), esc(e.core.join(' · ')), SP.priceLabel(e), e.kind)).join('')
+        : '<p class="ev-pick__none">이 분류에 맞는 이벤트가 없습니다. 필터를 “전체”로 바꾸거나 “내 상품에 맞는 이벤트만”을 꺼 보세요.</p>');
+    if (!form.elements.event || !Array.from(form.elements.event).some((r) => r.checked)) {
+      const none = box.querySelector('input[value=""]');
+      if (none) none.checked = true;
+    }
+  }
+
+  function setDisabled(name, value, disabled, why) {
+    const r = Array.from(form.elements[name]).find((x) => x.value === value);
+    if (!r) return;
+    r.disabled = disabled;
+    const label = r.closest('.choice');
+    label.classList.toggle('is-blocked', disabled);
+    label.title = disabled ? why : '';
+    if (disabled && r.checked) {
+      Array.from(form.elements[name]).find((x) => x.value !== value).checked = true;
+      GB.toast(why);
+    }
+  }
+
+  function renderEventPanel() {
+    if (!SP) return;
+    const id = selectedEvent();
+    const e = SP.byId(id);
+    $('#ev-box18').hidden = id !== 'health_box';
+    // conflicts are blocked, not just warned
+    setDisabled('ship', 'consolidate', !!e && SP.NO_CONSOLIDATE.includes(id), e ? `${e.name}은(는) 합배송할 수 없어 단독 배송으로 바꿨습니다` : '');
+    setDisabled('inspect', 'precise', !!e && SP.NO_INSPECT.includes(id), e ? `${e.name}은(는) 비검수라 정밀검수를 선택할 수 없습니다` : '');
+    // tracking-required events flag the missing tracking right away
+    const trackField = $('#f-track').closest('.field');
+    const needTrack = !!e && SP.NEEDS_TRACKING.includes(id);
+    trackField.classList.toggle('is-required-by-event', needTrack);
+    const detail = $('#ev-detail');
+    if (!e) { detail.innerHTML = ''; return; }
+    const q = currentQuote();
+    const r = specialResult(q);
+    const alts = SP.candidates(specialInput(), q.base, GB.today());
+    const fix = needTrack && trackingList().length < 1
+      ? '<p class="ev-pick__fix"><b>트래킹번호가 필요합니다.</b> <button type="button" class="btn-text" data-goto-tracking>상품정보에서 트래킹 입력하기</button></p>' : '';
+    detail.innerHTML = GB.specialHTML(e, 'table') + fix + GB.specialResultHTML(r, alts);
+  }
+
+  function eventStepOk() {
+    const id = selectedEvent();
+    if (!SP || !id) return true;
+    const r = specialResult(currentQuote());
+    if (r && r.ok) return true;
+    GB.toast('선택한 배송비 이벤트의 조건이 맞지 않습니다. 조건을 고치거나 “해당사항 없음”을 고르세요');
+    $('#ev-detail').scrollIntoView({ behavior: GB.reduceMotion ? 'auto' : 'smooth', block: 'center' });
+    return false;
+  }
+
+  function initEvents() {
+    if (!SP) return;
+    $('#o-ptype').innerHTML = Object.entries(SP.TYPES).map(([k, v]) => `<option value="${k}">${v}</option>`).join('');
+    $('#o-ptype').addEventListener('change', () => { typeTouched = true; renderEventList(); renderEventPanel(); });
+    $('#ev-fit').addEventListener('change', () => { renderEventList(); });
+    $$('[data-evk]').forEach((b) => b.addEventListener('click', () => {
+      evKind = b.dataset.evk;
+      $$('[data-evk]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      renderEventList();
+    }));
+    document.addEventListener('click', (ev) => {
+      const pick = ev.target.closest('[data-pick-special]');
+      if (pick) {
+        evKind = 'all'; $('#ev-fit').checked = false;
+        $$('[data-evk]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.evk === 'all')));
+        renderEventList();
+        const r = Array.from(form.elements.event).find((x) => x.value === pick.dataset.pickSpecial);
+        if (r) { r.checked = true; update(); }
+        return;
+      }
+      if (ev.target.closest('[data-goto-tracking]')) { goTo(1, true); setTimeout(() => $('#f-track').focus(), 50); }
+    });
+    renderEventList();
+  }
+  // suggest 상품 분류 from the first item's 품목 until the user picks one
+  function syncType() {
+    if (!SP || typeTouched) return;
+    const cat = (readItems()[0] || {}).cat;
+    const t = CAT_TO_TYPE[cat] || 'general';
+    if (form.elements.ptype.value !== t) { form.elements.ptype.value = t; renderEventList(); }
+  }
+
   /* ---------- Summary + autosave ---------- */
   let saveTimer;
   function update() {
@@ -195,10 +329,14 @@
     const count = items.filter((i) => i.name).reduce((s, i) => s + (Number(i.qty) || 0), 0);
     $('#sum-items').textContent = count + '개';
     $('#sum-declared').textContent = GB.usd(declared);
-    $('#sum-opts').textContent = optionLabels().join(' · ');
+    syncType();
+    renderEventPanel();
     const q = currentQuote();
-    $('#sum-fee').textContent = GB.usd(q.total);
-    $('#sum-fee-krw').textContent = '약 ' + GB.krw(q.krw) + ' · ' + q.billable + 'lb 기준';
+    const sp = feeWithSpecial(q);
+    const ev = SP && SP.byId(selectedEvent());
+    $('#sum-opts').textContent = (ev ? ev.name + (sp.r && sp.r.ok ? '' : '(조건 미충족)') + ' · ' : '') + optionLabels().join(' · ');
+    $('#sum-fee').textContent = GB.usd(sp.total) + (sp.pending ? '부터' : '');
+    $('#sum-fee-krw').textContent = sp.pending ? '입고 후 실측으로 확정' : '약 ' + GB.krw(Math.round(sp.total * GB.KRW_PER_USD / 10) * 10) + ' · ' + q.billable + 'lb 기준';
     const insLine = q.lines.find((l) => l.label.includes('보험'));
     $('#ins-price').textContent = '+' + GB.usd(insLine ? insLine.price : Math.max(1, declared * 0.02));
 
@@ -285,6 +423,7 @@
     const k = i + 1;
     if (k > reached || k === current) return;
     if (k > current && !GB.validate($(`.step[data-step="${current}"]`))) return;
+    if (k > 3 && current <= 3 && !eventStepOk()) return;
     goTo(k, true);
   }));
   prevBtn.addEventListener('click', () => goTo(Math.max(1, current - 1), true));
@@ -293,6 +432,7 @@
     e.preventDefault();
     const stepEl = $(`.step[data-step="${current}"]`);
     if (!GB.validate(stepEl)) { GB.toast('표시된 항목을 확인해 주세요'); return; }
+    if (current === 3 && !eventStepOk()) return;
     if (current < TOTAL_STEPS) { goTo(current + 1, true); return; }
     // A real application belongs to an account; the file:// preview can still submit as a demo
     if (GB.auth && GB.auth.available && !GB.auth.user) {
@@ -312,12 +452,23 @@
     const center = GB.RATES[f.center.value];
     const itemsHTML = items.map((it) => `<li><span>${esc(it.name || '(이름 없음)')} · ${esc(it.cat || '-')} × ${esc(it.qty || 0)}</span><b class="mono">${GB.usd((Number(it.price) || 0) * (Number(it.qty) || 0))}</b></li>`).join('');
     const block = (no, title, body, step) => `<div class="review__block"><h3><span>${no}</span>${title}</h3><div>${body}</div><button type="button" class="btn-text" data-edit="${step}">수정</button></div>`;
-    const lines = [['기본요금 · ' + q.billable + 'lb', q.base]].concat(q.lines.map((l) => [l.label, l.price]));
+    const sp = feeWithSpecial(q);
+    const ev = SP && SP.byId(selectedEvent());
+    const lines = [['① 기본요금 · ' + q.billable + 'lb', q.base]];
+    if (sp.r && sp.r.ok && !sp.pending) lines.push([`② ${ev.name} ${ev.kind === 'fixed' ? '고정가' : '할인'}`, sp.ship - q.base]);
+    q.lines.forEach((l) => lines.push(['옵션 · ' + l.label, l.price]));
+    const agree = $('#ev-agree');
+    agree.hidden = !ev;
+    agree.querySelector('input').required = !!ev;
+    if (ev) {
+      $('#ev-agree-title').textContent = `${ev.name}(${SP.priceLabel(ev)}) 조건을 확인했습니다.`;
+      $('#ev-agree-desc').textContent = ev.core.join(' · ') + ' — 조건과 다르게 입고되면 일반 요금으로 다시 계산됩니다.';
+    }
     $('#review').innerHTML =
       block('GATE 01', '상품정보', `<dl><dt>쇼핑몰</dt><dd>${esc(f.shop.value)}</dd><dt>주문번호</dt><dd class="mono">${esc(f.order.value)}</dd><dt>트래킹</dt><dd class="mono">${esc(f.tracking.value || '나중에 등록')}</dd></dl><ul class="review__items" style="margin-top:12px">${itemsHTML}</ul>`, 1) +
       block('GATE 02', '수취인·통관', `<dl><dt>수취인</dt><dd>${esc(f.rname.value)} · ${esc(f.reng.value)}</dd><dt>휴대폰</dt><dd class="mono">${esc(f.rtel.value)}</dd><dt>통관부호</dt><dd class="mono">${esc(f.pccc.value.replace(/^(P\d{4})\d{5}/i, '$1*****'))}</dd><dt>주소</dt><dd>(${esc(f.zip.value)}) ${esc(f.addr.value)} ${esc(f.addr2.value)}</dd></dl>`, 2) +
-      block('GATE 03', '옵션', `<dl><dt>센터</dt><dd>${center.name} ${center.code}</dd><dt>선택</dt><dd>${optionLabels().join(' · ')}</dd>${f.memo.value ? `<dt>요청사항</dt><dd>${esc(f.memo.value)}</dd>` : ''}</dl>`, 3) +
-      `<div class="review__fee" aria-label="예상 배송비">${lines.map(([l, p]) => `<div class="row"><span>${l}</span><b>${GB.usd(p)}</b></div>`).join('')}<div class="row total"><span>예상 합계 · 입고 후 확정</span><b>${GB.usd(q.total)}</b></div></div>`;
+      block('GATE 03', '옵션', `<dl><dt>센터</dt><dd>${center.name} ${center.code}</dd><dt>배송비 이벤트</dt><dd>${ev ? esc(ev.name) + ' · ' + SP.priceLabel(ev) + '<br><span class="review__sub">' + esc(ev.core.join(' · ')) + '</span>' : '해당사항 없음'}</dd><dt>선택</dt><dd>${optionLabels().join(' · ')}</dd>${f.memo.value ? `<dt>요청사항</dt><dd>${esc(f.memo.value)}</dd>` : ''}</dl>`, 3) +
+      `<div class="review__fee" aria-label="예상 배송비">${lines.map(([l, p]) => `<div class="row"><span>${l}</span><b>${GB.usd(p)}</b></div>`).join('')}<div class="row total"><span>예상 합계 · 입고 후 확정</span><b>${sp.pending ? GB.usd(sp.total) + '부터' : GB.usd(sp.total)}</b></div><p class="review__dutynote">관부가세는 배송비와 별도입니다.</p></div>`;
   }
   $('#review').addEventListener('click', (e) => {
     const b = e.target.closest('[data-edit]');
@@ -353,6 +504,7 @@
   $('#again').addEventListener('click', () => { window.location.reload(); });
 
   /* ---------- Boot ---------- */
+  initEvents();
   let startStep = loadDraft();
 
   // Deep link from the hot deal radar: apply.html?shop=&item=&price=&cat=&url=&center=&w=
@@ -367,6 +519,17 @@
     startStep = 1;
     history.replaceState(null, '', location.pathname);
     GB.toast('핫딜 상품 정보를 채웠습니다. 주문번호만 넣으면 됩니다');
+  }
+  // Deep link from the events page: apply.html?event=<id>
+  const evParam = qs.get('event');
+  if (evParam && SP && SP.byId(evParam)) {
+    const ev = SP.byId(evParam);
+    if (ev.types) { form.elements.ptype.value = ev.types[0]; typeTouched = true; }
+    renderEventList();
+    const r = Array.from(form.elements.event).find((x) => x.value === evParam);
+    if (r) r.checked = true;
+    if (!qs.get('item')) history.replaceState(null, '', location.pathname);
+    GB.toast(`${ev.name} 이벤트를 선택해 두었습니다. 3단계 옵션에서 조건을 확인하세요`);
   }
   goTo(startStep || 1, false);
   update();

@@ -13,8 +13,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
 <link rel="stylesheet" href="assets/css/tokens.css?v=af816627">
-<link rel="stylesheet" href="assets/css/base.css?v=8b4a8ba7">
-<link rel="stylesheet" href="assets/css/index.css?v=fa4ef1e1">
+<link rel="stylesheet" href="assets/css/base.css?v=0f38df08">
+<link rel="stylesheet" href="assets/css/index.css?v=1c68e315">
 <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('gb.user'))document.documentElement.classList.add('is-authed')}catch(e){}</script>
 </head>
 <body class="page-index">
@@ -559,6 +559,19 @@
     </div>
   </section>
 
+  <!-- ============ SHIPPING-FEE SPECIALS STRIP (고배송 요금 혜택 — 상품 핫딜과 별개) ============ -->
+  <section class="spstrip on-navy" aria-labelledby="spstrip-title">
+    <div class="wrap spstrip__in">
+      <div class="spstrip__head">
+        <p class="eyebrow">배송비 혜택 · 고배송 요금</p>
+        <h2 class="h3" id="spstrip-title">진행 중 배송비 스페셜 <span class="mono" id="spstrip-count"></span></h2>
+      </div>
+      <ol class="spstrip__list" id="spstrip-list" role="list"></ol>
+      <a class="link-arrow spstrip__all" href="events.html#specials">전체 보기
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8h12M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+    </div>
+  </section>
+
   <!-- ============ PARTNER MALLS ============ -->
   <section class="malls section band" id="malls" aria-labelledby="malls-title">
     <div class="wrap grid12">
@@ -779,6 +792,7 @@
 <script src="assets/js/member.js?v=3395ab68"></script>
 <script src="assets/js/chat.js?v=4cc07a87"></script>
 <script src="assets/js/deals-data.js?v=f41ea5b7"></script>
-<script src="assets/js/index.js?v=d27292af"></script>
+<script src="assets/js/specials.js?v=5ffa3d05"></script>
+<script src="assets/js/index.js?v=74f0aeae"></script>
 </body>
 </html>

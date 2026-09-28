@@ -185,3 +185,29 @@
   .bpass__grid > div:nth-child(n+3) { display: none; }
   .bpass__fee { padding: 12px 16px; }
 }
+
+/* ---------- Shipping-fee special picker (options step) ---------- */
+.ev-pick { background: var(--white); border: var(--bw-strong) solid var(--navy); padding: var(--s-5); }
+.ev-pick .opt-group__title { float: left; width: 100%; }
+.ev-pick__lead { font-size: var(--fs-small); color: var(--steel-ink); margin-bottom: 12px; clear: both; }
+.ev-pick__filters { display: flex; flex-wrap: wrap; align-items: end; gap: 12px 16px; margin-bottom: 12px; }
+.ev-pick__type { min-width: 220px; flex: 1; }
+.ev-pick__fit, .ev-pick__box { display: flex; gap: 8px; align-items: center; font-size: 14px; font-weight: 600; cursor: pointer; }
+.ev-pick__fit input, .ev-pick__box input { width: 18px; height: 18px; accent-color: var(--navy); margin: 0; }
+.ev-pick__box { margin-top: 10px; padding: 10px 12px; background: #FFF1EA; }
+.ev-pick__list { display: grid; gap: 6px; max-height: 420px; overflow-y: auto; padding-right: 2px; }
+.ev-choice .choice__title { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.ev-pick__none { font-size: var(--fs-small); color: var(--steel-ink); padding: 10px 0; }
+.ev-pick__detail { margin-top: 12px; display: grid; gap: 10px; }
+.ev-pick__detail .spc--row { display: grid; grid-template-columns: 1fr; gap: 10px; padding: 12px 14px; background: var(--paper); border: 1px solid var(--line); }
+.ev-pick__fix { font-size: var(--fs-small); color: var(--danger); }
+.choice.is-blocked { opacity: .45; cursor: not-allowed; }
+.field.is-required-by-event .field__label::after { content: "배송비 이벤트 필수"; margin-left: 8px; font-size: 11px; font-weight: 700; color: var(--orange-ink); border: 1px solid currentColor; padding: 0 6px; }
+.review__sub { font-size: 12px; color: var(--steel-ink); font-weight: 500; }
+.review__dutynote { font-size: 12px; color: var(--steel); margin-top: 6px; }
+@media (max-width: 640px) {
+  .ev-pick { padding: var(--s-4); }
+  .ev-pick__filters .seg { width: 100%; }
+  .ev-pick__filters .seg button { flex: 1; padding-inline: 6px; }
+  .ev-pick__list { max-height: none; }
+}

@@ -264,8 +264,24 @@
     }));
   }
 
+  /* ---------- Shipping-fee specials strip: operator-picked top 3 (specials.js `featured`) ---------- */
+  function initSpecialStrip() {
+    const S = window.GBSpecials;
+    const list = $('#spstrip-list');
+    if (!S || !list) return;
+    const today = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Seoul' });
+    const live = S.active(today);
+    $('#spstrip-count').textContent = `${live.length}건`; // never hard-coded
+    const top = live.filter((e) => e.featured).sort((a, b) => a.featured - b.featured).slice(0, 3);
+    list.innerHTML = top.map((e) => `<li><a href="events.html#special-${e.id}">
+      <span class="spc__kind spc__kind--${e.kind}">${S.KIND_LABEL[e.kind]}</span>
+      <b>${escH(e.name)}</b>
+      <span class="mono spstrip__price">${S.priceLabel(e)}${e.end ? ` · ${e.end.replace(/-/g, '.')}까지` : ''}</span></a></li>`).join('');
+  }
+
   initRoute();
   initRadar();
+  initSpecialStrip();
   initIssue();
   initBoard();
   initCalc();

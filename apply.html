@@ -13,8 +13,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
 <link rel="stylesheet" href="assets/css/tokens.css?v=af816627">
-<link rel="stylesheet" href="assets/css/base.css?v=8b4a8ba7">
-<link rel="stylesheet" href="assets/css/apply.css?v=f52a3945">
+<link rel="stylesheet" href="assets/css/base.css?v=0f38df08">
+<link rel="stylesheet" href="assets/css/apply.css?v=a9d0533e">
 <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('gb.user'))document.documentElement.classList.add('is-authed')}catch(e){}</script>
 </head>
 <body class="page-apply">
@@ -293,8 +293,8 @@
           </div>
           <div class="field span-2">
             <label class="field__label" for="f-track">트래킹번호 <span class="opt">모르면 비워 두세요</span></label>
-            <input class="input mono" id="f-track" name="tracking" data-rule="tracking" placeholder="1Z999AA10123456784" autocapitalize="characters">
-            <p class="field__hint">쇼핑몰 발송 후 받은 번호입니다. 나중에 마이페이지에서 등록해도 입고에는 문제가 없습니다.</p>
+            <input class="input mono" id="f-track" name="tracking" data-rule="trackings" placeholder="1Z999AA10123456784" autocapitalize="characters">
+            <p class="field__hint">쇼핑몰 발송 후 받은 번호입니다. 여러 개면 쉼표로 구분하세요. 트래킹이 필수인 배송비 이벤트가 아니라면 나중에 등록해도 됩니다.</p>
           </div>
         </div>
 
@@ -369,6 +369,27 @@
           <p class="muted">기본만으로도 모든 상자는 열어서 검수하고 다시 포장합니다. 필요한 것만 더하세요.</p>
         </header>
 
+        <fieldset class="opt-group ev-pick" id="ev-pick">
+          <legend class="opt-group__title">배송비 이벤트</legend>
+          <p class="ev-pick__lead">조건이 맞으면 일반 요금 대신 적용됩니다. 기본은 <b>해당사항 없음</b>입니다.</p>
+          <div class="ev-pick__filters">
+            <div class="seg" role="group" aria-label="요금 방식으로 좁히기">
+              <button type="button" aria-pressed="true" data-evk="all">전체</button>
+              <button type="button" aria-pressed="false" data-evk="fixed">고정가</button>
+              <button type="button" aria-pressed="false" data-evk="discount">할인</button>
+              <button type="button" aria-pressed="false" data-evk="general">일반</button>
+            </div>
+            <div class="field ev-pick__type">
+              <label class="field__label" for="o-ptype">상품 분류</label>
+              <select class="select" id="o-ptype" name="ptype"></select>
+            </div>
+            <label class="tick ev-pick__fit"><input type="checkbox" id="ev-fit" checked><span>내 상품에 맞는 이벤트만</span></label>
+          </div>
+          <div class="ev-pick__list" id="ev-list" role="radiogroup" aria-label="배송비 이벤트"></div>
+          <label class="tick ev-pick__box" id="ev-box18" hidden><input type="checkbox" name="box18"><span>18호 박스(8×6×4in)에 들어가도록 주문했습니다</span></label>
+          <div class="ev-pick__detail" id="ev-detail" aria-live="polite"></div>
+        </fieldset>
+
         <fieldset class="opt-group">
           <legend class="opt-group__title">받을 센터</legend>
           <div class="opt-group__row">
@@ -430,6 +451,11 @@
           <p class="muted">제출 후에도 입고 전까지는 마이페이지에서 고칠 수 있습니다.</p>
         </header>
         <div class="review" id="review"></div>
+        <label class="choice field review__agree ev-agree" id="ev-agree" hidden>
+          <input type="checkbox" name="eventAgree" data-msg-required="선택한 배송비 이벤트의 조건을 확인해 주세요.">
+          <span class="choice__mark" aria-hidden="true"></span>
+          <span class="choice__body"><span class="choice__title" id="ev-agree-title">배송비 이벤트 조건을 확인했습니다.</span><span class="choice__desc" id="ev-agree-desc">조건과 다르게 입고되면 일반 요금으로 다시 계산됩니다.</span></span>
+        </label>
         <label class="choice field review__agree">
           <input type="checkbox" name="agree" required data-msg-required="내용 확인에 동의해 주세요.">
           <span class="choice__mark" aria-hidden="true"></span>
@@ -639,6 +665,8 @@
 <script src="assets/js/common.js?v=69ef406c"></script>
 <script src="assets/js/member.js?v=3395ab68"></script>
 <script src="assets/js/chat.js?v=4cc07a87"></script>
-<script src="assets/js/apply.js?v=dbdd9594"></script>
+<script src="assets/js/specials.js?v=5ffa3d05"></script>
+<script src="assets/js/specials-ui.js?v=0b3339f7"></script>
+<script src="assets/js/apply.js?v=a44f1fd7"></script>
 </body>
 </html>

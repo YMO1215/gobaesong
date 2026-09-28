@@ -92,3 +92,24 @@
   .salet__tip { grid-column: 1 / -1; grid-row: 4; }
   .salet .num { grid-column: 2; grid-row: 1 / span 3; align-self: center; }
 }
+
+/* ---------- Shipping-fee special cards ---------- */
+.ev-count { font-size: .875rem; color: var(--orange-ink); margin-left: 8px; vertical-align: middle; }
+.spc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--s-5) var(--col-gap); }
+.spc--card { display: flex; flex-direction: column; gap: 8px; padding: var(--s-4) 0 0; border-top: var(--bw-strong) solid var(--navy); }
+.spc--card[data-kind="discount"] { border-top-color: var(--orange); }
+.spc--card[data-kind="from"] { border-top-style: dashed; }
+.spc--card .spc__end { font-size: 13px; padding: 1px 8px; background: #FFF1EA; border: 1px solid var(--orange); }
+.spc__core { margin: 4px 0 0; padding: 0; display: grid; gap: 4px; font-size: var(--fs-small); }
+.spc__core li { display: flex; gap: 8px; }
+.spc__core li::before { content: ""; flex: none; width: 6px; height: 6px; margin-top: .6em; background: var(--navy); }
+.spc__more summary { cursor: pointer; font-size: 13px; font-weight: 700; color: var(--navy); padding: 4px 0; }
+.spc__more .spc__facts { margin-top: 8px; padding: 12px; background: var(--white); border: 1px solid var(--line); grid-template-columns: 1fr 1fr; }
+.spc__notes { margin: 8px 0 0; padding-left: 18px; font-size: 13px; color: var(--steel-ink); }
+.spc__cta { align-self: flex-start; margin-top: auto; }
+.spc__over { font-size: 13px; color: var(--steel-ink); margin-top: auto; }
+.ev-sp-src { margin-top: var(--s-5); }
+@media (max-width: 640px) {
+  .spc-grid { grid-template-columns: 1fr; }
+  .spc__cta { align-self: stretch; }
+}
