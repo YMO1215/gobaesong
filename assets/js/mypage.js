@@ -35,11 +35,24 @@
   SHIPS.forEach((s) => {
     if (paid.includes(s.no) && s.status === '결제대기') { s.status = '출고'; s.times.push('결제 후 출고 대기'); }
   });
-  const issued = GB.store.get('gb.mailbox', null);
-  if (issued && issued.mailbox) {
-    $('#my-box').textContent = issued.mailbox;
-    $('#addr-box').textContent = issued.mailbox;
+  // Account header + US address follow the logged-in member (member.js); shipments stay sample data
+  const ADDR = {
+    NJ: ['000 LOGISTICS AVE UNIT B', 'EDISON, NJ 08800 USA', '뉴저지 센터'],
+    DE: ['000 HARBOR RD SUITE B', 'NEW CASTLE, DE 19700 USA', '델라웨어 센터'],
+  };
+  function applyUser(u) {
+    const demo = $('#my-demo');
+    if (demo) demo.hidden = !!u;
+    if (!u) return;
+    const a = ADDR[u.center] || ADDR.NJ;
+    $('#my-name').textContent = u.id;
+    $('#my-box').textContent = u.mailbox;
+    $('#my-center').textContent = a[2];
+    $('#my-since').textContent = '가입 ' + String(u.createdAt || '').slice(0, 7).replace('-', '.');
+    $('#addr-text').innerHTML = `${esc(u.name)}\n${a[0]}\n<b id="addr-box">${esc(u.mailbox)}</b>\n${a[1]}`;
   }
+  applyUser(GB.auth && GB.auth.user);
+  document.addEventListener('gb:auth', (e) => applyUser(e.detail.user));
 
   /* ---------- Safe-view illustrations (duotone line work, no stock photos) ---------- */
   const corners = (w, h) => `<path class="o" d="M10 26V10h16M${w - 26} 10h16v16M10 ${h - 26}v16h16M${w - 10} ${h - 26}v16h-16"/>`;

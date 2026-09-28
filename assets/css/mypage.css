@@ -12,6 +12,8 @@
 .my-head__stats dd { font-size: clamp(1.5rem, 1.2rem + 1vw, 2.125rem); font-weight: 700; line-height: 1.2; }
 .my-head__stats small { font-size: .9rem; font-weight: 800; margin-left: 2px; }
 
+.my-demo { margin-top: var(--s-5); padding: 10px 14px; background: var(--white); border-left: 4px solid var(--navy); font-size: var(--fs-small); }
+
 /* ---------- Payment alert ---------- */
 .payalert {
   display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: var(--s-5);

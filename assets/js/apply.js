@@ -21,8 +21,13 @@
   const nextBtn = $('#next');
   const prevBtn = $('#prev');
 
-  const mailbox = (GB.store.get('gb.mailbox', null) || {}).mailbox || 'GB-000417';
+  const DEMO_MAILBOX = 'GB-000417';
+  let mailbox = (GB.auth && GB.auth.user && GB.auth.user.mailbox) || DEMO_MAILBOX;
   $('#sum-box').textContent = mailbox;
+  document.addEventListener('gb:auth', (e) => {
+    mailbox = (e.detail.user && e.detail.user.mailbox) || DEMO_MAILBOX;
+    $('#sum-box').textContent = mailbox;
+  });
 
   let current = 1;
   let reached = 1;
@@ -289,6 +294,11 @@
     const stepEl = $(`.step[data-step="${current}"]`);
     if (!GB.validate(stepEl)) { GB.toast('표시된 항목을 확인해 주세요'); return; }
     if (current < TOTAL_STEPS) { goTo(current + 1, true); return; }
+    // A real application belongs to an account; the file:// preview can still submit as a demo
+    if (GB.auth && GB.auth.available && !GB.auth.user) {
+      GB.auth.require('신청서를 제출하려면 로그인해 주세요. 작성한 내용은 그대로 남아 있습니다.').then(() => submit());
+      return;
+    }
     submit();
   });
 

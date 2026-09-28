@@ -27,6 +27,8 @@ gobaesong/
 │  │  └─ index.css · apply.css · mypage.css · pricing.css · support.css
 │  ├─ js/
 │  │  ├─ common.js      메뉴, 시계, 리빌, 카운트업, 바코드, 요금 계산, 폼 검증
+│  │  ├─ hours.js       센터 업무시간 계산 (테스트 대상)
+│  │  ├─ member.js      상단 바·주소 패널·로그인 상태·가입/로그인 창
 │  │  └─ index.js · apply.js · mypage.js · pricing.js · support.js
 │  └─ svg/logo-mark.svg
 ├─ partials/            공통 헤더·푸터 원본
@@ -53,6 +55,36 @@ python -m http.server 8000
 3. Deploy. `vercel.json`의 `cleanUrls` 설정으로 `/apply`, `/pricing` 같은 주소도 동작합니다.
 
 > 모든 페이지에 `<meta name="robots" content="noindex">`가 들어 있어 검색엔진에 노출되지 않습니다. 실제 서비스로 전환할 때 지우세요.
+
+## 회원 기능 (실제 계정)
+
+가입·로그인은 진짜로 동작합니다. 정적 페이지 옆에 Vercel 서버리스 함수가 있습니다.
+
+| API | 하는 일 |
+|---|---|
+| `POST /api/auth/signup` | 아이디·비밀번호·영문 이름·이메일·센터로 가입, 개인 사서함 `GB-000001`부터 순서대로 발급, 바로 로그인 |
+| `POST /api/auth/login` · `POST /api/auth/logout` | 로그인(5번 틀리면 10분 잠금) · 로그아웃 |
+| `GET /api/auth/me` · `GET /api/auth/check-id?id=` | 로그인 상태 · 아이디 중복 확인 |
+| `GET /api/health` | 저장소 연결 상태 (환경변수 **이름만** 표시, 값은 안 보임) |
+
+- 비밀번호는 scrypt 해시로만 저장, 로그인 상태는 서명된 HttpOnly 쿠키(30일)
+- 저장소: 배포에서는 **Upstash Redis**(`KV_REST_API_URL`/`KV_REST_API_TOKEN`, 접두어가 붙어도 인식), 로컬에서는 `.data/dev-store.json`
+- 세션 서명 키는 `AUTH_SECRET` 환경변수가 있으면 그것을, 없으면 Upstash 토큰에서 만듭니다
+
+**Vercel 연결**: 프로젝트 → Storage → Upstash for Redis → Connect Project 에서 **Production 을 체크**하고 연결 → Deployments 에서 Redeploy.
+연결 확인: `https://<도메인>/api/health` 가 `{"ok":true,"store":"upstash"}` 이면 정상입니다.
+
+**로컬 실행·테스트**
+
+```bash
+npm run dev     # http://127.0.0.1:3000 — 정적 페이지 + /api, 계정은 .data/ 에 저장
+npm test        # API 13개 + 업무시간 6개 자동 테스트
+```
+
+## 상단 바
+
+- 왼쪽: 뉴저지 센터 업무시간 타이머 (미국 동부 평일 09:00–17:00, 델라웨어 09:00–15:00). 업무 중 → 마감까지, 시작 4시간 전 → 시작까지, 업무 종료, 주말·미국 공휴일 휴무와 한국시각 재개 시각. 규칙은 `assets/js/hours.js`
+- 오른쪽: 뉴저지 / 델라웨어 주소 버튼. 칸별 복사, 로그인하면 Full Name 과 Street Address 2 에 개인 사서함 번호가 채워집니다
 
 ## 헤더·푸터 수정
 

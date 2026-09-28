@@ -276,21 +276,7 @@
     window.matchMedia('(min-width: 961px)').addEventListener('change', (m) => { if (m.matches) set(false); });
   }
 
-  /* ---------- Flight strip: New Jersey local time ---------- */
-  function initClock() {
-    const els = GB.$$('[data-clock]');
-    if (!els.length) return;
-    const fmt = {};
-    const draw = () => {
-      els.forEach((el) => {
-        const tz = el.dataset.clock;
-        fmt[tz] = fmt[tz] || new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit', hour12: false });
-        el.textContent = fmt[tz].format(new Date());
-      });
-    };
-    draw();
-    setInterval(draw, 15000);
-  }
+  /* Center-hours timer in the top bar lives in hours.js + member.js */
 
   /* ---------- Copy buttons ---------- */
   document.addEventListener('click', (e) => {
@@ -311,7 +297,6 @@
   /* ---------- Boot ---------- */
   function boot() {
     initMenu();
-    initClock();
     renderBarcodes();
     observeInView();
   }

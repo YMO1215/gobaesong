@@ -56,49 +56,27 @@
     requestAnimationFrame(frame);
   }
 
-  /* ---------- Mailbox issue ---------- */
+  /* ---------- Mailbox label: filled from the logged-in account (member.js) ---------- */
   const CENTERS = {
-    NJ: { a1: '000 Logistics Ave, Unit GB', city: 'Edison, NJ 08800', tel: '+1 732-000-0000' },
-    DE: { a1: '000 Harbor Rd, Suite GB', city: 'New Castle, DE 19700', tel: '+1 302-000-0000' },
+    NJ: { a1: '000 LOGISTICS AVE UNIT B', city: 'EDISON, NJ 08800', tel: '732-000-0000' },
+    DE: { a1: '000 HARBOR RD SUITE B', city: 'NEW CASTLE, DE 19700', tel: '302-000-0000' },
   };
 
   function initIssue() {
-    const form = $('#issue-form');
     const out = $('#issue-result');
-    if (!form || !out) return;
-
-    function show(data) {
-      const c = CENTERS[data.center] || CENTERS.NJ;
-      $('#lbl-name').textContent = data.name.toUpperCase();
+    if (!out) return;
+    function show(user) {
+      if (!user) return;
+      const c = CENTERS[user.center] || CENTERS.NJ;
+      $('#lbl-name').textContent = user.name;
       $('#lbl-a1').textContent = c.a1;
-      $('#lbl-a2').textContent = data.mailbox;
+      $('#lbl-a2').textContent = user.mailbox;
       $('#lbl-city').textContent = c.city;
       $('#lbl-tel').textContent = c.tel;
-      const bar = $('#lbl-bar');
-      bar.innerHTML = GB.barcode(data.mailbox + '-' + data.center, 64);
-      form.hidden = true;
-      out.hidden = false;
-      GB.press($('.label__head .stamp', out));
+      $('#lbl-bar').innerHTML = GB.barcode(user.mailbox + '-' + user.center, 64);
     }
-
-    const saved = GB.store.get('gb.mailbox', null);
-    if (saved && saved.mailbox) show(saved);
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (!GB.validate(form)) return;
-      const fd = new FormData(form);
-      const data = {
-        name: String(fd.get('name')).trim(),
-        email: String(fd.get('email')).trim(),
-        center: fd.get('center'),
-        mailbox: 'GB-' + String(Math.floor(100000 + Math.random() * 900000)),
-      };
-      GB.store.set('gb.mailbox', data);
-      show(data);
-      out.focus();
-      GB.toast('사서함 ' + data.mailbox + ' 발급 완료');
-    });
+    show(GB.auth && GB.auth.user);
+    document.addEventListener('gb:auth', (e) => show(e.detail.user));
   }
 
   /* ---------- Departures board ---------- */
