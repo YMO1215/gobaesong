@@ -39,7 +39,9 @@ const alice = { id: 'alice01', password: 'passw0rd!', name: 'Alice Kim', email: 
 test('health reports the local file store', async () => {
   const r = await call('/api/health');
   assert.equal(r.status, 200);
-  assert.deepEqual(r.data, { ok: true, store: 'file' });
+  assert.equal(r.data.ok, true);
+  assert.equal(r.data.store, 'file');
+  assert.equal(r.data.using, null);
 });
 
 test('logged-out /me is a normal 200 with no user', async () => {
