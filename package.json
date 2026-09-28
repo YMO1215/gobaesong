@@ -1,0 +1,13 @@
+{
+  "name": "gobaesong-renewal",
+  "private": true,
+  "type": "module",
+  "description": "Gobaesong frontend renewal: static pages + Vercel member API",
+  "scripts": {
+    "dev": "node tools/dev-server.mjs",
+    "test": "node --test tests/"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
