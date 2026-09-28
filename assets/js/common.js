@@ -187,7 +187,7 @@
     const inputs = GB.$$('input, select, textarea', root).filter((i) => !i.disabled && i.type !== 'hidden' && i.offsetParent !== null && (i.required || i.dataset.rule));
     let first = null;
     inputs.forEach((i) => { if (!GB.checkField(i) && !first) first = i; });
-    if (first) { first.focus({ preventScroll: false }); }
+    if (first) { (first._csButton || first).focus({ preventScroll: false }); } // custom dropdowns focus their button
     return !first;
   };
 
