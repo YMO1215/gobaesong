@@ -3,7 +3,7 @@
    ========================================================================== */
 
 /* ---------- Hero ---------- */
-.hero { position: relative; padding-top: var(--s-8); overflow: hidden; }
+.hero { position: relative; padding-top: calc(var(--s-8) - var(--s-4)); /* + hero__copy 16px = same 72px as .pagehead */ overflow: hidden; }
 .hero::before {
   /* waybill grid, printed faintly behind the right half */
   content: ""; position: absolute; top: 0; right: 0; bottom: 30%; width: 46%; z-index: -1;
@@ -251,7 +251,7 @@
   .fids { min-width: 0; }
 }
 @media (max-width: 640px) {
-  .hero { padding-top: var(--s-6); }
+  .hero { padding-top: calc(var(--s-6) - var(--s-4)); }
   .awb__stamp { right: -12px; bottom: 90px; }
   .awb { margin-right: 12px; }
   .route { height: 132px; margin-top: var(--s-6); }

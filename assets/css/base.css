@@ -444,6 +444,9 @@ html:not(.is-authed) [data-auth="in"], html.is-authed [data-auth="out"] { displa
 
 /* ---------- Page head (sub pages) ---------- */
 .pagehead { padding-block: var(--s-8) var(--s-7); border-bottom: var(--bw) solid var(--line); }
+/* The title column always hugs the top so the breadcrumb sits at the same height on every page,
+   however tall the right-hand column is (align-items:end used to push it down). */
+.pagehead .grid12 > :first-child { align-self: start; }
 .pagehead__crumb { font-family: var(--font-mono); font-size: var(--fs-micro); color: var(--steel-ink); letter-spacing: var(--ls-mono); margin-bottom: var(--s-5); }
 .pagehead__crumb a { text-decoration: none; }
 .pagehead__crumb a:hover { text-decoration: underline; }
@@ -567,6 +570,7 @@ html:not(.is-authed) [data-auth="in"], html.is-authed [data-auth="out"] { displa
 }
 @media (max-width: 640px) {
   .section { padding-block: var(--s-8); }
+  .pagehead { padding-block: var(--s-6) var(--s-6); }
   .topbar__in { gap: var(--s-2); min-height: 44px; }
   .ctimer { gap: 6px; }
   .ctimer__long, .ctimer__full, .ctimer__kst { display: none; }
