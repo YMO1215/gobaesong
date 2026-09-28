@@ -226,7 +226,7 @@
       const link = 'apply.html?' + new URLSearchParams({ shop: d.shop, item: d.item, price: d.price.toFixed(2), cat: d.cat, url: d.url, center: d.center, w: String(d.lb) }).toString();
       return `<article class="deal" role="listitem" aria-labelledby="deal-${d.id}">
         <span class="deal__hole" aria-hidden="true"></span>
-        ${d.image ? `<img class="deal__img" src="${escH(d.image)}" alt="${escH(d.title)} 상품 사진" loading="lazy" decoding="async" width="480" height="480">` : ''}
+        ${d.image ? `<img class="deal__img" src="${escH(d.image)}" alt="${escH(d.title)} 상품 사진" loading="lazy" decoding="async">` : ''}
         <p class="deal__shop mono">${escH(d.shop)} · ${escH(d.label || d.cat)}</p>
         <span class="deal__off stamp" data-status="결제대기" style="--stamp-rot:${off % 2 ? 4 : -4}deg">−${off}%</span>
         <h3 class="deal__title" id="deal-${d.id}">${escH(d.title)}</h3>

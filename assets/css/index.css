@@ -390,6 +390,8 @@
 }
 
 /* Real listings (tools/fetch_wornwear.py): product photo + size/condition */
-.deal__img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: contain; background: var(--paper); border: 1px solid var(--line); margin-top: 6px; }
+/* Worn Wear photos are square PNGs with transparent bands: no frame/tint around them,
+   so the transparent part blends into the white card instead of showing as a longer box */
+.deal__img { display: block; width: 100%; height: auto; background: transparent; border: 0; margin-top: 6px; }
 .deal__meta { font-size: 13px; font-weight: 600; color: var(--steel-ink); margin-top: -4px; }
 .radar__mock.is-real { color: var(--ok); }
