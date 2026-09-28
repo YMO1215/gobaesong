@@ -211,8 +211,10 @@
     $('#radar-count').textContent = live.length ? `딜 ${live.length}개 · 끝난 딜은 자동으로 내려갑니다` : '';
     if (data.real) {
       // real listings pulled by tools/fetch_wornwear.py — say so, and when
-      $('#radar-sub').textContent = `· ${data.source} 실제 매물`;
-      $('#radar-lead').textContent = `${data.source}(파타고니아 공식 중고몰)의 실제 매물을 ${data.fetched}에 가져왔습니다. 중고 한 점씩이라 먼저 팔릴 수 있고, 가격·재고는 판매처 사정에 따라 바뀝니다.`;
+      const shops = data.shops || [data.source];
+      $('#radar-sub').textContent = `· ${shops.length > 1 ? `쇼핑몰 ${shops.length}곳` : shops[0]} 실제 할인가`;
+      $('#radar-lead').textContent = `${shops.join(' · ')}의 실제 할인 매물을 ${data.fetched}에 가져왔습니다. 가격·재고는 판매처 사정에 따라 바뀌고,` +
+        (data.fx && Object.keys(data.fx).length ? ` 유럽 가게 가격은 가져온 시점 환율로 달러 환산했습니다.` : '') + (shops.includes('Worn Wear') ? ' Worn Wear 는 중고 1점씩입니다.' : '');
       $('#radar-badge').textContent = `실제 매물 · ${data.fetched.slice(5, 16).replace('-', '.')} 기준`;
       $('#radar-badge').classList.add('is-real');
     }
@@ -230,13 +232,19 @@
         <p class="deal__shop mono">${escH(d.shop)} · ${escH(d.label || d.cat)}</p>
         <span class="deal__off stamp" data-status="결제대기" style="--stamp-rot:${off % 2 ? 4 : -4}deg">−${off}%</span>
         <h3 class="deal__title" id="deal-${d.id}">${escH(d.title)}</h3>
-        ${d.size || d.condition ? `<p class="deal__meta">${escH([d.size, d.condition].filter(Boolean).join(' · '))}${data.real ? ' · 중고 1점' : ''}</p>` : ''}
+        ${d.size || d.condition || d.used ? `<p class="deal__meta">${escH([d.size, d.condition].filter(Boolean).join(' · '))}${d.used ? ' · 중고 1점' : ''}</p>` : ''}
         <p class="deal__price"><b class="mono">${GB.usd(d.price)}</b><s class="mono" aria-label="정가">${GB.usd(d.was)}</s></p>
+        ${d.currency ? `<p class="deal__fx mono">${escH(d.currency)} ${d.priceLocal.toFixed(2)} → 약 ${GB.usd(d.price)}</p>` : ''}
         <dl class="deal__ship">
           <div><dt>예상 배송비</dt><dd class="mono">${GB.usd(q.total)} · ${d.lbEstimated ? '약 ' : ''}${d.lb}lb · ${d.center}</dd></div>
           <div><dt>딜 종료</dt><dd class="mono">${d.expires ? d.expires.slice(5).replace('-', '.') + '까지' : '재고 소진 시'}</dd></div>
         </dl>
-        ${d.note ? `<p class="deal__note">${escH(d.note)}</p>` : ''}
+        ${(() => {
+          const notes = [d.note];
+          if (d.price > 200) notes.push('$200 초과 · 관부가세 대상');
+          if (d.origin && d.origin !== 'US') notes.push(`${d.origin === 'DE' ? '독일' : d.origin === 'SE' ? '스웨덴' : '해외'} 발송 · 미국 센터를 거치면 국제 배송 2번`);
+          return notes.filter(Boolean).map((n) => `<p class="deal__note">${escH(n)}</p>`).join('');
+        })()}
         <div class="deal__cta">
           <a class="deal__src" href="${escH(d.url)}" target="_blank" rel="noopener noreferrer">원문 보기<span class="sr-only"> (${escH(d.shop)}, 새 창)</span> ↗</a>
           <a class="btn btn--primary btn--sm" href="${escH(link)}">이 상품으로 신청서</a>
