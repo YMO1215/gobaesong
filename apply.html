@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
 <link rel="stylesheet" href="assets/css/tokens.css?v=af816627">
 <link rel="stylesheet" href="assets/css/base.css?v=1489ea39">
-<link rel="stylesheet" href="assets/css/apply.css?v=2a0ba7f5">
+<link rel="stylesheet" href="assets/css/apply.css?v=e03d320d">
 <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('gb.user'))document.documentElement.classList.add('is-authed')}catch(e){}</script>
 </head>
 <body class="page-apply">
@@ -290,6 +290,23 @@
           <p class="whpick__addr"><button type="button" class="btn-text" id="wh-addr">선택한 센터 주소 확인하기</button> <span id="wh-note"></span></p>
         </fieldset>
 
+        <fieldset class="evsel" id="evsel">
+          <legend class="evsel__title">배송 유형 <span class="opt">배송비 이벤트 · 기본은 일반 요금</span></legend>
+          <p class="evsel__lead">요금 페이지와 같은 이벤트입니다. 조건이 맞으면 일반 요금 대신 이 요금으로 신청됩니다.</p>
+          <div class="evsel__grid">
+            <div class="field evsel__event">
+              <label class="field__label" for="o-event">배송비 이벤트</label>
+              <select class="select" id="o-event" name="event"><option value="">해당사항 없음 · 일반 요금</option></select>
+            </div>
+            <div class="field">
+              <label class="field__label" for="o-ptype">상품 분류</label>
+              <select class="select" id="o-ptype" name="ptype"></select>
+            </div>
+          </div>
+          <label class="tick ev-pick__box" id="ev-box18" hidden><input type="checkbox" name="box18"><span>18호 박스(8×6×4in)에 들어가도록 주문했습니다</span></label>
+          <div class="ev-pick__detail" id="ev-detail" aria-live="polite"></div>
+        </fieldset>
+
         <div class="autofill">
           <div class="autofill__head">
             <h3 class="h3">간편 자동입력</h3>
@@ -392,26 +409,7 @@
           <p class="muted">기본만으로도 모든 상자는 열어서 검수하고 다시 포장합니다. 필요한 것만 더하세요.</p>
         </header>
 
-        <fieldset class="opt-group ev-pick" id="ev-pick">
-          <legend class="opt-group__title">배송비 이벤트</legend>
-          <p class="ev-pick__lead">조건이 맞으면 일반 요금 대신 적용됩니다. 기본은 <b>해당사항 없음</b>입니다.</p>
-          <div class="ev-pick__filters">
-            <div class="seg" role="group" aria-label="요금 방식으로 좁히기">
-              <button type="button" aria-pressed="true" data-evk="all">전체</button>
-              <button type="button" aria-pressed="false" data-evk="general">일반</button>
-              <button type="button" aria-pressed="false" data-evk="discount">할인</button>
-              <button type="button" aria-pressed="false" data-evk="fixed">고정가</button>
-            </div>
-            <div class="field ev-pick__type">
-              <label class="field__label" for="o-ptype">상품 분류</label>
-              <select class="select" id="o-ptype" name="ptype"></select>
-            </div>
-            <label class="tick ev-pick__fit"><input type="checkbox" id="ev-fit" checked><span>내 상품에 맞는 이벤트만</span></label>
-          </div>
-          <div class="ev-pick__list" id="ev-list" role="radiogroup" aria-label="배송비 이벤트"></div>
-          <label class="tick ev-pick__box" id="ev-box18" hidden><input type="checkbox" name="box18"><span>18호 박스(8×6×4in)에 들어가도록 주문했습니다</span></label>
-          <div class="ev-pick__detail" id="ev-detail" aria-live="polite"></div>
-        </fieldset>
+        <div class="evsum" id="ev-sum" aria-live="polite"></div>
 
         <fieldset class="opt-group">
           <legend class="opt-group__title">배송 방식</legend>
@@ -491,6 +489,7 @@
       <span class="stamp stamp--lg done__stamp" data-status="완료" style="--stamp-rot:-8deg">접수완료</span>
       <h2 class="h1" id="done-title">신청서가 뉴저지에 도착했습니다.</h2>
       <p class="lead">신청번호 <b class="mono" id="done-no">GB-000417-05</b> — 상자가 센터에 들어오면 검수 사진과 배송비를 알려 드립니다.</p>
+      <p class="done__type">배송 유형 <b id="done-type">일반 요금</b></p>
       <ol class="done__next" role="list">
         <li class="is-done"><span class="mono">01</span>신청서 접수</li>
         <li><span class="mono">02</span>미국 현지 배송 · 트래킹 대기</li>
@@ -683,6 +682,6 @@
 <script src="assets/js/chat.js?v=4cc07a87"></script>
 <script src="assets/js/specials.js?v=7341765c"></script>
 <script src="assets/js/specials-ui.js?v=83d5c023"></script>
-<script src="assets/js/apply.js?v=aac15260"></script>
+<script src="assets/js/apply.js?v=c719e6c5"></script>
 </body>
 </html>

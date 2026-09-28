@@ -241,3 +241,24 @@
 .paste-btn:hover { background: var(--navy); color: var(--paper); }
 .paste-btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
 .input-group .pastebox .input { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+
+/* ---------- 배송 유형 (event dropdown) — step 1, same options as pricing ---------- */
+.evsel { border: var(--bw-strong) solid var(--navy); background: var(--white); margin: 0 0 var(--s-6); padding: var(--s-5); min-width: 0; }
+.evsel__title { float: left; width: 100%; padding: 0; font-weight: 800; font-size: 1.0625rem; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.evsel__title .opt { font-size: var(--fs-micro); font-weight: 500; color: var(--steel-ink); }
+.evsel__lead { clear: both; font-size: var(--fs-small); color: var(--steel-ink); margin: 6px 0 12px; }
+.evsel__grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 12px; align-items: start; }
+.evsel .ev-pick__detail:empty { display: none; }
+.evsum { margin-bottom: var(--s-6); padding: 12px 14px; background: var(--white); border-left: 4px solid var(--steel); font-size: var(--fs-small); display: grid; gap: 4px; }
+.evsum[data-state="ok"] { border-left-color: var(--ok); }
+.evsum[data-state="fail"] { border-left-color: var(--danger); background: #FFF6F3; }
+.evsum p { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.evsum .btn-text { color: var(--navy); font-size: var(--fs-small); }
+.evsum__ok { color: var(--ok); font-weight: 700; }
+.evsum__fail { color: var(--danger); font-weight: 600; }
+.done__type { margin-top: var(--s-3); font-size: var(--fs-small); color: var(--steel-ink); }
+.done__type b { color: var(--navy); }
+@media (max-width: 640px) {
+  .evsel { padding: var(--s-4); }
+  .evsel__grid { grid-template-columns: 1fr; }
+}

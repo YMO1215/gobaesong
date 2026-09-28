@@ -232,7 +232,6 @@
   const CAT_TO_TYPE = { '의류': 'clothing', '신발': 'shoes', '가방·잡화': 'hat_bag', '건강기능식품': 'supplement' };
   const trackingList = () => String(form.elements.tracking.value || '').split(/[\s,]+/).filter(Boolean);
   const selectedEvent = () => (form.elements.event ? form.elements.event.value : '') || '';
-  let evKind = 'all';
   let typeTouched = false;
 
   function specialInput() {
@@ -259,26 +258,11 @@
   }
 
   function renderEventList() {
-    const box = $('#ev-list');
-    if (!SP || !box) return;
-    const cur = selectedEvent();
-    const type = form.elements.ptype.value || 'general';
-    const fitOnly = $('#ev-fit').checked;
-    const today = GB.today();
-    const list = SP.EVENTS.filter((e) => !SP.isEnded(e, today))
-      .filter((e) => e.id === cur || evKind === 'all' || (evKind === 'general' ? e.kind === 'from' : e.kind === evKind))
-      .filter((e) => e.id === cur || !fitOnly || SP.fits(e, type));
-    const row = (value, title, desc, price, kind) => `<label class="choice ev-choice"><input type="radio" name="event" value="${value}"${value === cur ? ' checked' : ''}>
-      <span class="choice__mark" aria-hidden="true"></span>
-      <span class="choice__body"><span class="choice__title">${title}${kind ? ` <span class="spc__kind spc__kind--${kind}">${SP.KIND_LABEL[kind]}</span>` : ''}</span><span class="choice__desc">${desc}</span></span>
-      <span class="choice__price">${price}</span></label>`;
-    box.innerHTML = row('', '해당사항 없음', '일반 무게 요금으로 계산합니다.', '일반 요금', null) +
-      (list.length ? list.map((e) => row(e.id, esc(e.name), esc(e.core.join(' · ')), SP.priceLabel(e), e.kind)).join('')
-        : '<p class="ev-pick__none">이 분류에 맞는 이벤트가 없습니다. 필터를 “전체”로 바꾸거나 “내 상품에 맞는 이벤트만”을 꺼 보세요.</p>');
-    if (!form.elements.event || !Array.from(form.elements.event).some((r) => r.checked)) {
-      const none = box.querySelector('input[value=""]');
-      if (none) none.checked = true;
-    }
+    const sel = $('#o-event');
+    if (!SP || !sel) return;
+    const cur = sel.value;
+    sel.innerHTML = GB.specialOptions(cur); // 해당사항 없음 › 최저가부터 › 일반 요금 할인 › 고정가
+    sel.value = SP.byId(cur) ? cur : '';
   }
 
   function setDisabled(name, value, disabled, why) {
@@ -312,8 +296,19 @@
     const r = specialResult(q);
     const alts = SP.candidates(specialInput(), q.base, GB.today());
     const fix = needTrack && trackingList().length < 1
-      ? '<p class="ev-pick__fix"><b>트래킹번호가 필요합니다.</b> <button type="button" class="btn-text" data-goto-tracking>상품정보에서 트래킹 입력하기</button></p>' : '';
+      ? '<p class="ev-pick__fix"><b>트래킹번호가 필요합니다.</b> <button type="button" class="btn-text" data-goto-tracking>트래킹번호 입력하기</button></p>' : '';
     detail.innerHTML = GB.specialHTML(e, 'table') + fix + GB.specialResultHTML(r, alts);
+    renderEventSummary(e, r);
+  }
+
+  // Step 3 recap of the delivery type chosen in step 1 (options there can change the verdict)
+  function renderEventSummary(e, r) {
+    const box = $('#ev-sum');
+    if (!box) return;
+    if (!e) { box.innerHTML = '<p><b>배송 유형</b> 해당사항 없음 · 일반 요금 <button type="button" class="btn-text" data-goto-event>1단계에서 이벤트 선택</button></p>'; box.dataset.state = 'none'; return; }
+    box.dataset.state = r && r.ok ? 'ok' : 'fail';
+    box.innerHTML = `<p><b>배송 유형</b> ${esc(e.name)} <span class="spc__kind spc__kind--${e.kind}">${SP.KIND_LABEL[e.kind]}</span> ${SP.priceLabel(e)} <button type="button" class="btn-text" data-goto-event>1단계에서 변경</button></p>` +
+      (r && r.ok ? '<p class="evsum__ok">조건 충족 — 이 요금으로 신청됩니다.</p>' : `<p class="evsum__fail">조건 불충족: ${esc((r && r.reasons || []).join(' · '))}</p>`);
   }
 
   function eventStepOk() {
@@ -322,31 +317,23 @@
     const r = specialResult(currentQuote());
     if (r && r.ok) return true;
     GB.toast('선택한 배송비 이벤트의 조건이 맞지 않습니다. 조건을 고치거나 “해당사항 없음”을 고르세요');
-    $('#ev-detail').scrollIntoView({ behavior: GB.reduceMotion ? 'auto' : 'smooth', block: 'center' });
+    const target = current === 1 ? $('#ev-detail') : $('#ev-sum');
+    target.scrollIntoView({ behavior: GB.reduceMotion ? 'auto' : 'smooth', block: 'center' });
     return false;
   }
 
   function initEvents() {
     if (!SP) return;
     $('#o-ptype').innerHTML = Object.entries(SP.TYPES).map(([k, v]) => `<option value="${k}">${v}</option>`).join('');
-    $('#o-ptype').addEventListener('change', () => { typeTouched = true; renderEventList(); renderEventPanel(); });
-    $('#ev-fit').addEventListener('change', () => { renderEventList(); });
-    $$('[data-evk]').forEach((b) => b.addEventListener('click', () => {
-      evKind = b.dataset.evk;
-      $$('[data-evk]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-      renderEventList();
-    }));
+    // 'input' fires before 'change' (and before the form-level update that auto-suggests a type): mark the choice first
+    ['input', 'change'].forEach((t) => $('#o-ptype').addEventListener(t, () => { typeTouched = true; }));
+    $('#o-ptype').addEventListener('change', () => renderEventPanel());
+    const focusEvent = () => { const b = $('#o-event').closest('.cselect'); (b ? b.querySelector('.cselect__btn') : $('#o-event')).focus(); };
     document.addEventListener('click', (ev) => {
       const pick = ev.target.closest('[data-pick-special]');
-      if (pick) {
-        evKind = 'all'; $('#ev-fit').checked = false;
-        $$('[data-evk]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.evk === 'all')));
-        renderEventList();
-        const r = Array.from(form.elements.event).find((x) => x.value === pick.dataset.pickSpecial);
-        if (r) { r.checked = true; update(); }
-        return;
-      }
-      if (ev.target.closest('[data-goto-tracking]')) { goTo(1, true); setTimeout(() => $('#f-track').focus(), 50); }
+      if (pick) { $('#o-event').value = pick.dataset.pickSpecial; update(); return; }
+      if (ev.target.closest('[data-goto-tracking]')) { if (current !== 1) goTo(1, true); setTimeout(() => $('#f-track').focus(), 50); return; }
+      if (ev.target.closest('[data-goto-event]')) { goTo(1, true); setTimeout(() => { $('#evsel').scrollIntoView({ block: 'center' }); focusEvent(); }, 60); }
     });
     renderEventList();
   }
@@ -355,7 +342,7 @@
     if (!SP || typeTouched) return;
     const cat = (readItems()[0] || {}).cat;
     const t = CAT_TO_TYPE[cat] || 'general';
-    if (form.elements.ptype.value !== t) { form.elements.ptype.value = t; renderEventList(); }
+    if (form.elements.ptype.value !== t) form.elements.ptype.value = t;
   }
 
   /* ---------- Summary + autosave ---------- */
@@ -529,7 +516,12 @@
     const no = `${mailbox}-${String(apps.length + 5).padStart(2, '0')}`;
     const f = form.elements;
     const items = readItems();
-    apps.push({ no, shop: f.shop.value, title: items[0] ? items[0].name : '', count: items.length, declared: declaredTotal(items), at: Date.now() });
+    const evSel = SP && SP.byId(selectedEvent());
+    const sp = feeWithSpecial(currentQuote());
+    const deliveryType = evSel && sp.r && sp.r.ok ? { id: evSel.id, name: evSel.name, price: SP.priceLabel(evSel) } : null;
+    apps.push({ no, shop: f.shop.value, title: items[0] ? items[0].name : '', count: items.length, declared: declaredTotal(items),
+      center: f.center.value, event: deliveryType, fee: sp.pending ? null : sp.total, at: Date.now() });
+    $('#done-type').textContent = deliveryType ? `${deliveryType.name} · ${deliveryType.price}` : '일반 요금';
     GB.store.set(APPS_KEY, apps);
     GB.store.del(DRAFT_KEY);
     $('#done-no').textContent = no;
@@ -598,9 +590,7 @@
   if (evParam && SP && SP.byId(evParam)) {
     const ev = SP.byId(evParam);
     if (ev.types) { form.elements.ptype.value = ev.types[0]; typeTouched = true; }
-    renderEventList();
-    const r = Array.from(form.elements.event).find((x) => x.value === evParam);
-    if (r) r.checked = true;
+    form.elements.event.value = evParam;
     if (!qs.get('item')) history.replaceState(null, '', location.pathname);
     GB.toast(`${ev.name} 이벤트를 선택해 두었습니다. 3단계 옵션에서 조건을 확인하세요`);
   }

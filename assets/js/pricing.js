@@ -90,7 +90,8 @@
     $('#p-special').innerHTML = res ? GB.specialResultHTML(res, S.candidates(input, q.base, GB.today())) : '';
     $('#p-total').textContent = GB.usd(total) + (pending ? '부터' : '');
     $('#p-krw').textContent = pending ? '입고 후 실측으로 확정' : '약 ' + GB.krw(Math.round(total * GB.KRW_PER_USD / 10) * 10);
-    $('#p-apply').href = 'apply.html' + (res && res.ok ? '?event=' + res.id : '');
+    // carry the chosen event even if conditions are not met yet — the application form re-checks them
+    $('#p-apply').href = 'apply.html' + (evId ? '?event=' + evId : '');
     placeTag();
     highlightRow(q.billable);
   }
