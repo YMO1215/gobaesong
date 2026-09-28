@@ -263,15 +263,30 @@
     const btn = GB.$('.menu-btn');
     const nav = GB.$('#gnav');
     if (!btn || !nav) return;
-    const set = (open) => {
+    const set = (open, instant) => {
+      if (instant) nav.classList.add('no-anim');
       btn.setAttribute('aria-expanded', String(open));
       nav.classList.toggle('is-open', open);
       const header = nav.closest('.site-header');
       if (header) header.classList.toggle('is-menu-open', open);
       btn.querySelector('.menu-btn__label').textContent = open ? '닫기' : '메뉴';
+      if (instant) requestAnimationFrame(() => requestAnimationFrame(() => nav.classList.remove('no-anim')));
+    };
+    // A link to another page must not collapse the menu first: the 0.3s fold would slide the page up
+    // right before the next page paints (visible jump). Leave it open; the next page starts closed.
+    const leavesPage = (a) => {
+      if (!a || a.target === '_blank' || a.hasAttribute('download')) return false;
+      const url = new URL(a.href, location.href);
+      return url.origin === location.origin && (url.pathname !== location.pathname || url.search !== location.search);
     };
     btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
-    nav.addEventListener('click', (e) => { if (e.target.closest('a, button')) set(false); });
+    nav.addEventListener('click', (e) => {
+      const a = e.target.closest('a');
+      if (a && leavesPage(a) && !e.defaultPrevented && !a.hasAttribute('data-auth-open')) return;
+      if (e.target.closest('a, button')) set(false, true);
+    });
+    // Coming back with the Back button (bfcache) must not show a menu left open
+    window.addEventListener('pageshow', (e) => { if (e.persisted) set(false, true); });
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') { set(false); btn.focus(); }
     });

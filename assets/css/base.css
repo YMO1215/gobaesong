@@ -712,3 +712,5 @@ html:not(.is-authed) [data-auth="in"], html.is-authed [data-auth="out"] { displa
   .cselect__btn .cselect__meta { order: 3; flex-basis: 100%; font-size: 12px; }
   .cselect__list { max-height: 60vh; }
 }
+/* instant close (same-page actions, Back-button return) — no fold animation */
+.gnav.no-anim, .gnav.no-anim .gnav__inner { transition: none !important; }
