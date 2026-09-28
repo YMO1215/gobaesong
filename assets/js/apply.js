@@ -32,6 +32,53 @@
   let current = 1;
   let reached = 1;
 
+  /* ---------- Paste buttons on every required text field ---------- */
+  const PASTABLE = 'input.input[required]:not([type="checkbox"]):not([type="radio"]):not([data-nopaste])';
+  function addPasteButtons(root) {
+    $$(PASTABLE, root).forEach((input) => {
+      if (input.dataset.paste) return;
+      input.dataset.paste = '1';
+      const box = document.createElement('span');
+      box.className = 'pastebox';
+      input.parentNode.insertBefore(box, input);
+      box.appendChild(input);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'paste-btn';
+      btn.textContent = '붙여넣기';
+      const label = input.id && document.querySelector(`label[for="${input.id}"]`);
+      const name = label ? label.childNodes[0].textContent.trim() : '이 칸';
+      btn.setAttribute('aria-label', `${name}에 붙여넣기`);
+      box.appendChild(btn);
+    });
+  }
+  async function pasteInto(input) {
+    let text = '';
+    try {
+      if (!navigator.clipboard || !navigator.clipboard.readText) throw new Error('unsupported');
+      text = await navigator.clipboard.readText();
+    } catch {
+      input.focus();
+      GB.toast('클립보드를 읽을 수 없습니다. 칸을 길게 눌러 “붙여넣기”를 선택하세요');
+      return;
+    }
+    text = String(text).replace(/\s+/g, ' ').trim();
+    if (!text) { input.focus(); GB.toast('클립보드가 비어 있습니다'); return; }
+    if (input.maxLength > 0) text = text.slice(0, input.maxLength);
+    input.value = text;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+    GB.checkField(input);
+    input.focus();
+  }
+  form.addEventListener('click', (e) => {
+    const b = e.target.closest('.paste-btn');
+    if (b) pasteInto(b.parentNode.querySelector('input'));
+  });
+  addPasteButtons(form);
+  // item rows added later (template clones)
+  new MutationObserver((muts) => muts.forEach((m) => m.addedNodes.forEach((n) => { if (n.nodeType === 1) addPasteButtons(n); }))).observe(form, { childList: true, subtree: true });
+
   /* ---------- Items ---------- */
   function addItem(data, animate) {
     const node = tpl.content.firstElementChild.cloneNode(true);

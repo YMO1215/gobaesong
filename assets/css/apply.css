@@ -229,3 +229,15 @@
   .whpick { padding: var(--s-4); }
   .whpick__row { grid-template-columns: 1fr; }
 }
+
+/* ---------- Paste button inside required fields ---------- */
+.pastebox { position: relative; display: block; flex: 1; min-width: 0; }
+.pastebox .input { padding-right: 96px; }
+.paste-btn {
+  position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+  min-height: 36px; padding: 0 12px; border: 1px solid var(--navy); border-radius: var(--r-1);
+  background: var(--paper); color: var(--navy); font-size: 13px; font-weight: 700; cursor: pointer;
+}
+.paste-btn:hover { background: var(--navy); color: var(--paper); }
+.paste-btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+.input-group .pastebox .input { border-top-right-radius: 0; border-bottom-right-radius: 0; }
