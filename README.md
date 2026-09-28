@@ -30,11 +30,21 @@
 - `end`가 지나면 모든 화면에서 자동으로 "종료", 메인 띠 대표 3건은 `featured` 순서(운영자가 지정)
 - 근거는 고배송 신청서 화면의 이벤트 옵션. **운영 투입 전 관리자 기준 요금·종료일과 다시 대조**하고, 실제 청구는 서버 계산을 기준으로 해야 합니다
 
-## 핫딜 운영
+## 핫딜 운영 (Patagonia Worn Wear 실제 매물)
 
-`assets/js/deals-data.js` 한 파일을 **매주 월·목 사람이 직접** 고칩니다(자동 크롤링 금지). 6–12개만 두고, 각 딜의
-`expires`가 지나면 화면에서 자동으로 빠집니다. `updated`·`nextUpdate`·`affiliate`(제휴 링크 여부) 값이 섹션 상단 문구에 그대로 쓰입니다.
-고친 뒤에는 `python tools/sync_partials.py`로 파일 해시를 갱신하세요.
+핫딜 레이더는 `assets/js/deals-data.js`를 읽기만 합니다. 이 파일은 `tools/fetch_wornwear.py`가 만듭니다.
+
+```bash
+python tools/fetch_wornwear.py            # Worn Wear 에서 할인 중인 실제 매물 8개
+python tools/fetch_wornwear.py --count 6
+python tools/sync_partials.py             # 자산 해시 갱신 후 커밋·푸시
+```
+
+- worn wear 앱(`thrift_wear/app/collector.py`)과 같은 방식: 공개 `collections/{mens,packs-and-gear}/products.json`을 **컬렉션마다 1회**, 같은 헤더로 `requests` 요청(curl 은 403), `sort_by`·`filter` 금지(robots), 429 면 즉시 중단
+- 할인 중인 재고에서 분류(재킷·바지·플리스·셔츠·가방 등)가 겹치지 않게 골라 사진·사이즈·컨디션·원문 링크를 넣습니다. 무게는 분류별 추정값(`lbEstimated`)
+- 사이트는 방문할 때마다 크롤링하지 않습니다. 운영 주기(월·목)에 사람이 실행하고 결과를 확인해 올립니다
+- 중고 1점씩이라 빨리 팔립니다. `expires`(가져온 날 + 3일)가 지나면 화면에서 자동으로 빠집니다
+- 필요: `pip install requests`
 
 ## 파일 구조
 

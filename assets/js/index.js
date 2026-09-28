@@ -209,6 +209,13 @@
     $('#radar-next').textContent = fmtDay(data.nextUpdate);
     $('#radar-affiliate').textContent = data.affiliate ? '일부 링크는 제휴 링크이며 구매 시 수수료를 받을 수 있습니다.' : '제휴·광고 링크가 아닙니다.';
     $('#radar-count').textContent = live.length ? `딜 ${live.length}개 · 끝난 딜은 자동으로 내려갑니다` : '';
+    if (data.real) {
+      // real listings pulled by tools/fetch_wornwear.py — say so, and when
+      $('#radar-sub').textContent = `· ${data.source} 실제 매물`;
+      $('#radar-lead').textContent = `${data.source}(파타고니아 공식 중고몰)의 실제 매물을 ${data.fetched}에 가져왔습니다. 중고 한 점씩이라 먼저 팔릴 수 있고, 가격·재고는 판매처 사정에 따라 바뀝니다.`;
+      $('#radar-badge').textContent = `실제 매물 · ${data.fetched.slice(5, 16).replace('-', '.')} 기준`;
+      $('#radar-badge').classList.add('is-real');
+    }
     if (!live.length) {
       rail.innerHTML = '<p class="radar__empty">이번 주 딜을 고르는 중입니다. 다음 갱신일에 다시 확인해 주세요.</p>';
       return;
@@ -219,12 +226,14 @@
       const link = 'apply.html?' + new URLSearchParams({ shop: d.shop, item: d.item, price: d.price.toFixed(2), cat: d.cat, url: d.url, center: d.center, w: String(d.lb) }).toString();
       return `<article class="deal" role="listitem" aria-labelledby="deal-${d.id}">
         <span class="deal__hole" aria-hidden="true"></span>
-        <p class="deal__shop mono">${escH(d.shop)} · ${escH(d.cat)}</p>
+        ${d.image ? `<img class="deal__img" src="${escH(d.image)}" alt="${escH(d.title)} 상품 사진" loading="lazy" decoding="async" width="480" height="480">` : ''}
+        <p class="deal__shop mono">${escH(d.shop)} · ${escH(d.label || d.cat)}</p>
         <span class="deal__off stamp" data-status="결제대기" style="--stamp-rot:${off % 2 ? 4 : -4}deg">−${off}%</span>
         <h3 class="deal__title" id="deal-${d.id}">${escH(d.title)}</h3>
+        ${d.size || d.condition ? `<p class="deal__meta">${escH([d.size, d.condition].filter(Boolean).join(' · '))}${data.real ? ' · 중고 1점' : ''}</p>` : ''}
         <p class="deal__price"><b class="mono">${GB.usd(d.price)}</b><s class="mono" aria-label="정가">${GB.usd(d.was)}</s></p>
         <dl class="deal__ship">
-          <div><dt>예상 배송비</dt><dd class="mono">${GB.usd(q.total)} · ${d.lb}lb · ${d.center}</dd></div>
+          <div><dt>예상 배송비</dt><dd class="mono">${GB.usd(q.total)} · ${d.lbEstimated ? '약 ' : ''}${d.lb}lb · ${d.center}</dd></div>
           <div><dt>딜 종료</dt><dd class="mono">${d.expires ? d.expires.slice(5).replace('-', '.') + '까지' : '재고 소진 시'}</dd></div>
         </dl>
         ${d.note ? `<p class="deal__note">${escH(d.note)}</p>` : ''}
