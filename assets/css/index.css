@@ -377,3 +377,14 @@
 /* Hot deal radar is the first thing under the header: same top spacing as page heads (72px / 32px) */
 .radar--top { padding-top: var(--s-8); }
 @media (max-width: 640px) { .radar--top { padding-top: var(--s-6); } }
+/* Radar heading: the sub-label never leaves a single orphaned word */
+.radar__title .eyebrow { flex-wrap: wrap; row-gap: 2px; }
+.radar__sub { white-space: nowrap; }
+@media (max-width: 640px) {
+  /* title starts at the left edge; the dial becomes a small mark at the top right */
+  .radar__head { grid-template-columns: minmax(0, 1fr) 52px; gap: var(--s-3) var(--s-4); align-items: start; }
+  .radar__title { grid-column: 1; grid-row: 1; }
+  .radar__dial { grid-column: 2; grid-row: 1; justify-self: end; }
+  .radar__dial svg { width: 52px; height: 52px; }
+  .radar__meta { grid-column: 1 / -1; }
+}
