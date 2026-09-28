@@ -94,6 +94,8 @@ npm test        # API 13개 + 업무시간 6개 자동 테스트
 python tools/sync_partials.py
 ```
 
+**`assets/` 의 CSS·JS·이미지를 고친 뒤에도 꼭 실행하세요.** 모든 파일 주소에 `?v=내용해시`를 다시 붙여, 방문자 브라우저가 새 HTML에 예전 CSS를 붙여 보여 주는 일을 막습니다.
+
 각 페이지의 `<!-- HEADER:START -->` … `<!-- HEADER:END -->` 사이가 교체되고, 현재 페이지 메뉴에 `aria-current="page"`가 붙습니다.
 
 ## 더미 데이터 규칙
