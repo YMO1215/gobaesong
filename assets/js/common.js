@@ -266,10 +266,12 @@
     const set = (open) => {
       btn.setAttribute('aria-expanded', String(open));
       nav.classList.toggle('is-open', open);
+      const header = nav.closest('.site-header');
+      if (header) header.classList.toggle('is-menu-open', open);
       btn.querySelector('.menu-btn__label').textContent = open ? '닫기' : '메뉴';
     };
     btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
-    nav.addEventListener('click', (e) => { if (e.target.closest('a')) set(false); });
+    nav.addEventListener('click', (e) => { if (e.target.closest('a, button')) set(false); });
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') { set(false); btn.focus(); }
     });

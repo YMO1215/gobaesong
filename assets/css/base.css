@@ -545,21 +545,42 @@ html:not(.is-authed) [data-auth="in"], html.is-authed [data-auth="out"] { displa
   /* 7 menu items no longer fit next to the account area: collapse into the menu panel */
   .menu-btn { display: inline-flex; margin-left: 0; }
   .hauth { margin-left: auto; }
-  .gnav__join { display: inline-flex; }
+  /* The menu is part of the header: it unfolds inside it and pushes the page down (no floating layer) */
+  .site-header__in { flex-wrap: wrap; height: auto; min-height: var(--header-h); row-gap: 0; }
+  .brand, .hauth, .menu-btn { height: var(--header-h); display: inline-flex; align-items: center; }
+  .menu-btn { height: auto; align-self: center; }
   .gnav {
-    position: absolute; left: 0; right: 0; top: 100%; z-index: 49;
-    max-height: calc(100vh - var(--header-h)); overflow-y: auto;
-    flex-direction: column; align-items: stretch; gap: var(--s-5);
-    background: var(--paper); border-bottom: var(--bw-strong) solid var(--navy);
-    padding: var(--s-5) var(--gutter) var(--s-6);
-    transform: translateY(-8px); opacity: 0; visibility: hidden;
-    transition: opacity var(--dur-1) var(--ease), transform var(--dur-1) var(--ease), visibility 0s linear var(--dur-1);
+    order: 10; flex: 0 0 100%; margin: 0; display: grid; grid-template-rows: 0fr;
+    transition: grid-template-rows var(--dur-2) var(--ease);
   }
-  .gnav.is-open { opacity: 1; transform: none; visibility: visible; transition-delay: 0s; }
-  .gnav ul { flex-direction: column; gap: 0; }
-  .gnav ul a:not(.btn) { display: block; padding: 14px 0; font-size: 1.125rem; border-bottom: var(--bw) solid var(--line); }
+  .gnav.is-open { grid-template-rows: 1fr; }
+  .gnav__inner {
+    display: block; min-height: 0; overflow: hidden; visibility: hidden;
+    transition: visibility 0s linear var(--dur-2);
+  }
+  .gnav.is-open .gnav__inner { visibility: visible; transition-delay: 0s; overflow-y: auto; max-height: calc(100dvh - var(--header-h)); }
+  .gnav__code { display: block; padding: var(--s-4) 0 var(--s-2); border-top: var(--bw) solid var(--line); font-size: 11px; letter-spacing: .14em; color: var(--steel-ink); }
+  .gnav ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s-6); border-top: var(--bw-strong) solid var(--navy); }
+  .gnav ul a:not(.btn) {
+    display: grid; grid-template-columns: 36px minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 8px;
+    padding: 12px 0; border-bottom: var(--bw) solid var(--line); font-size: 1.0625rem; font-weight: 800;
+  }
+  .gnav__no { display: block; grid-row: 1 / span 2; padding-top: 3px; font-size: 12px; font-weight: 700; color: var(--steel-ink); }
+  .gnav__desc { display: block; grid-column: 2; font-size: 12px; font-weight: 500; color: var(--steel-ink); }
+  .gnav ul a:not(.btn):hover .gnav__txt { text-decoration: underline; text-underline-offset: 3px; }
   .gnav ul a[aria-current="page"] { border-bottom-color: var(--line); box-shadow: inset 4px 0 0 var(--orange); padding-left: 14px; }
-  .gnav .btn { width: 100%; min-height: 52px; }
+  .gnav ul a[aria-current="page"] .gnav__no { color: var(--orange-ink); }
+  .gnav__cta { display: flex; flex-wrap: wrap; gap: 8px; padding: var(--s-4) 0 var(--s-5); }
+  .gnav__join { display: inline-flex; flex: 1; min-width: 180px; min-height: 48px; }
+  .site-header.is-menu-open { border-bottom: var(--bw-strong) solid var(--navy); }
+}
+@media (min-width: 1181px) {
+  .gnav__inner { display: contents; }
+  .gnav__code, .gnav__no, .gnav__desc, .gnav__cta { display: none; }
+}
+@media (max-width: 640px) {
+  .gnav ul { grid-template-columns: 1fr; }
+  .gnav__join { flex-basis: 100%; }
 }
 @media (max-width: 960px) {
   :root { --header-h: 64px; }
@@ -586,7 +607,7 @@ html:not(.is-authed) [data-auth="in"], html.is-authed [data-auth="out"] { displa
   .addrpop__rows .addrpop__copy { grid-column: 2; grid-row: 1 / span 2; }
   .brand__sub { display: none; }
   .hauth__join { display: none; }
-  .site-header__in { gap: var(--s-3); }
+  .site-header__in { column-gap: var(--s-3); row-gap: 0; }
   .hauth { gap: 6px; }
   .hauth .btn--sm { min-height: 38px; padding: 0 10px; font-size: 13px; }
   .hauth__apply-long { display: none; }

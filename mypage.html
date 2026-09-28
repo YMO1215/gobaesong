@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
 <link rel="stylesheet" href="assets/css/tokens.css?v=af816627">
-<link rel="stylesheet" href="assets/css/base.css?v=0f38df08">
+<link rel="stylesheet" href="assets/css/base.css?v=d80d752b">
 <link rel="stylesheet" href="assets/css/mypage.css?v=960ef925">
 <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('gb.user'))document.documentElement.classList.add('is-authed')}catch(e){}</script>
 </head>
@@ -111,16 +111,23 @@
       <span class="brand__txt"><span class="brand__word">고배송</span><span class="brand__sub">GOBAESONG · US→KR</span></span>
     </a>
     <nav class="gnav" id="gnav" aria-label="주 메뉴">
-      <ul>
-        <li><a href="guide.html">이용방법</a></li>
-        <li><a href="pricing.html">요금</a></li>
-        <li><a href="customs.html">통관 가이드</a></li>
-        <li><a href="events.html">이벤트</a></li>
-        <li><a href="apply.html">신청서</a></li>
-        <li><a href="mypage.html" aria-current="page">마이페이지</a></li>
-        <li><a href="support.html">고객센터</a></li>
-      </ul>
-      <a class="btn btn--primary gnav__join" href="index.html#issue" data-auth="out" data-auth-open="signup">무료 사서함 발급</a>
+      <div class="gnav__inner">
+        <p class="gnav__code mono" aria-hidden="true">GATES · 페이지</p>
+        <ul>
+          <li><a href="guide.html"><span class="gnav__no mono" aria-hidden="true">01</span><span class="gnav__txt">이용방법</span><span class="gnav__desc">처음이라면 8단계</span></a></li>
+          <li><a href="pricing.html"><span class="gnav__no mono" aria-hidden="true">02</span><span class="gnav__txt">요금</span><span class="gnav__desc">요금표·이벤트 배송비·관부가세</span></a></li>
+          <li><a href="customs.html"><span class="gnav__no mono" aria-hidden="true">03</span><span class="gnav__txt">통관 가이드</span><span class="gnav__desc">개인통관고유부호 발급·오류</span></a></li>
+          <li><a href="events.html"><span class="gnav__no mono" aria-hidden="true">04</span><span class="gnav__txt">이벤트</span><span class="gnav__desc">배송비 스페셜·쿠폰·세일 캘린더</span></a></li>
+          <li><a href="apply.html"><span class="gnav__no mono" aria-hidden="true">05</span><span class="gnav__txt">신청서</span><span class="gnav__desc">배송대행 4단계 신청</span></a></li>
+          <li><a href="mypage.html" aria-current="page"><span class="gnav__no mono" aria-hidden="true">06</span><span class="gnav__txt">마이페이지</span><span class="gnav__desc">내 화물 여정·결제</span></a></li>
+          <li><a href="support.html"><span class="gnav__no mono" aria-hidden="true">07</span><span class="gnav__txt">고객센터</span><span class="gnav__desc">FAQ·1:1 문의·공지</span></a></li>
+        </ul>
+        <div class="gnav__cta">
+          <a class="btn btn--primary gnav__join" href="index.html#issue" data-auth="out" data-auth-open="signup">무료 사서함 발급</a>
+          <a class="btn btn--primary gnav__join" href="apply.html" data-auth="in">간편 신청서 쓰기</a>
+          <button type="button" class="btn btn--ghost gnav__join" data-chat-open>상담 연결</button>
+        </div>
+      </div>
     </nav>
     <div class="hauth">
       <a class="btn btn--primary btn--sm hauth__join" href="index.html#issue" data-auth="out" data-auth-open="signup">사서함 발급</a>
@@ -496,7 +503,7 @@ Edison, NJ 08800 USA</address>
 <!-- FOOTER:END -->
 
 <script src="assets/js/hours.js?v=754dcf87"></script>
-<script src="assets/js/common.js?v=69ef406c"></script>
+<script src="assets/js/common.js?v=ba5b04ee"></script>
 <script src="assets/js/member.js?v=3395ab68"></script>
 <script src="assets/js/chat.js?v=4cc07a87"></script>
 <script src="assets/js/mypage.js?v=3d15241e"></script>
