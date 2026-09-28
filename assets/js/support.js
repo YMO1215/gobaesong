@@ -61,24 +61,53 @@
       $('#faq-none').hidden = n > 0;
     }
 
-    $$('.cat').forEach((b) => b.addEventListener('click', () => {
-      cat = b.dataset.cat;
-      $$('.cat').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-      apply();
-    }));
+    // Filter state lives in the URL (?cat=&q=#faq) so Back steps through filters instead of leaving the page
     const input = $('#faq-q');
-    input.addEventListener('input', () => { query = input.value.trim(); apply(); });
-    $('#faq-search-form').addEventListener('submit', (e) => {
-      e.preventDefault();
+    const CATS = $$('.cat').map((b) => b.dataset.cat);
+    function syncControls() {
+      $$('.cat').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.cat === cat)));
+      input.value = query;
+      const filtered = cat !== 'all' || !!query;
+      $$('[data-faq-reset]').forEach((b) => { if (b.classList.contains('faq__reset')) b.hidden = !filtered; });
+    }
+    function toURL(mode) {
+      const u = new URL(location.href);
+      u.searchParams.delete('cat'); u.searchParams.delete('q');
+      if (cat !== 'all') u.searchParams.set('cat', cat);
+      if (query) u.searchParams.set('q', query);
+      u.hash = 'faq';
+      if (u.href === location.href) return;
+      history[mode === 'push' ? 'pushState' : 'replaceState']({ faq: true }, '', u);
+    }
+    function fromURL() {
+      const u = new URL(location.href);
+      const c = u.searchParams.get('cat');
+      cat = CATS.includes(c) ? c : 'all';
+      query = (u.searchParams.get('q') || '').trim().slice(0, 40);
+    }
+    const commit = (mode) => { syncControls(); apply(); toURL(mode); };
+    const toList = () => $('#faq').scrollIntoView({ behavior: GB.reduceMotion ? 'auto' : 'smooth' });
+
+    $$('.cat').forEach((b) => b.addEventListener('click', () => { cat = b.dataset.cat; commit('push'); }));
+    let typing = false;
+    input.addEventListener('input', () => {
       query = input.value.trim();
-      apply();
-      $('#faq').scrollIntoView({ behavior: GB.reduceMotion ? 'auto' : 'smooth' });
+      // first keystroke of a new search makes one history entry; the rest just update it
+      commit(typing ? 'replace' : 'push');
+      typing = true;
     });
-    $$('[data-q]').forEach((b) => b.addEventListener('click', () => {
-      input.value = b.dataset.q; query = b.dataset.q; apply();
-      $('#faq').scrollIntoView({ behavior: GB.reduceMotion ? 'auto' : 'smooth' });
+    input.addEventListener('blur', () => { typing = false; });
+    $('#faq-search-form').addEventListener('submit', (e) => { e.preventDefault(); query = input.value.trim(); typing = false; commit('replace'); toList(); });
+    $$('[data-q]').forEach((b) => b.addEventListener('click', () => { query = b.dataset.q; typing = false; commit('push'); toList(); }));
+    $$('[data-faq-reset]').forEach((b) => b.addEventListener('click', () => {
+      cat = 'all'; query = ''; typing = false; commit('push');
     }));
+    window.addEventListener('popstate', () => { fromURL(); typing = false; syncControls(); apply(); });
+
+    fromURL();
+    syncControls();
     apply();
+    if (cat !== 'all' || query) setTimeout(toList, 0);
   }
 
   /* ---------- Inquiry form ---------- */

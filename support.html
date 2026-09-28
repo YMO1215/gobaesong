@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
 <link rel="stylesheet" href="assets/css/tokens.css?v=af816627">
 <link rel="stylesheet" href="assets/css/base.css?v=1489ea39">
-<link rel="stylesheet" href="assets/css/support.css?v=11cac0b8">
+<link rel="stylesheet" href="assets/css/support.css?v=113a5ef4">
 <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('gb.user'))document.documentElement.classList.add('is-authed')}catch(e){}</script>
 </head>
 <body class="page-support">
@@ -286,7 +286,7 @@
       </div>
 
       <div class="faq__main">
-        <p class="faq__count small" id="faq-count" role="status">전체 17개</p>
+        <div class="faq__bar"><p class="faq__count small" id="faq-count" role="status">전체 17개</p><button type="button" class="faq__reset" data-faq-reset hidden><span aria-hidden="true">×</span> 검색·분류 지우고 전체 보기</button></div>
         <div class="faq__list" id="faq-list">
           <details class="qa" data-cat="box"><summary><span class="qa__q mono">Q</span>사서함 번호는 쇼핑몰 주소 어디에 적나요?</summary><div class="qa__a"><p>배송지의 두 번째 줄(Address 2)에 <b class="mono">GB-000000</b> 형식 그대로 적습니다. 두 번째 줄이 없는 쇼핑몰은 받는 사람 이름 뒤에 한 칸 띄우고 붙여도 됩니다.</p></div></details>
           <details class="qa" data-cat="box"><summary><span class="qa__q mono">Q</span>뉴저지와 델라웨어 중 어디로 받아야 하나요?</summary><div class="qa__a"><p>델라웨어는 판매세가 없는 주라 전자기기와 고가품에 유리합니다. 의류·신발은 뉴저지도 판매세 면제 품목이 많아 차이가 작고, 당일 입고 마감이 17:00로 빠릅니다.</p></div></details>
@@ -306,7 +306,7 @@
           <details class="qa" data-cat="ship"><summary><span class="qa__q mono">Q</span>국내 택배는 어디로 오나요?</summary><div class="qa__a"><p>통관이 끝나면 우체국택배로 인계됩니다. 국내 운송장번호는 마이페이지 여정 지도의 ‘배송중’ 단계에 표시됩니다.</p></div></details>
           <details class="qa" data-cat="ship"><summary><span class="qa__q mono">Q</span>미국 쇼핑몰로 반품할 수 있나요?</summary><div class="qa__a"><p>입고 후 출고 전이라면 센터에서 반품 라벨을 붙여 보내 드립니다. 반품 대행 수수료는 <span class="mono">$5.00</span>이며 쇼핑몰 반품 라벨은 직접 받아 주셔야 합니다.</p></div></details>
         </div>
-        <p class="faq__none" id="faq-none" hidden>찾는 답이 없나요? <a href="#ask">1:1 문의</a>로 남겨 주세요.</p>
+        <p class="faq__none" id="faq-none" hidden>찾는 답이 없나요? <button type="button" class="btn-text" data-faq-reset>전체 질문 다시 보기</button> 또는 <a href="#ask">1:1 문의</a>로 남겨 주세요.</p>
       </div>
     </div>
   </section>
@@ -516,6 +516,6 @@
 <script src="assets/js/cselect.js?v=63d6bff8"></script>
 <script src="assets/js/member.js?v=3395ab68"></script>
 <script src="assets/js/chat.js?v=4cc07a87"></script>
-<script src="assets/js/support.js?v=ada3ca1a"></script>
+<script src="assets/js/support.js?v=06e7abac"></script>
 </body>
 </html>
