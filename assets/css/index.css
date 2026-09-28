@@ -102,29 +102,7 @@
 .stop--last .stop__node { background: var(--ok); }
 
 /* ---------- Issue mailbox ---------- */
-.issue__copy { grid-column: 1 / span 5; }
-.issue__copy .h1 { margin-top: var(--s-4); }
-.issue__copy .lead { margin-top: var(--s-5); }
-.issue__how { margin-top: var(--s-6); border-top: var(--bw-strong) solid var(--navy); }
-.issue__how li { display: grid; grid-template-columns: 112px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: var(--fs-small); align-items: baseline; }
-.issue__how li > .mono:first-child { font-size: 11px; color: var(--steel-ink); letter-spacing: .06em; }
-.issue__panel { grid-column: 7 / span 6; }
-.issue__cta { background: var(--paper); border: var(--bw-strong) solid var(--navy); padding: var(--s-6); display: grid; gap: var(--s-5); }
-.issue__steps { margin: 0; padding: 0; border-top: 1px solid var(--line); }
-.issue__steps li { display: grid; grid-template-columns: 36px 1fr; gap: 8px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: var(--fs-small); }
-.issue__steps li > .mono:first-child { color: var(--orange-ink); font-weight: 700; }
-.issue__login { font-size: var(--fs-small); color: var(--steel-ink); text-align: center; }
 
-.label { background: var(--white); border: var(--bw-strong) solid var(--navy); }
-.label:focus { outline: none; }
-.label__head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 20px; border-bottom: var(--bw-strong) solid var(--navy); font-size: 11px; letter-spacing: .08em; }
-.label__lines > div { display: grid; grid-template-columns: 132px minmax(0, 1fr) auto; gap: 12px; padding: 12px 20px; border-bottom: 1px solid var(--line); align-items: baseline; }
-.label__lines dt { font-size: 11px; color: var(--steel-ink); letter-spacing: .04em; }
-.label__lines dd { font-weight: 700; overflow-wrap: anywhere; }
-.label__hot { background: #FFF1EA; box-shadow: inset 5px 0 0 var(--orange); }
-.label__hot dd { font-size: 1.375rem; letter-spacing: 0; }
-.label__bar { height: 64px; margin: 20px 20px 8px; }
-.label__next { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding: 16px 20px 20px; border-top: 2px dashed var(--line); margin-top: 12px; font-weight: 600; }
 
 /* ---------- Board (departures) ---------- */
 .board__head { display: flex; justify-content: space-between; align-items: end; gap: var(--s-6); flex-wrap: wrap; margin-bottom: var(--s-7); }
@@ -232,8 +210,6 @@
   .hero__copy, .awb { grid-column: 1 / -1; }
   .awb { max-width: 460px; margin-right: 20px; }
   .process__title, .process__lead { grid-column: 1 / -1; }
-  .issue__copy, .issue__panel { grid-column: 1 / -1; }
-  .issue__panel { margin-top: var(--s-7); }
   .calc__copy, .receipt { grid-column: 1 / -1; }
   .calc__copy { position: static; margin-bottom: var(--s-7); }
   .partners__title, .partners__list, .partners__link { grid-column: 1 / -1; }
@@ -260,11 +236,6 @@
   .route__end span { display: none; }
   .hero .wrap { padding-bottom: 96px; }
   .metric { padding: var(--s-4) var(--s-4) var(--s-4) var(--s-4); }
-  .issue__cta { padding: var(--s-5); }
-  .label__lines > div { grid-template-columns: 1fr auto; padding: 10px 16px; gap: 2px 12px; }
-  .label__lines dt { grid-column: 1 / -1; }
-  .label__head, .label__next { padding-inline: 16px; }
-  .label__bar { margin-inline: 16px; }
   .board__today { gap: var(--s-5); width: 100%; justify-content: space-between; }
   .fids th, .fids td { padding: 10px 10px; font-size: 13px; }
   .fids th:nth-child(2), .fids td:nth-child(2) { display: none; }
@@ -402,3 +373,7 @@
   .spstrip__list a { padding: 12px 0; }
   .spstrip__all { justify-self: start; }
 }
+
+/* Hot deal radar is the first thing under the header: same top spacing as page heads (72px / 32px) */
+.radar--top { padding-top: var(--s-8); }
+@media (max-width: 640px) { .radar--top { padding-top: var(--s-6); } }

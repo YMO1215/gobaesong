@@ -56,29 +56,6 @@
     requestAnimationFrame(frame);
   }
 
-  /* ---------- Mailbox label: filled from the logged-in account (member.js) ---------- */
-  const CENTERS = {
-    NJ: { a1: '000 LOGISTICS AVE UNIT B', city: 'EDISON, NJ 08800', tel: '732-000-0000' },
-    DE: { a1: '000 HARBOR RD SUITE B', city: 'NEW CASTLE, DE 19700', tel: '302-000-0000' },
-  };
-
-  function initIssue() {
-    const out = $('#issue-result');
-    if (!out) return;
-    function show(user) {
-      if (!user) return;
-      const c = CENTERS[user.center] || CENTERS.NJ;
-      $('#lbl-name').textContent = user.name;
-      $('#lbl-a1').textContent = c.a1;
-      $('#lbl-a2').textContent = user.mailbox;
-      $('#lbl-city').textContent = c.city;
-      $('#lbl-tel').textContent = c.tel;
-      $('#lbl-bar').innerHTML = GB.barcode(user.mailbox + '-' + user.center, 64);
-    }
-    show(GB.auth && GB.auth.user);
-    document.addEventListener('gb:auth', (e) => show(e.detail.user));
-  }
-
   /* ---------- Departures board ---------- */
   const ITEMS = [
     ['러닝화', 'Nike'], ['캐시미어 니트', 'J.Crew'], ['비타민 D3 3병', 'iHerb'], ['무선 이어폰', 'Best Buy'],
@@ -282,7 +259,6 @@
   initRoute();
   initRadar();
   initSpecialStrip();
-  initIssue();
   initBoard();
   initCalc();
   initDesk();

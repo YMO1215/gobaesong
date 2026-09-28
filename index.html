@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
 <link rel="stylesheet" href="assets/css/tokens.css?v=af816627">
 <link rel="stylesheet" href="assets/css/base.css?v=1489ea39">
-<link rel="stylesheet" href="assets/css/index.css?v=1c68e315">
+<link rel="stylesheet" href="assets/css/index.css?v=ad5a02bf">
 <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('gb.user'))document.documentElement.classList.add('is-authed')}catch(e){}</script>
 </head>
 <body class="page-index">
@@ -123,14 +123,14 @@
           <li><a href="support.html"><span class="gnav__no mono" aria-hidden="true">07</span><span class="gnav__txt">고객센터</span><span class="gnav__desc">FAQ·1:1 문의·공지</span></a></li>
         </ul>
         <div class="gnav__cta">
-          <a class="btn btn--primary gnav__join" href="index.html#issue" data-auth="out" data-auth-open="signup">무료 사서함 발급</a>
+          <a class="btn btn--primary gnav__join" href="index.html?signup=1" data-auth="out" data-auth-open="signup">무료 사서함 발급</a>
           <a class="btn btn--primary gnav__join" href="apply.html" data-auth="in">간편 신청서 쓰기</a>
           <button type="button" class="btn btn--ghost gnav__join" data-chat-open>상담 연결</button>
         </div>
       </div>
     </nav>
     <div class="hauth">
-      <a class="btn btn--primary btn--sm hauth__join" href="index.html#issue" data-auth="out" data-auth-open="signup">사서함 발급</a>
+      <a class="btn btn--primary btn--sm hauth__join" href="index.html?signup=1" data-auth="out" data-auth-open="signup">사서함 발급</a>
       <button type="button" class="btn btn--sm hauth__login" data-auth="out" data-auth-open="login">로그인</button>
       <a class="btn btn--primary btn--sm hauth__apply" href="apply.html" data-auth="in"><span class="hauth__apply-long">간편&nbsp;</span>신청서</a>
       <div class="hauth__me" data-auth="in">
@@ -235,6 +235,43 @@
 
 <main id="main">
 
+  <!-- ============ HOT DEAL RADAR (hand-picked, never crawled) ============ -->
+  <section class="radar radar--top section" id="deals" aria-labelledby="radar-title">
+    <div class="wrap">
+      <div class="radar__head">
+        <div class="radar__dial" aria-hidden="true">
+          <svg viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="56" class="radar__ring"/>
+            <circle cx="60" cy="60" r="38" class="radar__ring"/>
+            <circle cx="60" cy="60" r="20" class="radar__ring"/>
+            <path d="M60 4v112M4 60h112" class="radar__cross"/>
+            <g class="radar__sweep"><path d="M60 60 L60 4 A56 56 0 0 1 108 32 Z"/></g>
+            <circle cx="84" cy="38" r="4" class="radar__blip"/><circle cx="40" cy="78" r="3" class="radar__blip"/><circle cx="74" cy="88" r="3.5" class="radar__blip"/>
+          </svg>
+        </div>
+        <div class="radar__title">
+          <p class="eyebrow">HOT DEAL RADAR · 사람이 직접 고른 딜</p>
+          <h2 class="h1" id="radar-title">이번 주, 미국에서 싸게 나온 것들.</h2>
+        </div>
+        <dl class="radar__meta">
+          <div><dt>업데이트</dt><dd><b id="radar-cadence">매주 월·목</b></dd></div>
+          <div><dt>이번 목록</dt><dd class="mono" id="radar-updated">2026.09.28(월)</dd></div>
+          <div><dt>다음 갱신</dt><dd class="mono" id="radar-next">2026.10.01(목)</dd></div>
+        </dl>
+      </div>
+      <p class="radar__disclaimer">가격과 재고는 판매처 사정에 따라 변동될 수 있습니다. 담당자가 매주 월·목 직접 확인해 올리며, 끝난 딜은 바로 내립니다. <b id="radar-affiliate">제휴·광고 링크가 아닙니다.</b> <span class="radar__mock">목업 예시 가격</span></p>
+      <div class="radar__rail" id="radar-rail" role="list" aria-label="이번 주 핫딜"></div>
+      <div class="radar__foot">
+        <p class="small muted" id="radar-count">딜 8개</p>
+        <div class="radar__nav">
+          <button type="button" class="radar__arrow" data-rail="-1" aria-label="이전 딜"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+          <button type="button" class="radar__arrow" data-rail="1" aria-label="다음 딜"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+        </div>
+      </div>
+      <noscript><p class="radar__disclaimer">자바스크립트를 켜면 이번 주 딜 목록이 보입니다.</p></noscript>
+    </div>
+  </section>
+
   <!-- ============ HERO ============ -->
   <section class="hero" aria-labelledby="hero-title">
     <div class="wrap">
@@ -248,8 +285,10 @@
           </h1>
           <p class="lead hero__lead">대한민국 국적기 직항에 싣기 전, 모든 상자를 열어 확인하고 다시 포장합니다. 사서함 번호 하나로 미국 어느 쇼핑몰이든 주문하세요.</p>
           <div class="hero__cta">
-            <a class="btn btn--primary btn--lg" href="#issue">무료 사서함 발급
+            <a class="btn btn--primary btn--lg" href="index.html?signup=1" data-auth="out" data-auth-open="signup">무료 사서함 발급
               <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 9h13M10 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+            <button type="button" class="btn btn--primary btn--lg" data-auth="in" data-auth-show-addr>내 미국 주소 보기
+              <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 9h13M10 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
             <a class="link-arrow" href="apply.html">이미 주문했다면, 신청서 쓰기
               <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8h12M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
           </div>
@@ -395,91 +434,6 @@
             <div class="stop__body"><span class="stop__who">고배송</span><h3 class="stop__title">국내 배송·완료</h3><p class="stop__desc">우체국택배로 인계, 결제액의 1%를 포인트로 적립합니다.</p></div>
           </li>
         </ol>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ HOT DEAL RADAR (hand-picked, never crawled) ============ -->
-  <section class="radar section" id="deals" aria-labelledby="radar-title">
-    <div class="wrap">
-      <div class="radar__head">
-        <div class="radar__dial" aria-hidden="true">
-          <svg viewBox="0 0 120 120">
-            <circle cx="60" cy="60" r="56" class="radar__ring"/>
-            <circle cx="60" cy="60" r="38" class="radar__ring"/>
-            <circle cx="60" cy="60" r="20" class="radar__ring"/>
-            <path d="M60 4v112M4 60h112" class="radar__cross"/>
-            <g class="radar__sweep"><path d="M60 60 L60 4 A56 56 0 0 1 108 32 Z"/></g>
-            <circle cx="84" cy="38" r="4" class="radar__blip"/><circle cx="40" cy="78" r="3" class="radar__blip"/><circle cx="74" cy="88" r="3.5" class="radar__blip"/>
-          </svg>
-        </div>
-        <div class="radar__title">
-          <p class="eyebrow">HOT DEAL RADAR · 사람이 직접 고른 딜</p>
-          <h2 class="h1" id="radar-title">이번 주, 미국에서 싸게 나온 것들.</h2>
-        </div>
-        <dl class="radar__meta">
-          <div><dt>업데이트</dt><dd><b id="radar-cadence">매주 월·목</b></dd></div>
-          <div><dt>이번 목록</dt><dd class="mono" id="radar-updated">2026.09.28(월)</dd></div>
-          <div><dt>다음 갱신</dt><dd class="mono" id="radar-next">2026.10.01(목)</dd></div>
-        </dl>
-      </div>
-      <p class="radar__disclaimer">가격과 재고는 판매처 사정에 따라 변동될 수 있습니다. 담당자가 매주 월·목 직접 확인해 올리며, 끝난 딜은 바로 내립니다. <b id="radar-affiliate">제휴·광고 링크가 아닙니다.</b> <span class="radar__mock">목업 예시 가격</span></p>
-      <div class="radar__rail" id="radar-rail" role="list" aria-label="이번 주 핫딜"></div>
-      <div class="radar__foot">
-        <p class="small muted" id="radar-count">딜 8개</p>
-        <div class="radar__nav">
-          <button type="button" class="radar__arrow" data-rail="-1" aria-label="이전 딜"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
-          <button type="button" class="radar__arrow" data-rail="1" aria-label="다음 딜"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
-        </div>
-      </div>
-      <noscript><p class="radar__disclaimer">자바스크립트를 켜면 이번 주 딜 목록이 보입니다.</p></noscript>
-    </div>
-  </section>
-
-  <!-- ============ ISSUE MAILBOX (core conversion) ============ -->
-  <section class="issue section band" id="issue" aria-labelledby="issue-title">
-    <div class="wrap grid12">
-      <div class="issue__copy">
-        <p class="eyebrow">STOP 01 · 사서함 발급</p>
-        <h2 class="h1" id="issue-title">미국 주소 한 줄 뒤에 붙는, 당신의 이름표.</h2>
-        <p class="lead">쇼핑몰 배송지에 센터 주소를 적고 두 번째 줄에 사서함 번호를 넣으면, 상자가 도착하는 순간 당신의 화물로 분류됩니다. 발급은 무료이며 1분이면 끝납니다.</p>
-        <ol class="issue__how" role="list">
-          <li><span class="mono">Address 1</span> 센터 주소 그대로</li>
-          <li><span class="mono">Address 2</span> <b class="mono">GB-000000</b> 사서함 번호</li>
-          <li><span class="mono">Name</span> 영문 이름 (여권과 같게)</li>
-        </ol>
-      </div>
-
-      <div class="issue__panel">
-        <div class="issue__cta" data-auth="out">
-          <h3 class="h3">아이디를 만들면 사서함 번호가 바로 나옵니다.</h3>
-          <ol class="issue__steps" role="list">
-            <li><span class="mono">01</span>아이디·비밀번호·영문 이름·이메일 입력</li>
-            <li><span class="mono">02</span><b class="mono">GB-000000</b> 형식 개인 사서함 번호 즉시 발급</li>
-            <li><span class="mono">03</span>화면 맨 위 <b>뉴저지 주소</b> 버튼에서 칸별로 복사</li>
-          </ol>
-          <button class="btn btn--primary btn--lg btn--block" type="button" data-auth-open="signup">가입하고 사서함 번호 받기</button>
-          <p class="issue__login">이미 회원이라면 <button type="button" class="btn-text" data-auth-open="login">로그인</button></p>
-        </div>
-
-        <div class="label" id="issue-result" data-auth="in" tabindex="-1">
-          <div class="label__head">
-            <span class="mono">SHIP TO · 쇼핑몰 배송지에 이대로</span>
-            <span class="stamp" data-status="완료" style="--stamp-rot:6deg" data-press>발급완료</span>
-          </div>
-          <dl class="label__lines">
-            <div><dt class="mono">Name</dt><dd id="lbl-name">GILDONG HONG</dd><button class="btn-text" type="button" data-copy="#lbl-name">복사</button></div>
-            <div><dt class="mono">Address 1</dt><dd id="lbl-a1">000 LOGISTICS AVE UNIT B</dd><button class="btn-text" type="button" data-copy="#lbl-a1">복사</button></div>
-            <div class="label__hot"><dt class="mono">Address 2</dt><dd id="lbl-a2" class="mono">GB-000000</dd><button class="btn-text" type="button" data-copy="#lbl-a2">복사</button></div>
-            <div><dt class="mono">City · State · ZIP</dt><dd id="lbl-city">EDISON, NJ 08800</dd><button class="btn-text" type="button" data-copy="#lbl-city">복사</button></div>
-            <div><dt class="mono">Phone</dt><dd id="lbl-tel">732-000-0000</dd><button class="btn-text" type="button" data-copy="#lbl-tel">복사</button></div>
-          </dl>
-          <div class="label__bar" id="lbl-bar" aria-hidden="true"></div>
-          <div class="label__next">
-            <p>주문을 마쳤다면 다음은 신청서입니다.</p>
-            <a class="btn btn--primary" href="apply.html">간편 신청서 쓰기</a>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -686,7 +640,9 @@
   <div class="wrap">
     <div class="footer__lead">
       <p class="h2">다음 상자는 뉴저지에서<br>당신의 사서함 번호를 기다립니다.</p>
-      <a class="btn btn--primary btn--lg" href="index.html#issue">사서함 번호 받기
+      <a class="btn btn--primary btn--lg" href="index.html?signup=1" data-auth="out" data-auth-open="signup">사서함 번호 받기
+        <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 9h13M10 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+      <a class="btn btn--primary btn--lg" href="apply.html" data-auth="in">간편 신청서 쓰기
         <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 9h13M10 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
     </div>
     <div class="footer__cols">
@@ -797,10 +753,10 @@
 <script src="assets/js/hours.js?v=754dcf87"></script>
 <script src="assets/js/common.js?v=0fe73ad3"></script>
 <script src="assets/js/cselect.js?v=63d6bff8"></script>
-<script src="assets/js/member.js?v=3395ab68"></script>
+<script src="assets/js/member.js?v=a5d9f972"></script>
 <script src="assets/js/chat.js?v=4cc07a87"></script>
 <script src="assets/js/deals-data.js?v=f41ea5b7"></script>
 <script src="assets/js/specials.js?v=7341765c"></script>
-<script src="assets/js/index.js?v=74f0aeae"></script>
+<script src="assets/js/index.js?v=e78e4ff9"></script>
 </body>
 </html>

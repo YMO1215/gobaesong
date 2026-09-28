@@ -325,4 +325,11 @@
   tickHours();
   setInterval(tickHours, 1000);
   refresh();
+  // index.html?signup=1 (fallback href of every 사서함 발급 button) opens the signup dialog
+  const qs = new URLSearchParams(location.search);
+  if (qs.has('signup')) {
+    qs.delete('signup');
+    history.replaceState(null, '', location.pathname + (qs.toString() ? '?' + qs : '') + location.hash);
+    if (!readCache()) auth.open('signup');
+  }
 })();
