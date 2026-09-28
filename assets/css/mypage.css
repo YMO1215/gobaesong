@@ -1,0 +1,138 @@
+/* ==========================================================================
+   My page — journey map, payment alert, safe-view photos, points
+   ========================================================================== */
+.my-head .grid12 { align-items: end; row-gap: var(--s-6); }
+.my-head__hello { grid-column: 1 / span 8; }
+.my-head__id { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-top: var(--s-5); font-size: var(--fs-small); }
+.my-head__id b { font-size: 1rem; }
+.my-head__stats { grid-column: 9 / span 4; display: grid; grid-template-columns: 1.4fr 1fr 1fr; border-top: var(--bw-strong) solid var(--navy); }
+.my-head__stats > div { padding: 12px 0 0 14px; border-left: 1px solid var(--line); }
+.my-head__stats > div:first-child { border-left: 0; padding-left: 0; }
+.my-head__stats dt { font-size: 12px; color: var(--steel-ink); font-weight: 600; }
+.my-head__stats dd { font-size: clamp(1.5rem, 1.2rem + 1vw, 2.125rem); font-weight: 700; line-height: 1.2; }
+.my-head__stats small { font-size: .9rem; font-weight: 800; margin-left: 2px; }
+
+/* ---------- Payment alert ---------- */
+.payalert {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: var(--s-5);
+  margin-block: var(--s-6) var(--s-7); padding: var(--s-5) var(--s-6);
+  background: var(--white); border: var(--bw-strong) solid var(--navy); box-shadow: inset 6px 0 0 var(--orange);
+}
+.payalert__title { font-weight: 700; font-size: 1.0625rem; }
+.payalert__txt .small { color: var(--steel-ink); margin-top: 2px; }
+.payalert__fee { font-size: 1.75rem; font-weight: 700; }
+.payalert.is-paid { box-shadow: inset 6px 0 0 var(--ok); }
+.payalert.is-paid .payalert__fee { text-decoration: line-through; color: var(--steel-ink); font-size: 1.25rem; }
+
+/* ---------- Layout ---------- */
+.my-body { align-items: start; row-gap: var(--s-8); padding-bottom: var(--s-9); }
+.journeycard { grid-column: 1 / span 8; grid-row: 1; min-width: 0; }
+.my-side { grid-column: 9 / span 4; grid-row: 1 / span 2; display: grid; gap: var(--s-7); min-width: 0; }
+.shipments { grid-column: 1 / span 8; grid-row: 2; min-width: 0; }
+
+/* ---------- Journey card ---------- */
+.journeycard { border-top: var(--bw-strong) solid var(--navy); padding-top: var(--s-5); }
+.journeycard__head { display: flex; justify-content: space-between; align-items: end; gap: var(--s-5); flex-wrap: wrap; margin-bottom: var(--s-5); }
+.journeycard__head .h2 { margin-top: var(--s-3); }
+.journeycard__meta { display: flex; gap: var(--s-6); font-size: var(--fs-small); }
+.journeycard__meta dt { font-size: 11px; color: var(--steel-ink); font-family: var(--font-mono); letter-spacing: .06em; }
+.journeycard__meta dd { font-weight: 600; }
+.journey { background: var(--white); border: 1px solid var(--line); padding: var(--s-5) var(--s-5) var(--s-6); }
+.journey__arc { max-width: 720px; margin: 0 auto var(--s-4); display: block; }
+.journey__stamp .stamp { font-size: 11px; padding: 3px 7px 2px; }
+.journeycard__facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
+.journeycard__facts > div { padding: 14px 16px 14px 0; border-right: 1px solid var(--line); }
+.journeycard__facts > div + div { padding-left: 16px; }
+.journeycard__facts > div:last-child { border-right: 0; }
+.journeycard__facts dt { font-size: 11px; color: var(--steel-ink); font-family: var(--font-mono); letter-spacing: .06em; }
+.journeycard__facts dd { font-weight: 700; margin-top: 2px; overflow-wrap: anywhere; }
+
+/* ---------- Side ---------- */
+.my-side__head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding-bottom: 10px; border-bottom: var(--bw-strong) solid var(--navy); margin-bottom: var(--s-4); }
+
+/* Safe-view: duotone line illustrations standing in for inspection photos */
+.safeview__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px; }
+.sv { position: relative; margin: 0; background: var(--navy); color: var(--paper); aspect-ratio: 4 / 3; overflow: hidden; }
+.sv:first-child { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
+.sv svg { width: 100%; height: 100%; }
+.sv figcaption { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; gap: 8px; padding: 6px 10px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .06em; background: rgba(11, 31, 58, .88); }
+.sv .l { fill: none; stroke: var(--paper); stroke-width: 1.6; stroke-linejoin: round; }
+.sv .o { fill: none; stroke: var(--orange); stroke-width: 2.2; stroke-linejoin: round; }
+.sv .of { fill: var(--orange); }
+.sv .pf { fill: var(--paper); }
+.sv .face { fill: #163459; }
+.sv .face2 { fill: #1D3E68; }
+.sv .t { font-family: var(--font-mono); fill: var(--paper); font-size: 9px; letter-spacing: .08em; }
+.sv .tb { font-family: var(--font-mono); fill: var(--orange); font-size: 18px; font-weight: 700; }
+.safeview.is-empty .safeview__grid { display: block; }
+.sv-empty { border: 1px dashed var(--line); padding: var(--s-5); text-align: center; color: var(--steel-ink); font-size: var(--fs-small); }
+
+.points__total { font-size: 1.125rem; font-weight: 800; }
+.points__total b { font-size: 2.25rem; font-weight: 700; }
+.points__log { margin: var(--s-3) 0 0; padding: 0; }
+.points__log li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: var(--fs-small); }
+.points__log .plus { color: var(--ok); }
+.points__log .minus { color: var(--steel-ink); }
+
+.myaddr__txt { font-style: normal; white-space: pre-line; font-size: 13px; line-height: 1.8; background: var(--white); border: 1px solid var(--line); padding: var(--s-4); }
+.myaddr__txt b { background: #FFF1EA; box-shadow: inset 3px 0 0 var(--orange); padding: 0 6px; }
+
+/* ---------- Shipments ---------- */
+.shipments__head { display: flex; justify-content: space-between; align-items: end; gap: var(--s-4); flex-wrap: wrap; margin-bottom: var(--s-5); }
+.shipments__frame { overflow-x: auto; }
+.shiptable { min-width: 620px; }
+.shiptable tbody tr { cursor: pointer; transition: background-color var(--dur-1) var(--ease); }
+.shiptable tbody tr:hover { background: var(--paper-2); }
+.shiptable tbody tr.is-selected { background: var(--white); box-shadow: inset 4px 0 0 var(--orange); }
+.shiptable td:first-child { font-family: var(--font-mono); font-size: 13px; white-space: nowrap; }
+.shiptable .title { font-weight: 700; display: block; }
+.shiptable .shop { font-size: 12px; color: var(--steel-ink); }
+.shiptable .stamp { font-size: 11px; }
+.shiptable .btn-text { white-space: nowrap; }
+.shipments__empty { padding: var(--s-6) 0; }
+
+/* ---------- Payment dialog ---------- */
+.paydlg__lines { display: grid; gap: 0; border-top: var(--bw-strong) solid var(--navy); }
+.paydlg__lines > div { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px dotted var(--line); font-size: var(--fs-small); }
+.paydlg__lines dt { color: var(--steel-ink); }
+.paydlg__lines dd { font-family: var(--font-mono); font-weight: 600; }
+.paydlg__method { border: 0; padding: 0; margin: 0; display: grid; gap: 8px; }
+.paydlg__total { display: flex; justify-content: space-between; align-items: baseline; font-weight: 800; }
+.paydlg__total b { font-size: 2rem; }
+.paydlg__done { display: grid; gap: var(--s-4); justify-items: start; padding-top: var(--s-4); border-top: 2px dashed var(--line); }
+.paydlg.is-busy #pay-go { opacity: .6; pointer-events: none; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1080px) {
+  .journeycard__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .journeycard__facts > div:nth-child(2) { border-right: 0; }
+  .journeycard__facts > div:nth-child(3) { padding-left: 0; }
+  .journeycard__facts > div:nth-child(n+3) { border-top: 1px solid var(--line); }
+}
+@media (max-width: 960px) {
+  .my-head__hello, .my-head__stats { grid-column: 1 / -1; }
+  .journeycard, .shipments, .my-side { grid-column: 1 / -1; grid-row: auto; }
+  .my-side { grid-template-columns: 1fr 1fr; }
+  .safeview { grid-column: 1 / -1; }
+  .payalert { grid-template-columns: auto minmax(0, 1fr); }
+  .payalert__fee { grid-column: 1; }
+  .payalert .btn { grid-column: 2; justify-self: end; }
+}
+@media (max-width: 640px) {
+  .my-side { grid-template-columns: 1fr; }
+  .payalert { grid-template-columns: 1fr auto; padding: var(--s-4) var(--s-4) var(--s-4) var(--s-5); gap: var(--s-3) var(--s-4); }
+  .payalert .stamp { grid-column: 1 / -1; justify-self: start; }
+  .payalert__txt { grid-column: 1 / -1; }
+  .payalert__fee { grid-column: 1; align-self: center; }
+  .payalert .btn { grid-column: 2; }
+  .journey { padding: var(--s-4); }
+  .journey__arc { margin-bottom: var(--s-2); }
+  .journeycard__meta { gap: var(--s-4); flex-wrap: wrap; }
+  .shiptable { min-width: 0; }
+  .shiptable th:nth-child(3), .shiptable td:nth-child(3), .shiptable th:nth-child(6), .shiptable td:nth-child(6) { display: none; }
+  .shiptable td, .shiptable th { padding-inline: 8px; }
+  .shiptable td:first-child { font-size: 11px; }
+  .shiptable td:first-child .mono-tail { display: block; }
+  .shipments__filter { width: 100%; }
+  .shipments__filter button { flex: 1; padding-inline: 6px; }
+}

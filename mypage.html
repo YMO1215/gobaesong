@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>마이페이지 — 고배송</title>
+<meta name="description" content="내 화물의 여정 지도, 결제 대기, 안심뷰 검수 사진과 포인트를 한 화면에서.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0B1F3A">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/mypage.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body class="page-mypage">
+<!-- HEADER:START -->
+<a class="skip" href="#main">본문 바로가기</a>
+<div class="flightstrip">
+  <div class="wrap flightstrip__in">
+    <span class="route" aria-label="뉴저지·델라웨어에서 인천으로">EWR·ILG<svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h24" stroke="#FF5C1A" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M22 1l4 3-4 3" fill="none" stroke="#FF5C1A" stroke-width="1.5"/></svg>ICN</span>
+    <span>뉴저지 현지 <b class="mono" data-clock="America/New_York">--:--</b></span>
+    <span class="hide-sm">당일 입고 마감 <b class="mono">17:00</b> EST</span>
+    <span class="hide-sm push">항공 출고 <b>월·수·금</b></span>
+  </div>
+</div>
+<header class="site-header">
+  <div class="wrap site-header__in">
+    <a class="brand" href="index.html" aria-label="고배송 홈으로">
+      <img src="assets/svg/logo-mark.svg" width="34" height="34" alt="">
+      <span class="brand__txt"><span class="brand__word">고배송</span><span class="brand__sub">GOBAESONG · US→KR</span></span>
+    </a>
+    <nav class="gnav" id="gnav" aria-label="주 메뉴">
+      <ul>
+        <li><a href="apply.html">배송대행 신청</a></li>
+        <li><a href="pricing.html">요금 안내</a></li>
+        <li><a href="mypage.html" aria-current="page">마이페이지</a></li>
+        <li><a href="support.html">고객센터</a></li>
+      </ul>
+      <a class="btn btn--primary btn--sm" href="index.html#issue">무료 사서함 발급</a>
+    </nav>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="gnav"><span class="menu-btn__bars" aria-hidden="true"></span><span class="menu-btn__label">메뉴</span></button>
+  </div>
+</header>
+<!-- HEADER:END -->
+
+<main id="main">
+  <section class="pagehead my-head">
+    <div class="wrap grid12">
+      <div class="my-head__hello">
+        <p class="pagehead__crumb"><a href="index.html">홈</a> / 마이페이지</p>
+        <h1 class="h1">김고배 님, 상자 <span class="mono" id="moving-count">4</span>개가<br>지금 움직이고 있습니다.</h1>
+        <p class="my-head__id">
+          <span class="badge badge--navy">GOLD</span>
+          <span>사서함 <b class="mono" id="my-box">GB-000417</b></span>
+          <button class="btn-text" type="button" data-copy="#my-box">복사</button>
+          <span class="muted">· 뉴저지 센터 · 가입 2023.04</span>
+        </p>
+      </div>
+      <dl class="my-head__stats">
+        <div><dt>포인트</dt><dd><span class="mono" id="point-total">12,480</span><small>P</small></dd></div>
+        <div><dt>결제 대기</dt><dd><span class="mono" id="pay-count">1</span><small>건</small></dd></div>
+        <div><dt>올해 배송</dt><dd><span class="mono">23</span><small>건</small></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- Payment-waiting alert -->
+  <div class="wrap">
+    <div class="payalert" id="payalert" aria-labelledby="payalert-title">
+      <span class="stamp" data-status="결제대기" data-press>결제대기</span>
+      <div class="payalert__txt">
+        <p class="payalert__title" id="payalert-title"><b class="mono">GB-000417-03</b> 검수가 끝났습니다.</p>
+        <p class="small">Nike Pegasus 41 외 1건 · 실측 6lb · 오늘 결제하면 <b>수요일 18:40 EST</b> 출고편에 실립니다.</p>
+      </div>
+      <p class="payalert__fee mono" id="payalert-fee">$25.40</p>
+      <button class="btn btn--primary" type="button" id="pay-open">배송비 결제</button>
+    </div>
+  </div>
+
+  <div class="wrap my-body grid12">
+    <!-- Signature: journey map -->
+    <section class="journeycard" aria-labelledby="journey-title">
+      <header class="journeycard__head">
+        <div>
+          <p class="eyebrow">여정 지도 · JOURNEY</p>
+          <h2 class="h2" id="journey-title"><span id="j-title">Nike Pegasus 41 외 1건</span></h2>
+        </div>
+        <dl class="journeycard__meta">
+          <div><dt>신청번호</dt><dd class="mono" id="j-no">GB-000417-03</dd></div>
+          <div><dt>트래킹</dt><dd class="mono" id="j-track">1Z999AA10123456784</dd></div>
+        </dl>
+      </header>
+      <div class="journey" id="journey">
+        <svg class="journey__arc" viewBox="0 0 700 110" aria-hidden="true">
+          <path class="arc-base" id="j-arc" d="M40 92 C 200 -6, 500 -6, 660 92"/>
+          <path class="arc-done" id="j-arc-done" d="M40 92 C 200 -6, 500 -6, 660 92" pathLength="100" stroke-dasharray="100 100" stroke-dashoffset="100"/>
+          <circle cx="40" cy="92" r="5" fill="#0B1F3A"/><circle cx="660" cy="92" r="5" fill="#0B1F3A"/>
+          <text class="arc-end" x="40" y="108" text-anchor="middle">EWR</text>
+          <text class="arc-end" x="660" y="108" text-anchor="middle">ICN</text>
+          <g class="arc-plane" id="j-plane"><path d="M29 16c0-1-1-1.6-2.2-1.6H20L13 4h-3l3.6 10.4H7.4L5 11H3l1.5 5L3 21h2l2.4-3.4h6.2L10 28h3l7-10.4h6.8C28 17.6 29 17 29 16z" fill="#FF5C1A" transform="scale(.8) translate(-16 -16)"/></g>
+        </svg>
+        <div class="journey__track">
+          <span class="journey__progress" id="j-progress"></span>
+          <ol class="journey__steps" id="j-steps" role="list"></ol>
+        </div>
+      </div>
+      <dl class="journeycard__facts" id="j-facts"></dl>
+    </section>
+
+    <!-- Side: photos, points, address -->
+    <aside class="my-side">
+      <section class="safeview" aria-labelledby="safeview-title">
+        <header class="my-side__head">
+          <h2 class="h3" id="safeview-title">안심뷰 검수 사진</h2>
+          <span class="mono small muted" id="sv-count">3장</span>
+        </header>
+        <div class="safeview__grid" id="safeview"></div>
+        <p class="small muted" id="sv-note">뉴저지 센터 검수대 · 촬영 시각은 현지 기준</p>
+      </section>
+
+      <section class="points" aria-labelledby="points-title">
+        <header class="my-side__head">
+          <h2 class="h3" id="points-title">포인트</h2>
+          <span class="mono small muted">결제액의 1%</span>
+        </header>
+        <p class="points__total"><b class="mono" id="point-side">12,480</b>P <span class="small muted">= ₩12,480</span></p>
+        <ul class="points__log" role="list" id="point-log">
+          <li><span>GB-000416-12 거래완료</span><b class="mono plus">+276</b></li>
+          <li><span>GB-000416-09 배송비 사용</span><b class="mono minus">−3,000</b></li>
+          <li><span>검수 사진 후기 작성</span><b class="mono plus">+150</b></li>
+        </ul>
+      </section>
+
+      <section class="myaddr" aria-labelledby="addr-title">
+        <header class="my-side__head"><h2 class="h3" id="addr-title">내 미국 주소</h2><button class="btn-text" type="button" data-copy="#addr-text">전체 복사</button></header>
+        <address class="mono myaddr__txt" id="addr-text">GOBAE KIM
+000 Logistics Ave, Unit GB
+<b id="addr-box">GB-000417</b>
+Edison, NJ 08800 USA</address>
+      </section>
+    </aside>
+
+    <!-- Shipments list -->
+    <section class="shipments" aria-labelledby="ship-title">
+      <header class="shipments__head">
+        <h2 class="h2" id="ship-title">내 화물</h2>
+        <div class="seg shipments__filter" role="group" aria-label="상태로 거르기">
+          <button type="button" aria-pressed="true" data-filter="all">전체</button>
+          <button type="button" aria-pressed="false" data-filter="moving">진행중</button>
+          <button type="button" aria-pressed="false" data-filter="pay">결제대기</button>
+          <button type="button" aria-pressed="false" data-filter="done">완료</button>
+        </div>
+      </header>
+      <div class="shipments__frame">
+        <table class="table shiptable">
+          <caption class="sr-only">내 화물 목록. 행을 선택하면 위 여정 지도가 바뀝니다.</caption>
+          <thead><tr><th scope="col">신청번호</th><th scope="col">상품</th><th scope="col" class="num">무게</th><th scope="col" class="num">배송비</th><th scope="col">상태</th><th scope="col"><span class="sr-only">보기</span></th></tr></thead>
+          <tbody id="ship-body"></tbody>
+        </table>
+      </div>
+      <p class="shipments__empty muted" id="ship-empty" hidden>이 상태의 화물이 없습니다.</p>
+    </section>
+  </div>
+
+  <!-- Payment dialog -->
+  <dialog class="dialog paydlg" id="paydlg" aria-labelledby="pay-title">
+    <form class="dialog__in" method="dialog" id="pay-form">
+      <div class="dialog__head">
+        <div>
+          <p class="eyebrow">배송비 결제</p>
+          <h2 class="h3" id="pay-title"><span class="mono" id="pay-no">GB-000417-03</span></h2>
+        </div>
+        <button class="dialog__close" type="button" data-close-dialog aria-label="닫기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 2l12 12M14 2L2 14" stroke="currentColor" stroke-width="2"/></svg></button>
+      </div>
+      <dl class="paydlg__lines" id="pay-lines"></dl>
+      <label class="choice">
+        <input type="checkbox" id="pay-usepoint">
+        <span class="choice__mark" aria-hidden="true"></span>
+        <span class="choice__body"><span class="choice__title">포인트 사용</span><span class="choice__desc">보유 <span class="mono" id="pay-pt-have">12,480</span>P 중 최대 <span class="mono" id="pay-pt-max">0</span>P</span></span>
+      </label>
+      <fieldset class="paydlg__method">
+        <legend class="field__label">결제 수단</legend>
+        <label class="choice"><input type="radio" name="method" value="card" checked><span class="choice__mark" aria-hidden="true"></span><span class="choice__body"><span class="choice__title">등록 카드</span><span class="choice__desc mono">신한 **** 1234</span></span></label>
+        <label class="choice"><input type="radio" name="method" value="easy"><span class="choice__mark" aria-hidden="true"></span><span class="choice__body"><span class="choice__title">간편결제</span><span class="choice__desc">휴대폰 인증 후 결제</span></span></label>
+      </fieldset>
+      <div class="paydlg__total">
+        <span>결제 금액</span>
+        <b class="mono" id="pay-total">₩35,310</b>
+      </div>
+      <button class="btn btn--primary btn--lg btn--block" type="button" id="pay-go">결제하기</button>
+      <p class="field__hint">목업입니다. 실제 결제는 일어나지 않습니다.</p>
+      <div class="paydlg__done" id="pay-done" hidden>
+        <span class="stamp stamp--lg" data-status="완료">결제완료</span>
+        <p>다음 출고편에 실립니다. 완료되면 <b class="mono" id="pay-earn">353</b>P가 적립됩니다.</p>
+        <button class="btn btn--ghost btn--block" type="button" data-close-dialog>여정 지도로 돌아가기</button>
+      </div>
+    </form>
+  </dialog>
+</main>
+
+<!-- FOOTER:START -->
+<footer class="site-footer on-navy">
+  <div class="wrap">
+    <div class="footer__lead">
+      <p class="h2">다음 상자는 뉴저지에서<br>당신의 사서함 번호를 기다립니다.</p>
+      <a class="btn btn--primary btn--lg" href="index.html#issue">사서함 번호 받기
+        <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 9h13M10 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+    </div>
+    <div class="footer__cols">
+      <div class="footer__col">
+        <h2>서비스</h2>
+        <ul>
+          <li><a href="apply.html">배송대행 신청서</a></li>
+          <li><a href="pricing.html">요금표·견적 계산</a></li>
+          <li><a href="mypage.html">내 화물 여정</a></li>
+          <li><a href="pricing.html#partners">파트너스(사업자)</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h2>고객센터</h2>
+        <p class="footer__tel">1588-0000</p>
+        <p>평일 10:00–18:00 (점심 12:30–13:30)<br>주말·공휴일 휴무</p>
+        <ul style="margin-top:12px">
+          <li><a href="support.html#faq">자주 묻는 질문</a></li>
+          <li><a href="support.html#ask">1:1 문의</a></li>
+        </ul>
+      </div>
+      <div class="footer__col footer__col--wide">
+        <h2>물류센터</h2>
+        <dl class="footer__addr">
+          <div>
+            <dt>뉴저지 센터 EWR</dt>
+            <dd>000 Logistics Ave, Unit GB<br>Edison, NJ 08800, USA<br>당일 입고 마감 17:00 EST</dd>
+          </div>
+          <div>
+            <dt>델라웨어 센터 ILG · 면세주</dt>
+            <dd>000 Harbor Rd, Suite GB<br>New Castle, DE 19700, USA<br>판매세 0% 주</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+    <div class="footer__barcode" data-barcode="GOBAESONG-AWB-EWR-ICN-2026" data-barcode-h="56" aria-hidden="true"></div>
+    <div class="footer__legal">
+      <span>© 2026 고배송 GOBAESONG</span>
+      <span>사업자등록번호 000-00-00000</span>
+      <span>통신판매업 제0000-서울-0000호</span>
+      <span class="mock">리뉴얼 디자인 목업 — 실제 접수·결제·전송은 이뤄지지 않습니다.</span>
+    </div>
+  </div>
+</footer>
+<!-- FOOTER:END -->
+
+<script src="assets/js/common.js"></script>
+<script src="assets/js/mypage.js"></script>
+</body>
+</html>

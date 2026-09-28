@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Gobaesong design tokens
+   See design-tokens.md for rationale and contrast figures.
+   ========================================================================== */
+:root {
+  /* Color — brand */
+  --navy: #0B1F3A;          /* primary: trust, night flight */
+  --navy-2: #132B4D;        /* raised surface on navy */
+  --navy-line: #2B4166;     /* hairlines on navy */
+  --orange: #FF5C1A;        /* CTA fill, accent strokes (never small text on paper) */
+  --orange-ink: #B83E0C;    /* orange for text on paper (5.1:1) */
+  --paper: #F6F4EE;         /* waybill paper background */
+  --paper-2: #ECE8DC;       /* darker paper band */
+  --paper-3: #E2DDCD;       /* pressed / hover on paper-2 */
+  --steel: #8A94A6;         /* lines, decoration, text on navy only */
+  --steel-ink: #545E72;     /* secondary text on paper (5.9:1) */
+  --white: #FFFFFF;
+
+  /* Color — semantic */
+  --ink: var(--navy);
+  --line: #CBC5B4;          /* hairline on paper */
+  --line-strong: var(--navy);
+  --ok: #1D6547;            /* completed stamp (6.3:1 on paper) */
+  --danger: #A8261B;        /* form errors (6.4:1 on paper) */
+  --focus: var(--orange);
+
+  /* Typography */
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --font-serif: "Noto Serif KR", "Nanum Myeongjo", "AppleMyungjo", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --fs-display: clamp(2.5rem, 1.35rem + 4.6vw, 5.25rem);
+  --fs-h1: clamp(2.125rem, 1.4rem + 2.8vw, 3.75rem);
+  --fs-h2: clamp(1.75rem, 1.25rem + 1.8vw, 2.75rem);
+  --fs-h3: clamp(1.25rem, 1.1rem + .5vw, 1.5rem);
+  --fs-lead: clamp(1.0625rem, 1rem + .3vw, 1.25rem);
+  --fs-body: 1rem;
+  --fs-small: .875rem;
+  --fs-micro: .75rem;
+
+  --lh-body: 1.6;
+  --lh-tight: 1.2;
+  --ls-tight: -0.02em;      /* hard floor for Korean display type */
+  --ls-mono: 0.04em;
+
+  /* Spacing — 4px base, deliberately uneven jumps for section rhythm */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 72px;
+  --s-9: 112px;
+  --s-10: 160px;
+
+  /* Layout */
+  --maxw: 1312px;
+  --gutter: clamp(16px, 4.4vw, 64px);
+  --col-gap: clamp(12px, 2vw, 24px);
+  --header-h: 72px;
+
+  /* Shape */
+  --r-1: 2px;
+  --bw: 1px;
+  --bw-strong: 2px;
+
+  /* Motion */
+  --ease: cubic-bezier(.2, .7, .1, 1);
+  --dur-1: 160ms;
+  --dur-2: 320ms;
+  --dur-3: 640ms;
+}
+
+/* Ink grain mask for stamps (inline so a missing file can never hide a stamp) */
+:root {
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -3 2.55'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E");
+}

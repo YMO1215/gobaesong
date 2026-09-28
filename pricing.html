@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>요금 안내 — 고배송</title>
+<meta name="description" content="뉴저지·델라웨어 센터 무게별 배송대행 요금표와 부피무게 견적 계산기.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0B1F3A">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/pricing.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body class="page-pricing">
+<!-- HEADER:START -->
+<a class="skip" href="#main">본문 바로가기</a>
+<div class="flightstrip">
+  <div class="wrap flightstrip__in">
+    <span class="route" aria-label="뉴저지·델라웨어에서 인천으로">EWR·ILG<svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h24" stroke="#FF5C1A" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M22 1l4 3-4 3" fill="none" stroke="#FF5C1A" stroke-width="1.5"/></svg>ICN</span>
+    <span>뉴저지 현지 <b class="mono" data-clock="America/New_York">--:--</b></span>
+    <span class="hide-sm">당일 입고 마감 <b class="mono">17:00</b> EST</span>
+    <span class="hide-sm push">항공 출고 <b>월·수·금</b></span>
+  </div>
+</div>
+<header class="site-header">
+  <div class="wrap site-header__in">
+    <a class="brand" href="index.html" aria-label="고배송 홈으로">
+      <img src="assets/svg/logo-mark.svg" width="34" height="34" alt="">
+      <span class="brand__txt"><span class="brand__word">고배송</span><span class="brand__sub">GOBAESONG · US→KR</span></span>
+    </a>
+    <nav class="gnav" id="gnav" aria-label="주 메뉴">
+      <ul>
+        <li><a href="apply.html">배송대행 신청</a></li>
+        <li><a href="pricing.html" aria-current="page">요금 안내</a></li>
+        <li><a href="mypage.html">마이페이지</a></li>
+        <li><a href="support.html">고객센터</a></li>
+      </ul>
+      <a class="btn btn--primary btn--sm" href="index.html#issue">무료 사서함 발급</a>
+    </nav>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="gnav"><span class="menu-btn__bars" aria-hidden="true"></span><span class="menu-btn__label">메뉴</span></button>
+  </div>
+</header>
+<!-- HEADER:END -->
+
+<main id="main">
+  <section class="pagehead price-head">
+    <div class="wrap grid12">
+      <div class="price-head__title">
+        <p class="pagehead__crumb"><a href="index.html">홈</a> / 요금 안내</p>
+        <h1 class="h1">첫 1lb <span class="mono nowrap">$8.90</span>,<br>이후 1lb마다 <span class="mono nowrap">$2.30</span>.</h1>
+      </div>
+      <div class="price-head__note">
+        <p class="lead">뉴저지 센터 일반회원 기준입니다. 유류할증료와 인천공항 하역비를 모두 포함한 금액이며, 추가로 붙는 비용은 아래 선택 옵션뿐입니다.</p>
+        <ul class="price-head__facts" role="list">
+          <li><span class="mono">1lb</span> 단위 올림</li>
+          <li><span class="mono">÷166</span> 부피무게</li>
+          <li><span class="mono">−7%</span> 파트너스</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Signature: luggage-scale ruler calculator -->
+  <section class="scale-sec band" aria-labelledby="scale-title">
+    <div class="wrap">
+      <div class="scale-sec__head">
+        <h2 class="h2" id="scale-title">저울에 올려 보세요.</h2>
+        <div class="scale-sec__ctrl">
+          <div class="seg" role="group" aria-label="센터 선택">
+            <button type="button" aria-pressed="true" data-center="NJ">뉴저지</button>
+            <button type="button" aria-pressed="false" data-center="DE">델라웨어</button>
+          </div>
+          <div class="seg" role="group" aria-label="회원 구분">
+            <button type="button" aria-pressed="true" data-member="normal">일반</button>
+            <button type="button" aria-pressed="false" data-member="partner">파트너스</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="scale" id="scale">
+        <div class="scale__tag" id="tag" aria-hidden="true">
+          <span class="scale__hole"></span>
+          <b class="mono" id="tag-w">5lb</b>
+          <span class="mono" id="tag-p">$18.10</span>
+        </div>
+        <div class="scale__ruler" id="ruler" aria-hidden="true"></div>
+        <label class="sr-only" for="w-range">실무게 (lb)</label>
+        <input class="scale__range" type="range" id="w-range" min="1" max="50" step="0.5" value="5">
+      </div>
+
+      <div class="scale-calc grid12">
+        <form class="scale-calc__form" id="p-form" novalidate>
+          <div class="scale-calc__row">
+            <div class="field">
+              <label class="field__label" for="p-weight">실무게 <span class="opt">직접 입력</span></label>
+              <div class="input-group">
+                <input class="input mono" id="p-weight" type="number" min="0.1" max="200" step="0.1" value="5" inputmode="decimal">
+                <div class="seg p-unit" role="group" aria-label="무게 단위">
+                  <button type="button" aria-pressed="true" data-unit="lb">lb</button>
+                  <button type="button" aria-pressed="false" data-unit="kg">kg</button>
+                </div>
+              </div>
+            </div>
+            <fieldset class="field p-dims">
+              <legend class="field__label">상자 크기 <span class="opt">inch · 선택</span></legend>
+              <div class="p-dims__row">
+                <label class="sr-only" for="p-l">가로</label><input class="input mono" id="p-l" type="number" min="0" placeholder="가로" inputmode="decimal">
+                <span aria-hidden="true">×</span>
+                <label class="sr-only" for="p-w">세로</label><input class="input mono" id="p-w" type="number" min="0" placeholder="세로" inputmode="decimal">
+                <span aria-hidden="true">×</span>
+                <label class="sr-only" for="p-h">높이</label><input class="input mono" id="p-h" type="number" min="0" placeholder="높이" inputmode="decimal">
+              </div>
+            </fieldset>
+          </div>
+          <fieldset class="p-opts">
+            <legend class="field__label">선택 옵션</legend>
+            <label class="tick"><input type="checkbox" name="consolidate"><span>합배송 <b class="mono">+$3.00</b></span></label>
+            <label class="tick"><input type="checkbox" name="inspect"><span>정밀검수 <b class="mono">+$2.00</b></span></label>
+            <label class="tick"><input type="checkbox" name="repack"><span>보강 재포장 <b class="mono">+$3.00</b></span></label>
+            <label class="tick"><input type="checkbox" name="photo"><span>안심뷰 사진 5장 <b class="mono">+$1.00</b></span></label>
+            <label class="tick"><input type="checkbox" name="insurance"><span>보험 <b class="mono">2%</b></span></label>
+            <label class="p-declared" for="p-declared"><span>신고 금액 <span class="mono">USD</span></span><input class="input mono" id="p-declared" type="number" min="0" step="0.01" value="120" inputmode="decimal"></label>
+          </fieldset>
+        </form>
+
+        <div class="scale-calc__out" aria-live="polite">
+          <dl class="p-lines" id="p-lines"></dl>
+          <div class="p-total">
+            <span>예상 배송비</span>
+            <b class="mono" id="p-total">$18.10</b>
+            <span class="mono" id="p-krw">약 ₩25,160</span>
+          </div>
+          <a class="btn btn--primary btn--block" href="apply.html">이 조건으로 신청서 쓰기</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rate table -->
+  <section class="section rates" aria-labelledby="rates-title">
+    <div class="wrap grid12">
+      <div class="rates__main">
+        <div class="rates__head">
+          <h2 class="h2" id="rates-title">무게별 요금표</h2>
+          <p class="mono small muted" id="rates-caption">뉴저지 EWR · USD</p>
+        </div>
+        <div class="rates__frame" tabindex="0" role="region" aria-labelledby="rates-title">
+          <table class="table ratetable">
+            <caption class="sr-only" id="rates-cap">센터별 무게당 배송비. 일반회원, 파트너스, 원화 환산.</caption>
+            <thead><tr><th scope="col">적용무게</th><th scope="col" class="num">일반</th><th scope="col" class="num">파트너스</th><th scope="col" class="num">원화 환산 (일반)</th></tr></thead>
+            <tbody id="rate-body"></tbody>
+          </table>
+        </div>
+      </div>
+      <aside class="rates__notes" aria-label="요금 계산 규칙">
+        <ol class="rules" role="list">
+          <li><span class="mono">01</span><div><b>큰 쪽을 1lb 단위로 올립니다.</b><p>실무게 3.2lb, 부피무게 4.2lb라면 적용무게는 5lb입니다.</p></div></li>
+          <li><span class="mono">02</span><div><b>유류할증·하역비 포함.</b><p>표의 금액 외에 붙는 것은 선택 옵션과 관·부가세뿐입니다.</p></div></li>
+          <li><span class="mono">03</span><div><b>결제는 원화로.</b><p>입고일 기준 환율을 적용합니다. 이 화면은 ₩1,390/$ 가정입니다.</p></div></li>
+          <li><span class="mono">04</span><div><b>50lb 초과는 문의.</b><p>가구·자전거 등 대형 화물은 해상 또는 특송 견적으로 안내합니다.</p></div></li>
+        </ol>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Volumetric -->
+  <section class="section vol on-navy" aria-labelledby="vol-title">
+    <div class="wrap grid12">
+      <div class="vol__art">
+        <svg viewBox="0 0 420 300" role="img" aria-labelledby="vol-art-t">
+          <title id="vol-art-t">가로 14, 세로 10, 높이 5인치 상자의 치수 표시</title>
+          <path d="M210 40l130 65-130 65-130-65z" fill="#1D3E68"/>
+          <path d="M80 105l130 65v90l-130-65z" fill="#132B4D"/>
+          <path d="M210 170l130-65v90l-130 65z" fill="#163459"/>
+          <path d="M210 40l130 65-130 65-130-65zM80 105v90l130 65 130-65v-90M210 170v90" fill="none" stroke="#F6F4EE" stroke-width="1.6"/>
+          <path d="M60 212l130 65" stroke="#FF5C1A" stroke-width="1.5"/><path d="M60 205v14M190 270v14" stroke="#FF5C1A" stroke-width="1.5"/>
+          <path d="M232 277l130-65" stroke="#FF5C1A" stroke-width="1.5"/><path d="M232 270v14M362 205v14" stroke="#FF5C1A" stroke-width="1.5"/>
+          <path d="M362 105v90" stroke="#FF5C1A" stroke-width="1.5"/><path d="M355 105h14M355 195h14" stroke="#FF5C1A" stroke-width="1.5"/>
+          <text x="104" y="262" fill="#F6F4EE" font-family="JetBrains Mono, monospace" font-size="15" font-weight="700">L 14in</text>
+          <text x="282" y="262" fill="#F6F4EE" font-family="JetBrains Mono, monospace" font-size="15" font-weight="700">W 10in</text>
+          <text x="376" y="155" fill="#F6F4EE" font-family="JetBrains Mono, monospace" font-size="15" font-weight="700">H 5</text>
+        </svg>
+      </div>
+      <div class="vol__copy">
+        <p class="eyebrow">부피무게 · VOLUMETRIC</p>
+        <h2 class="h2" id="vol-title">가벼운데 큰 상자는<br>크기로 계산합니다.</h2>
+        <p class="vol__formula mono"><span>14</span>×<span>10</span>×<span>5</span>÷166 = <b>4.22lb</b></p>
+        <p class="lead">항공기는 무게보다 자리를 먼저 채웁니다. 그래서 빈 공간이 많은 상자는 부피무게로 계산됩니다. 기본 재포장으로 쇼핑몰 상자를 줄이면 평균 1.6lb가 내려갑니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Add-ons -->
+  <section class="section addons" aria-labelledby="addons-title">
+    <div class="wrap grid12">
+      <div class="addons__title">
+        <h2 class="h2" id="addons-title">선택 옵션</h2>
+        <p class="muted">검수·재포장·안심뷰 사진 2장은 모든 화물에 기본 포함입니다.</p>
+      </div>
+      <div class="addons__frame">
+        <table class="table">
+          <caption class="sr-only">선택 옵션별 요금</caption>
+          <thead><tr><th scope="col">옵션</th><th scope="col">내용</th><th scope="col" class="num">요금</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">합배송</th><td>여러 신청서를 한 상자로 묶어 적용무게를 줄입니다.</td><td class="num">$3.00/건</td></tr>
+            <tr><th scope="row">정밀검수</th><td>사이즈·색상·구성품을 주문 내역과 대조합니다.</td><td class="num">$2.00</td></tr>
+            <tr><th scope="row">보강 재포장</th><td>에어캡 2중 포장과 모서리 보호대를 더합니다.</td><td class="num">$3.00</td></tr>
+            <tr><th scope="row">안심뷰 사진 추가</th><td>라벨·구성품 근접 사진 5장을 더 찍습니다.</td><td class="num">$1.00</td></tr>
+            <tr><th scope="row">파손·분실 보험</th><td>신고 금액까지 보상합니다. 최소 $1.00.</td><td class="num">신고액 2%</td></tr>
+            <tr><th scope="row">보관 연장</th><td>입고 후 30일 무료, 이후 하루 단위로 청구합니다.</td><td class="num">$0.50/일</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Partners -->
+  <section class="section partners-p band" id="partners" aria-labelledby="pp-title">
+    <div class="wrap grid12">
+      <div class="pp__title">
+        <p class="eyebrow">파트너스 · 사업자 회원</p>
+        <h2 class="h1" id="pp-title">월 100건부터,<br>기본요금 7% 할인.</h2>
+        <a class="btn btn--ghost" href="support.html#ask">파트너스 가입 문의</a>
+      </div>
+      <dl class="pp__terms">
+        <div><dt>가입 조건</dt><dd>사업자등록증 · 최근 3개월 월평균 100건 이상 또는 예상 물량 제출</dd></div>
+        <div><dt>대량 신청</dt><dd>엑셀 템플릿 업로드로 최대 500건 일괄 신청, 오류 행만 다시 표시</dd></div>
+        <div><dt>자동결제</dt><dd>검수 완료 즉시 등록 카드로 결제, 출고 대기 없음</dd></div>
+        <div><dt>전담 매니저</dt><dd>통관 서류, 반품, 폐기 요청을 한 사람이 처리</dd></div>
+        <div><dt>정산</dt><dd>월 1회 세금계산서 발행, 건별 내역 CSV 다운로드</dd></div>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER:START -->
+<footer class="site-footer on-navy">
+  <div class="wrap">
+    <div class="footer__lead">
+      <p class="h2">다음 상자는 뉴저지에서<br>당신의 사서함 번호를 기다립니다.</p>
+      <a class="btn btn--primary btn--lg" href="index.html#issue">사서함 번호 받기
+        <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 9h13M10 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+    </div>
+    <div class="footer__cols">
+      <div class="footer__col">
+        <h2>서비스</h2>
+        <ul>
+          <li><a href="apply.html">배송대행 신청서</a></li>
+          <li><a href="pricing.html">요금표·견적 계산</a></li>
+          <li><a href="mypage.html">내 화물 여정</a></li>
+          <li><a href="pricing.html#partners">파트너스(사업자)</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h2>고객센터</h2>
+        <p class="footer__tel">1588-0000</p>
+        <p>평일 10:00–18:00 (점심 12:30–13:30)<br>주말·공휴일 휴무</p>
+        <ul style="margin-top:12px">
+          <li><a href="support.html#faq">자주 묻는 질문</a></li>
+          <li><a href="support.html#ask">1:1 문의</a></li>
+        </ul>
+      </div>
+      <div class="footer__col footer__col--wide">
+        <h2>물류센터</h2>
+        <dl class="footer__addr">
+          <div>
+            <dt>뉴저지 센터 EWR</dt>
+            <dd>000 Logistics Ave, Unit GB<br>Edison, NJ 08800, USA<br>당일 입고 마감 17:00 EST</dd>
+          </div>
+          <div>
+            <dt>델라웨어 센터 ILG · 면세주</dt>
+            <dd>000 Harbor Rd, Suite GB<br>New Castle, DE 19700, USA<br>판매세 0% 주</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+    <div class="footer__barcode" data-barcode="GOBAESONG-AWB-EWR-ICN-2026" data-barcode-h="56" aria-hidden="true"></div>
+    <div class="footer__legal">
+      <span>© 2026 고배송 GOBAESONG</span>
+      <span>사업자등록번호 000-00-00000</span>
+      <span>통신판매업 제0000-서울-0000호</span>
+      <span class="mock">리뉴얼 디자인 목업 — 실제 접수·결제·전송은 이뤄지지 않습니다.</span>
+    </div>
+  </div>
+</footer>
+<!-- FOOTER:END -->
+
+<script src="assets/js/common.js"></script>
+<script src="assets/js/pricing.js"></script>
+</body>
+</html>

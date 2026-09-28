@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>배송대행 신청 — 고배송</title>
+<meta name="description" content="상품정보, 수취인·통관정보, 옵션, 확인 네 단계로 끝나는 고배송 배송대행 신청서.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0B1F3A">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/apply.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body class="page-apply">
+<!-- HEADER:START -->
+<a class="skip" href="#main">본문 바로가기</a>
+<div class="flightstrip">
+  <div class="wrap flightstrip__in">
+    <span class="route" aria-label="뉴저지·델라웨어에서 인천으로">EWR·ILG<svg viewBox="0 0 28 8" aria-hidden="true"><path d="M0 4h24" stroke="#FF5C1A" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M22 1l4 3-4 3" fill="none" stroke="#FF5C1A" stroke-width="1.5"/></svg>ICN</span>
+    <span>뉴저지 현지 <b class="mono" data-clock="America/New_York">--:--</b></span>
+    <span class="hide-sm">당일 입고 마감 <b class="mono">17:00</b> EST</span>
+    <span class="hide-sm push">항공 출고 <b>월·수·금</b></span>
+  </div>
+</div>
+<header class="site-header">
+  <div class="wrap site-header__in">
+    <a class="brand" href="index.html" aria-label="고배송 홈으로">
+      <img src="assets/svg/logo-mark.svg" width="34" height="34" alt="">
+      <span class="brand__txt"><span class="brand__word">고배송</span><span class="brand__sub">GOBAESONG · US→KR</span></span>
+    </a>
+    <nav class="gnav" id="gnav" aria-label="주 메뉴">
+      <ul>
+        <li><a href="apply.html" aria-current="page">배송대행 신청</a></li>
+        <li><a href="pricing.html">요금 안내</a></li>
+        <li><a href="mypage.html">마이페이지</a></li>
+        <li><a href="support.html">고객센터</a></li>
+      </ul>
+      <a class="btn btn--primary btn--sm" href="index.html#issue">무료 사서함 발급</a>
+    </nav>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="gnav"><span class="menu-btn__bars" aria-hidden="true"></span><span class="menu-btn__label">메뉴</span></button>
+  </div>
+</header>
+<!-- HEADER:END -->
+
+<main id="main">
+  <section class="pagehead apply-head">
+    <div class="wrap grid12">
+      <div class="apply-head__intro">
+        <p class="pagehead__crumb"><a href="index.html">홈</a> / 배송대행 신청</p>
+        <h1 class="h1">신청서 한 장이면,<br>나머지는 뉴저지에서.</h1>
+      </div>
+      <div class="apply-head__meta">
+        <p class="lead">평균 작성 3분. 입력한 내용은 이 브라우저에 자동으로 임시저장됩니다.</p>
+        <p class="apply-head__save mono"><span id="save-state">임시저장 대기</span> · <button class="btn-text" type="button" id="draft-clear">새로 쓰기</button></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Signature: boarding-pass step indicator -->
+  <div class="wrap">
+    <nav class="pass" aria-label="신청 단계">
+      <ol class="pass__list" role="list">
+        <li class="pass__seg"><button type="button" class="pass__btn" data-go="1"><span class="pass__gate mono">GATE 01</span><span class="pass__name">상품정보</span><span class="pass__state mono"></span></button></li>
+        <li class="pass__seg"><button type="button" class="pass__btn" data-go="2"><span class="pass__gate mono">GATE 02</span><span class="pass__name">수취인·통관</span><span class="pass__state mono"></span></button></li>
+        <li class="pass__seg"><button type="button" class="pass__btn" data-go="3"><span class="pass__gate mono">GATE 03</span><span class="pass__name">옵션</span><span class="pass__state mono"></span></button></li>
+        <li class="pass__seg"><button type="button" class="pass__btn" data-go="4"><span class="pass__gate mono">GATE 04</span><span class="pass__name">확인</span><span class="pass__state mono"></span></button></li>
+      </ol>
+      <div class="pass__progress">
+        <div class="pass__track" role="progressbar" aria-label="작성 진행률" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25" id="progress"><span id="progress-bar"></span></div>
+        <span class="mono pass__pct" id="progress-pct">25%</span>
+      </div>
+    </nav>
+  </div>
+
+  <div class="wrap apply-body grid12">
+    <form class="apply-form" id="apply-form" novalidate>
+
+      <!-- STEP 1 -->
+      <section class="step" data-step="1" aria-labelledby="s1-title">
+        <header class="step__head">
+          <span class="step__no mono">01 / 04</span>
+          <h2 class="h2" id="s1-title" tabindex="-1">상품정보</h2>
+          <p class="muted">쇼핑몰에서 받은 주문 정보를 옮겨 주세요. 상품명은 영문으로, 금액은 달러 단가로 적습니다.</p>
+        </header>
+
+        <div class="autofill">
+          <div class="autofill__head">
+            <h3 class="h3">간편 자동입력</h3>
+            <p class="small muted">주문확인 메일 본문을 붙여넣으면 쇼핑몰·주문번호·트래킹번호·상품 목록을 채웁니다.</p>
+          </div>
+          <label class="sr-only" for="af-src">주문확인 메일 본문 붙여넣기</label>
+          <textarea class="textarea mono autofill__src" id="af-src" rows="4" placeholder="Your Amazon.com order #112-4455120-7781 has shipped&#10;Tracking number: 1Z999AA10123456784&#10;1 x Nike Pegasus 41 Running Shoes $129.99"></textarea>
+          <div class="autofill__actions">
+            <button class="btn btn--sm" type="button" id="af-run">자동입력</button>
+            <button class="btn-text" type="button" id="af-sample">예시 메일 넣어보기</button>
+            <span class="autofill__result small" id="af-result" role="status"></span>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label class="field__label" for="f-shop">쇼핑몰 <span class="req">필수</span></label>
+            <input class="input" id="f-shop" name="shop" list="shops" required placeholder="Amazon">
+            <datalist id="shops"><option value="Amazon"><option value="Nike"><option value="iHerb"><option value="Target"><option value="Best Buy"><option value="Sephora"><option value="J.Crew"><option value="Walmart"></datalist>
+          </div>
+          <div class="field">
+            <label class="field__label" for="f-order">주문번호 <span class="req">필수</span></label>
+            <input class="input mono" id="f-order" name="order" required placeholder="112-4455120-7781">
+          </div>
+          <div class="field span-2">
+            <label class="field__label" for="f-track">트래킹번호 <span class="opt">모르면 비워 두세요</span></label>
+            <input class="input mono" id="f-track" name="tracking" data-rule="tracking" placeholder="1Z999AA10123456784" autocapitalize="characters">
+            <p class="field__hint">쇼핑몰 발송 후 받은 번호입니다. 나중에 마이페이지에서 등록해도 입고에는 문제가 없습니다.</p>
+          </div>
+        </div>
+
+        <div class="items" id="items" aria-live="polite"></div>
+        <div class="items__foot">
+          <button type="button" class="btn btn--ghost btn--sm" id="add-item">
+            <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M3 9h12" stroke="currentColor" stroke-width="2"/></svg>상품 추가</button>
+          <p class="items__total">신고 금액 합계 <b class="mono" id="declared">$0.00</b><span class="items__note" id="declared-note"></span></p>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section class="step" data-step="2" aria-labelledby="s2-title" hidden>
+        <header class="step__head">
+          <span class="step__no mono">02 / 04</span>
+          <h2 class="h2" id="s2-title" tabindex="-1">수취인·통관정보</h2>
+          <p class="muted">수취인 이름은 개인통관고유부호 명의와 같아야 통관이 멈추지 않습니다.</p>
+        </header>
+
+        <div class="recent" role="group" aria-labelledby="recent-label">
+          <span class="recent__label small" id="recent-label">최근 수취인</span>
+          <button type="button" class="recent__chip" data-recent="0">홍길동 · 본인</button>
+          <button type="button" class="recent__chip" data-recent="1">김고배 · 회사</button>
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label class="field__label" for="r-name">수취인 이름 <span class="req">필수</span></label>
+            <input class="input" id="r-name" name="rname" required minlength="2" autocomplete="name" placeholder="홍길동">
+          </div>
+          <div class="field">
+            <label class="field__label" for="r-eng">영문 이름 <span class="req">필수</span></label>
+            <input class="input" id="r-eng" name="reng" required data-rule="eng" placeholder="GILDONG HONG" autocapitalize="characters">
+          </div>
+          <div class="field">
+            <label class="field__label" for="r-tel">휴대폰 <span class="req">필수</span></label>
+            <input class="input mono" id="r-tel" name="rtel" type="tel" inputmode="tel" required data-rule="phone" autocomplete="tel" placeholder="010-0000-0000">
+          </div>
+          <div class="field">
+            <label class="field__label" for="r-pccc">개인통관고유부호 <span class="req">필수</span></label>
+            <input class="input mono" id="r-pccc" name="pccc" required data-rule="pccc" placeholder="P000000000000" maxlength="13" autocapitalize="characters">
+            <p class="field__hint">P로 시작하는 13자리. 관세청 유니패스에서 무료로 발급됩니다.</p>
+          </div>
+          <div class="field field--zip">
+            <label class="field__label" for="r-zip">우편번호 <span class="req">필수</span></label>
+            <div class="input-group">
+              <input class="input mono" id="r-zip" name="zip" required data-rule="zip" inputmode="numeric" maxlength="5" placeholder="04000" autocomplete="postal-code">
+              <button class="btn btn--sm" type="button" id="zip-find">주소 찾기</button>
+            </div>
+          </div>
+          <div class="field span-2">
+            <label class="field__label" for="r-addr">주소 <span class="req">필수</span></label>
+            <input class="input" id="r-addr" name="addr" required autocomplete="address-line1" placeholder="서울특별시 마포구 월드컵북로 000">
+          </div>
+          <div class="field span-2">
+            <label class="field__label" for="r-addr2">상세주소 <span class="req">필수</span></label>
+            <input class="input" id="r-addr2" name="addr2" required autocomplete="address-line2" placeholder="000동 000호">
+          </div>
+          <label class="choice span-2 field">
+            <input type="checkbox" name="pcccAgree" required data-msg-required="명의 일치 여부를 확인해 주세요.">
+            <span class="choice__mark" aria-hidden="true"></span>
+            <span class="choice__body"><span class="choice__title">수취인과 개인통관고유부호 명의가 같습니다.</span><span class="choice__desc">다르면 인천세관에서 보류되며 명의 변경에 2–3일이 더 걸립니다.</span></span>
+          </label>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section class="step" data-step="3" aria-labelledby="s3-title" hidden>
+        <header class="step__head">
+          <span class="step__no mono">03 / 04</span>
+          <h2 class="h2" id="s3-title" tabindex="-1">옵션</h2>
+          <p class="muted">기본만으로도 모든 상자는 열어서 검수하고 다시 포장합니다. 필요한 것만 더하세요.</p>
+        </header>
+
+        <fieldset class="opt-group">
+          <legend class="opt-group__title">받을 센터</legend>
+          <div class="opt-group__row">
+            <label class="choice"><input type="radio" name="center" value="NJ" checked><span class="choice__mark" aria-hidden="true"></span><span class="choice__body"><span class="choice__title">뉴저지 EWR</span><span class="choice__desc">당일 입고 마감 17:00 · 의류·신발 물량이 많은 센터</span></span></label>
+            <label class="choice"><input type="radio" name="center" value="DE"><span class="choice__mark" aria-hidden="true"></span><span class="choice__body"><span class="choice__title">델라웨어 ILG</span><span class="choice__desc">판매세 0% 주 · 전자기기·고가품 추천</span></span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="opt-group">
+          <legend class="opt-group__title">배송 방식</legend>
+          <div class="opt-group__row">
+            <label class="choice"><input type="radio" name="ship" value="single" checked><span class="choice__mark" aria-hidden="true"></span><span class="choice__body"><span class="choice__title">단독 배송</span><span class="choice__desc">이 주문만 먼저 보냅니다.</span></span><span class="choice__price">$0</span></label>
+            <label class="choice"><input type="radio" name="ship" value="consolidate"><span class="choice__mark" aria-hidden="true"></span><span class="choice__body"><span class="choice__title">합배송</span><span class="choice__desc">다른 신청서와 한 상자로 묶어 무게를 줄입니다.</span></span><span class="choice__price">+$3.00</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="opt-group">
+          <legend class="opt-group__title">검수</legend>
+          <div class="opt-group__row">
+            <label class="choice"><input type="radio" name="inspect" value="basic" checked><span class="choice__mark" aria-hidden="true"></span><span class="choice__body"><span class="choice__title">기본 검수</span><span class="choice__desc">수량·외관 파손 확인</span></span><span class="choice__price">$0</span></label>
+            <label class="choice"><input type="radio" name="inspect" value="precise"><span class="choice__mark" aria-hidden="true"></span><span class="choice__body"><span class="choice__title">정밀검수</span><span class="choice__desc">사이즈·색상·구성품을 주문 내역과 대조</span></span><span class="choice__price">+$2.00</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="opt-group">
+          <legend class="opt-group__title">재포장</legend>
+          <div class="opt-group__row">
+            <label class="choice"><input type="radio" name="repack" value="basic" checked><span class="choice__mark" aria-hidden="true"></span><span class="choice__body"><span class="choice__title">기본 재포장</span><span class="choice__desc">불필요한 완충재를 빼고 부피를 줄입니다.</span></span><span class="choice__price">$0</span></label>
+            <label class="choice"><input type="radio" name="repack" value="strong"><span class="choice__mark" aria-hidden="true"></span><span class="choice__body"><span class="choice__title">보강 재포장</span><span class="choice__desc">에어캡 2중, 모서리 보호대 추가</span></span><span class="choice__price">+$3.00</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="opt-group">
+          <legend class="opt-group__title">안심뷰 사진 · 보험</legend>
+          <div class="opt-group__row">
+            <label class="choice"><input type="checkbox" name="photo"><span class="choice__mark" aria-hidden="true"></span><span class="choice__body"><span class="choice__title">안심뷰 사진 5장 추가</span><span class="choice__desc">기본 2장 외에 라벨·구성품을 근접 촬영</span></span><span class="choice__price">+$1.00</span></label>
+            <label class="choice"><input type="checkbox" name="insurance"><span class="choice__mark" aria-hidden="true"></span><span class="choice__body"><span class="choice__title">파손·분실 보험</span><span class="choice__desc">신고 금액의 2% · 최소 $1.00</span></span><span class="choice__price" id="ins-price">+$1.00</span></label>
+          </div>
+        </fieldset>
+
+        <div class="form-grid">
+          <div class="field">
+            <label class="field__label" for="o-weight">예상 무게 <span class="opt">lb · 견적용</span></label>
+            <input class="input mono" id="o-weight" name="estWeight" type="number" min="0.1" step="0.1" inputmode="decimal" value="3">
+            <p class="field__hint">확정 금액은 입고 후 실측 무게로 정해집니다.</p>
+          </div>
+          <div class="field span-2">
+            <label class="field__label" for="o-memo">센터 요청사항 <span class="opt">선택 · 200자</span></label>
+            <textarea class="textarea" id="o-memo" name="memo" maxlength="200" rows="3" placeholder="예) 신발 상자는 버리고 신발만 보내주세요."></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section class="step" data-step="4" aria-labelledby="s4-title" hidden>
+        <header class="step__head">
+          <span class="step__no mono">04 / 04</span>
+          <h2 class="h2" id="s4-title" tabindex="-1">확인</h2>
+          <p class="muted">제출 후에도 입고 전까지는 마이페이지에서 고칠 수 있습니다.</p>
+        </header>
+        <div class="review" id="review"></div>
+        <label class="choice field review__agree">
+          <input type="checkbox" name="agree" required data-msg-required="내용 확인에 동의해 주세요.">
+          <span class="choice__mark" aria-hidden="true"></span>
+          <span class="choice__body"><span class="choice__title">입력 내용이 실제 주문과 같음을 확인합니다.</span><span class="choice__desc">허위 신고 시 통관이 보류되고 관세법에 따라 가산세가 부과될 수 있습니다.</span></span>
+        </label>
+      </section>
+
+      <div class="step__nav">
+        <button class="btn btn--ghost" type="button" id="prev" hidden>
+          <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M16 9H3M8 4L3 9l5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>이전</button>
+        <button class="btn btn--primary btn--lg" type="submit" id="next">다음 · 수취인·통관정보
+          <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 9h13M10 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+      </div>
+    </form>
+
+    <!-- Success -->
+    <section class="done" id="done" hidden tabindex="-1" aria-labelledby="done-title">
+      <span class="stamp stamp--lg done__stamp" data-status="완료" style="--stamp-rot:-8deg">접수완료</span>
+      <h2 class="h1" id="done-title">신청서가 뉴저지에 도착했습니다.</h2>
+      <p class="lead">신청번호 <b class="mono" id="done-no">GB-000417-05</b> — 상자가 센터에 들어오면 검수 사진과 배송비를 알려 드립니다.</p>
+      <ol class="done__next" role="list">
+        <li class="is-done"><span class="mono">01</span>신청서 접수</li>
+        <li><span class="mono">02</span>미국 현지 배송 · 트래킹 대기</li>
+        <li><span class="mono">03</span>입고·검수 후 배송비 알림</li>
+      </ol>
+      <div class="done__cta">
+        <a class="btn btn--primary" href="mypage.html">마이페이지에서 여정 보기</a>
+        <button class="btn btn--ghost" type="button" id="again">새 신청서 쓰기</button>
+      </div>
+    </section>
+
+    <!-- Boarding pass summary -->
+    <aside class="bpass" aria-label="신청 요약">
+      <div class="bpass__top"><span class="mono">BOARDING PASS · 배송대행</span><span class="mono bpass__draft" id="sum-state">DRAFT</span></div>
+      <div class="bpass__route">
+        <div><b class="mono" id="sum-from">EWR</b><span id="sum-from-name">뉴저지</span></div>
+        <svg viewBox="0 0 80 24" aria-hidden="true"><path d="M2 20 C 22 2, 58 2, 78 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/><circle cx="40" cy="6.6" r="3" fill="#FF5C1A"/></svg>
+        <div class="to"><b class="mono">ICN</b><span>인천</span></div>
+      </div>
+      <dl class="bpass__grid">
+        <div><dt>PASSENGER · 수취인</dt><dd id="sum-name">—</dd></div>
+        <div><dt>MAILBOX · 사서함</dt><dd class="mono" id="sum-box">GB-000417</dd></div>
+        <div><dt>ITEMS · 상품</dt><dd id="sum-items">0개</dd></div>
+        <div><dt>DECLARED · 신고</dt><dd class="mono" id="sum-declared">$0.00</dd></div>
+        <div class="full"><dt>CLASS · 옵션</dt><dd id="sum-opts">기본 검수 · 기본 재포장</dd></div>
+      </dl>
+      <div class="bpass__fee">
+        <span>예상 배송비</span>
+        <b class="mono" id="sum-fee">$0.00</b>
+        <span class="mono small" id="sum-fee-krw">약 ₩0</span>
+      </div>
+      <div class="bpass__stub">
+        <div class="bpass__bar" data-barcode="GB-APPLY-DRAFT" data-barcode-h="40" aria-hidden="true"></div>
+        <p class="mono small">신청번호는 제출과 동시에 발급됩니다</p>
+      </div>
+    </aside>
+  </div>
+
+  <template id="item-tpl">
+    <fieldset class="item">
+      <legend class="item__head"><span class="mono item__no">ITEM 01</span></legend>
+      <button type="button" class="btn-text item__remove">삭제</button>
+      <div class="item__grid">
+        <div class="field item__name">
+          <label class="field__label">상품명 (영문) <span class="req">필수</span></label>
+          <input class="input" data-k="name" required data-rule="product" placeholder="Nike Pegasus 41 Running Shoes">
+        </div>
+        <div class="field">
+          <label class="field__label">품목 <span class="req">필수</span></label>
+          <select class="select" data-k="cat" required>
+            <option value="">선택</option>
+            <option>의류</option><option>신발</option><option>가방·잡화</option><option>건강기능식품</option>
+            <option>화장품</option><option>전자기기</option><option>완구·유아</option><option>생활·주방</option><option>식품</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field__label">단가 <span class="opt">USD</span> <span class="req">필수</span></label>
+          <input class="input mono" data-k="price" required data-rule="money" inputmode="decimal" placeholder="129.99">
+        </div>
+        <div class="field">
+          <label class="field__label">수량 <span class="req">필수</span></label>
+          <input class="input mono" data-k="qty" required data-rule="int" inputmode="numeric" value="1">
+        </div>
+        <div class="field item__url">
+          <label class="field__label">상품 주소 <span class="opt">선택</span></label>
+          <input class="input" data-k="url" data-rule="url" inputmode="url" placeholder="https://">
+        </div>
+      </div>
+    </fieldset>
+  </template>
+</main>
+
+<!-- FOOTER:START -->
+<footer class="site-footer on-navy">
+  <div class="wrap">
+    <div class="footer__lead">
+      <p class="h2">다음 상자는 뉴저지에서<br>당신의 사서함 번호를 기다립니다.</p>
+      <a class="btn btn--primary btn--lg" href="index.html#issue">사서함 번호 받기
+        <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 9h13M10 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+    </div>
+    <div class="footer__cols">
+      <div class="footer__col">
+        <h2>서비스</h2>
+        <ul>
+          <li><a href="apply.html">배송대행 신청서</a></li>
+          <li><a href="pricing.html">요금표·견적 계산</a></li>
+          <li><a href="mypage.html">내 화물 여정</a></li>
+          <li><a href="pricing.html#partners">파트너스(사업자)</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h2>고객센터</h2>
+        <p class="footer__tel">1588-0000</p>
+        <p>평일 10:00–18:00 (점심 12:30–13:30)<br>주말·공휴일 휴무</p>
+        <ul style="margin-top:12px">
+          <li><a href="support.html#faq">자주 묻는 질문</a></li>
+          <li><a href="support.html#ask">1:1 문의</a></li>
+        </ul>
+      </div>
+      <div class="footer__col footer__col--wide">
+        <h2>물류센터</h2>
+        <dl class="footer__addr">
+          <div>
+            <dt>뉴저지 센터 EWR</dt>
+            <dd>000 Logistics Ave, Unit GB<br>Edison, NJ 08800, USA<br>당일 입고 마감 17:00 EST</dd>
+          </div>
+          <div>
+            <dt>델라웨어 센터 ILG · 면세주</dt>
+            <dd>000 Harbor Rd, Suite GB<br>New Castle, DE 19700, USA<br>판매세 0% 주</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+    <div class="footer__barcode" data-barcode="GOBAESONG-AWB-EWR-ICN-2026" data-barcode-h="56" aria-hidden="true"></div>
+    <div class="footer__legal">
+      <span>© 2026 고배송 GOBAESONG</span>
+      <span>사업자등록번호 000-00-00000</span>
+      <span>통신판매업 제0000-서울-0000호</span>
+      <span class="mock">리뉴얼 디자인 목업 — 실제 접수·결제·전송은 이뤄지지 않습니다.</span>
+    </div>
+  </div>
+</footer>
+<!-- FOOTER:END -->
+
+<script src="assets/js/common.js"></script>
+<script src="assets/js/apply.js"></script>
+</body>
+</html>
