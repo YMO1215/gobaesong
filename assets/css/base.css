@@ -714,3 +714,23 @@ html:not(.is-authed) [data-auth="in"], html.is-authed [data-auth="out"] { displa
 }
 /* instant close (same-page actions, Back-button return) — no fold animation */
 .gnav.no-anim, .gnav.no-anim .gnav__inner { transition: none !important; }
+
+/* ---------- PC ↔ mobile view switch ---------- */
+.viewswitch, .footer__view {
+  display: inline-flex; align-items: center; gap: 6px; background: transparent; cursor: pointer; font-weight: 600;
+}
+.viewswitch { min-height: 30px; padding: 0 10px; margin-left: 4px; color: var(--steel); border: 1px dashed var(--navy-line); border-radius: var(--r-1); font-size: 12px; }
+.viewswitch:hover { color: var(--paper); border-color: var(--steel); }
+.viewswitch svg, .footer__view svg { width: 16px; height: 16px; }
+.footer__view { padding: 4px 10px; color: var(--paper); border: 1px solid var(--navy-line); border-radius: 999px; font-size: 12px; }
+.footer__view:hover { border-color: var(--steel); }
+@media (max-width: 640px) { .viewswitch { display: none; } }   /* phones use the menu / footer switch */
+.in-frame .viewswitch { display: none; }
+
+/* Desktop "모바일 화면": the page is shown inside a 390px phone frame (iframe) */
+html.is-framehost body { background: var(--navy); }
+html.is-framehost body > *:not(.framehost) { display: none !important; }
+.framehost { min-height: 100vh; display: grid; grid-template-rows: auto 1fr; justify-items: center; gap: 16px; padding: 16px 16px 24px; }
+.framehost__bar { width: min(420px, 100%); display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--steel); font-size: 12px; letter-spacing: .1em; }
+.framehost__device { width: 414px; max-width: 100%; height: calc(100vh - 96px); padding: 12px; background: #06132A; border-radius: 36px; box-shadow: inset 0 0 0 2px var(--navy-line); }
+.framehost__device iframe { display: block; width: 390px; max-width: 100%; height: 100%; border: 0; border-radius: 26px; background: var(--paper); }

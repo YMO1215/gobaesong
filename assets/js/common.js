@@ -311,8 +311,79 @@
     if (b) { const d = b.closest('dialog'); if (d) d.close(); }
   });
 
+  /* ---------- PC ↔ mobile view switch ----------
+     gb.view in localStorage: 'pc' (a phone renders the 1280px desktop layout via the viewport meta,
+     set before paint in each page head) · 'mobile' (a desktop shows the page inside a 390px phone
+     frame — an iframe, so media queries really see 390px) · absent = automatic. */
+  const VIEW_KEY = 'gb.view';
+  const root = document.documentElement;
+  const isPhone = () => Math.min(screen.width, screen.height) < 820;
+  const inFrame = window.self !== window.top;
+  const setView = (v) => { try { if (v) localStorage.setItem(VIEW_KEY, v); else localStorage.removeItem(VIEW_KEY); } catch (e) { /* private mode: switch still works for this page */ } };
+
+  function viewIsMobileLayout() {
+    return inFrame || window.innerWidth <= 960;
+  }
+  function paintViewButtons() {
+    const mobile = viewIsMobileLayout();
+    GB.$$('[data-view-toggle]').forEach((b) => {
+      const label = b.querySelector('[data-view-label]');
+      const inMenu = b.classList.contains('gnav__join');
+      if (label) label.textContent = mobile ? (inMenu ? 'PC 화면으로 보기' : 'PC 화면') : (inMenu ? '모바일 화면으로 보기' : '모바일 화면');
+      b.setAttribute('aria-label', mobile ? 'PC 화면으로 전환' : '모바일 화면으로 전환');
+    });
+  }
+  function switchView() {
+    if (viewIsMobileLayout()) {
+      // → PC
+      if (inFrame) { setView(null); window.top.location.href = window.location.href; return; }
+      if (isPhone()) {
+        setView('pc');
+        document.querySelector('meta[name=viewport]').setAttribute('content', 'width=1280');
+        root.classList.add('is-pcview');
+        window.scrollTo(0, 0);
+        paintViewButtons();
+      } else {
+        GB.toast('이미 넓은 화면입니다. 창 폭을 넓히면 PC 배치로 보입니다');
+      }
+      return;
+    }
+    // → mobile
+    if (isPhone()) {
+      setView(null);
+      document.querySelector('meta[name=viewport]').setAttribute('content', 'width=device-width, initial-scale=1');
+      root.classList.remove('is-pcview');
+      window.scrollTo(0, 0);
+      paintViewButtons();
+      return;
+    }
+    setView('mobile');
+    root.classList.add('is-framehost');
+    buildFrameHost();
+  }
+  function buildFrameHost() {
+    if (GB.$('.framehost')) return;
+    const host = document.createElement('div');
+    host.className = 'framehost';
+    host.innerHTML = `<div class="framehost__bar"><span class="mono">MOBILE VIEW · 390px</span>
+      <button type="button" class="btn btn--primary btn--sm" data-framehost-exit>PC 화면으로 돌아가기</button></div>
+      <div class="framehost__device"><iframe title="고배송 모바일 화면" src="${location.href.replace(/"/g, '&quot;')}"></iframe></div>`;
+    document.body.appendChild(host);
+    host.querySelector('[data-framehost-exit]').addEventListener('click', () => {
+      setView(null);
+      // follow the page the visitor navigated to inside the phone frame
+      let target = location.href;
+      try { target = host.querySelector('iframe').contentWindow.location.href; } catch (e) { /* cross-origin: keep current */ }
+      window.location.href = target;
+    });
+  }
+  document.addEventListener('click', (e) => { if (e.target.closest('[data-view-toggle]')) { e.preventDefault(); switchView(); } });
+  window.addEventListener('resize', paintViewButtons);
+
   /* ---------- Boot ---------- */
   function boot() {
+    paintViewButtons();
+    if (root.classList.contains('is-framehost') && !inFrame) buildFrameHost();
     initMenu();
     renderBarcodes();
     observeInView();
