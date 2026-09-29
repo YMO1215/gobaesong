@@ -95,16 +95,7 @@
 .cus-jump a:hover { background: var(--navy); color: var(--paper); }
 .cus-jump a:hover .mono { color: var(--orange); }
 .pass-card { grid-row: 1 / span 2; align-self: start; }
-.cus-sum { display: none; }
-
-/* ---------- M-04 mobile compression (≤767px): 2-line summary + key values, details folded ---------- */
 @media (max-width: 767px) {
   .cus-jump { grid-column: 1 / -1; grid-template-columns: 1fr 1fr; }
   .pass-card { grid-row: auto; }
-  .cus-head__title .lead { font-size: 1rem; }
-  .cus-sum { display: block; grid-column: 1 / -1; margin: 0; font-size: .9375rem; line-height: 1.6; }
-  .on-navy .cus-sum { color: var(--paper); }
-  .cus-side { margin-bottom: 0; }
-  .cus-side .h2 { margin-bottom: var(--s-2); }
-  .grid12 > .cus-sum + .m-fold, .cus-side + .m-fold { margin-top: var(--s-3); }
 }

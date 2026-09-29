@@ -55,7 +55,6 @@
         </dl>
         ${p.code && p.st !== 'ended' ? `<a class="link-arrow" href="#cp-${p.code}">쿠폰 받으러 가기</a>` : ''}
       </article>`).join('') : '<p class="muted">해당하는 프로모션이 없습니다.</p>';
-    GB.mMore(box);
   }
   $$('[data-pf]').forEach((b) => b.addEventListener('click', () => {
     $$('[data-pf]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
@@ -97,7 +96,6 @@
         <div class="coupon__act">${action}</div>
       </article>`;
     }).join('');
-    GB.mMore(list);
   }
   document.addEventListener('click', (e) => {
     const b = e.target.closest('[data-get]');
@@ -161,7 +159,6 @@
     const list = S.EVENTS.filter((e) => kind === 'all' || e.kind === kind)
       .slice().sort((a, b) => S.isEnded(a, TODAY) - S.isEnded(b, TODAY)); // kind order from specials.js, ended last
     box.innerHTML = list.map((e) => GB.specialHTML(e, 'card')).join('');
-    GB.mMore(box);
   }
   $$('[data-spk]').forEach((b) => b.addEventListener('click', () => {
     $$('[data-spk]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));

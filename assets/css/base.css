@@ -744,35 +744,6 @@ html.is-framehost body > *:not(.framehost) { display: none !important; }
 .chatfab { bottom: calc(var(--fab-bottom, 16px) + var(--fab-lift, 0px) + env(safe-area-inset-bottom)); transition: bottom var(--dur-2) var(--ease); }
 @media (max-width: 640px) { .site-footer { padding-bottom: calc(76px + env(safe-area-inset-bottom)); } }
 
-/* ---------- Mobile compression (≤767px): 더보기 lists + folded sections (common.js) ----------
-   Buttons exist on every width but only show on phones; .m-cut only hides on phones. */
-.m-more, .m-fold { display: none; }
-@media (max-width: 767px) {
-  .m-cut { display: none !important; }
-  .m-more, .m-fold {
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    width: 100%; min-height: 48px; margin-top: var(--s-3); padding: 10px 16px;
-    background: transparent; color: var(--ink); border: var(--bw-strong) solid var(--navy); border-radius: var(--r-1);
-    font: 700 .9375rem/1.3 var(--font-sans); text-align: left; cursor: pointer;
-  }
-  .m-more[hidden], .m-fold[hidden] { display: none; }
-  .m-more svg, .m-fold svg { width: 16px; height: 16px; flex: none; transition: transform var(--dur-1) var(--ease); }
-  .m-more[aria-expanded="true"] svg, .m-fold[aria-expanded="true"] svg { transform: rotate(180deg); }
-  .m-fold { border-width: var(--bw); border-color: var(--line); background: var(--paper); }
-  .m-fold[aria-expanded="true"] { border-color: var(--navy); }
-  .on-navy .m-more, .on-navy .m-fold { color: var(--paper); border-color: var(--paper); background: transparent; }
-}
-@media (min-width: 768px) { .m-only { display: none !important; } }
-@media (prefers-reduced-motion: reduce) { .m-more svg, .m-fold svg { transition: none; } }
-/* phones: tighter section rhythm (72 → 48px) — the biggest single cut in page length */
-@media (max-width: 767px) { .section { padding-block: var(--s-7); } }
-@media (max-width: 767px) {
-  .grid12 > .m-fold, .grid12 > .m-more { grid-column: 1 / -1; }
-  /* footer: the two short link columns side by side */
-  .footer__cols { grid-template-columns: 1fr 1fr; column-gap: var(--s-4); }
-  .footer__col { grid-column: auto; }
-  .footer__col:nth-child(n+3) { grid-column: 1 / -1; }
-}
 @media (max-width: 767px) {
   .footer__col ul { gap: 0; }
   .footer__col a, .footer__chat { display: flex; align-items: center; min-height: 44px; }

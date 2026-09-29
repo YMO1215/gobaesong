@@ -6,24 +6,6 @@
   const KEY = 'gb.guide';
   const boxes = $$('[data-ck]');
   if (!boxes.length) return;
-
-  /* M-03 phones: each GATE shows number · title · lead line; the prep list, example and buttons sit
-     in a body that common.js folds (one open at a time, GATE 01 open). Wider screens show everything. */
-  $$('.gate').forEach((gate, i) => {
-    const lead = $(':scope > p', gate);
-    if (!lead) return;
-    const body = document.createElement('div');
-    body.className = 'gate__body';
-    while (lead.nextSibling) body.appendChild(lead.nextSibling);
-    gate.appendChild(body);
-    body.dataset.mFold = `${$('.gate__no', gate).textContent} 준비물·자세히`;
-    body.dataset.mFoldGroup = 'gate';
-    if (i === 0) body.setAttribute('data-m-fold-open', '');
-  });
-  const openGate = (id) => { const g = id && document.getElementById(id); const b = g && $('.gate__body', g); if (b) GB.mReveal(b); };
-  window.addEventListener('hashchange', () => openGate(location.hash.slice(1)));
-  document.addEventListener('click', (e) => { const a = e.target.closest('#ck-gates a'); if (a) openGate(a.getAttribute('href').slice(1)); });
-  setTimeout(() => openGate(location.hash.slice(1)), 0);
   const saved = GB.store.get(KEY, {});
   boxes.forEach((b) => { b.checked = !!saved[b.dataset.ck]; });
 

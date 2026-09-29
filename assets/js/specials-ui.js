@@ -25,10 +25,8 @@
       <h3 class="spc__name" id="spc-${mode}-${e.id}">${esc(e.name)}</h3>
       <p class="spc__price mono">${S.priceLabel(e)}</p>`;
     if (mode === 'table') {
-      // the toggle only shows on phones (base.css); on wider screens every condition stays visible
-      return `<article class="spc spc--row${ended ? ' is-ended' : ''}" data-kind="${e.kind}" data-id="${e.id}" aria-labelledby="spc-${mode}-${e.id}">
-        <div class="spc__lead">${head}<button type="button" class="spc__toggle" aria-expanded="true" aria-controls="spc-facts-${e.id}">조건 보기<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></button></div>
-        <dl class="spc__facts" id="spc-facts-${e.id}">${facts}</dl></article>`;
+      return `<article class="spc spc--row${ended ? ' is-ended' : ''}" data-kind="${e.kind}" aria-labelledby="spc-${mode}-${e.id}">
+        <div class="spc__lead">${head}</div><dl class="spc__facts">${facts}</dl></article>`;
     }
     return `<article class="spc spc--card${ended ? ' is-ended' : ''}" data-kind="${e.kind}" id="special-${e.id}" aria-labelledby="spc-${mode}-${e.id}">
       ${head}

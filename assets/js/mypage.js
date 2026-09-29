@@ -133,9 +133,7 @@
       const time = k <= i ? (s.times[k] || '') : '';
       const stamp = k <= i ? GB.stamp(name, '', 'j-stamp') : '';
       const cur = k === i ? ' aria-current="step"' : '';
-      // phones show only the last done · current · next step until "전체 여정 보기" (mypage.css)
-      const near = Math.abs(k - i) <= 1 ? ' is-near' : '';
-      return `<li class="journey__step ${state}${near}"${cur}><span class="journey__dot" aria-hidden="true"></span><span class="journey__name">${name}</span><span class="journey__time">${time}</span><span class="journey__stamp">${stamp}</span></li>`;
+      return `<li class="journey__step ${state}"${cur}><span class="journey__dot" aria-hidden="true"></span><span class="journey__name">${name}</span><span class="journey__time">${time}</span><span class="journey__stamp">${stamp}</span></li>`;
     }).join('');
     $('#j-progress').style.setProperty('--f', String(f));
 
@@ -289,13 +287,6 @@
 
   /* ---------- Boot ---------- */
   renderCounts();
-  // phones: journey shows last done · current · next; the button opens all steps
-  const jAll = $('#j-all');
-  if (jAll) jAll.addEventListener('click', () => {
-    const open = $('#journey').classList.toggle('is-all');
-    jAll.setAttribute('aria-expanded', String(open));
-    jAll.firstElementChild.textContent = open ? '현재 단계만 보기' : `전체 여정 ${S.length}단계 보기`;
-  });
   select(SHIPS.find((s) => s.status === '결제대기') || SHIPS[0], false);
   setPoints(points);
 })();

@@ -253,7 +253,6 @@
         </div>
       </article>`;
     }).join('');
-    GB.mMore(rail);
     $$('[data-rail]').forEach((b) => b.addEventListener('click', () => {
       const card = rail.querySelector('.deal');
       const step = card ? card.getBoundingClientRect().width + 16 : 300;

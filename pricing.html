@@ -13,8 +13,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
 <link rel="stylesheet" href="assets/css/tokens.css?v=7f50594a">
-<link rel="stylesheet" href="assets/css/base.css?v=f69b3385">
-<link rel="stylesheet" href="assets/css/pricing.css?v=0485da6d">
+<link rel="stylesheet" href="assets/css/base.css?v=5586c786">
+<link rel="stylesheet" href="assets/css/pricing.css?v=75b6d49b">
 <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('gb.user'))document.documentElement.classList.add('is-authed')}catch(e){}try{var d=document.documentElement,v=localStorage.getItem('gb.view'),s=Math.min(screen.width,screen.height)<820,f=window.self!==window.top;if(f)d.classList.add('in-frame');if(v==='pc'&&s&&!f){document.querySelector('meta[name=viewport]').setAttribute('content','width=1280');d.classList.add('is-pcview')}if(v==='mobile'&&!s&&!f)d.classList.add('is-framehost')}catch(e){}</script>
 </head>
 <body class="page-pricing">
@@ -309,7 +309,7 @@
               </div>
             </fieldset>
           </div>
-          <fieldset class="p-event" data-m-fold="배송비 이벤트 적용 (선택)">
+          <fieldset class="p-event">
             <legend class="field__label">배송비 이벤트 <span class="opt">선택 · 기본은 일반 요금</span></legend>
             <div class="p-event__grid">
               <div class="field p-event__pick">
@@ -332,7 +332,7 @@
             </div>
             <p class="p-event__hint" id="p-event-hint">이벤트를 고르면 판정에 필요한 칸만 켜집니다. 조건 설명은 아래 B 구획에 모두 있습니다.</p>
           </fieldset>
-          <fieldset class="p-opts" data-m-fold="선택 옵션·보험 (선택)">
+          <fieldset class="p-opts">
             <legend class="field__label">선택 옵션</legend>
             <label class="tick"><input type="checkbox" name="consolidate"><span>합배송 <b class="mono">+$3.00</b></span></label>
             <label class="tick"><input type="checkbox" name="inspect"><span>정밀검수 <b class="mono">+$2.00</b></span></label>
@@ -373,8 +373,6 @@
             <tbody id="rate-body"></tbody>
           </table>
         </div>
-        <!-- phones: 1·3·5·10·20 LB rows first, the full 1–50 LB table one tap away -->
-        <button type="button" class="m-more rates__all" id="rates-all" aria-controls="rate-body" aria-expanded="false"><span>전체 표 보기 (1–50&nbsp;LB)</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
       </div>
       <aside class="rates__notes" aria-label="요금 계산 규칙">
         <ol class="rules" role="list">
@@ -401,12 +399,12 @@
           <button type="button" aria-pressed="false" data-sk="fixed">고정가</button>
         </div>
       </div>
-      <ul class="specials__legend" role="list" data-m-fold="요금 방식 3가지 설명">
+      <ul class="specials__legend" role="list">
         <li><span class="spc__kind spc__kind--from">최저가부터</span> 최종 금액은 입고 후 확정</li>
         <li><span class="spc__kind spc__kind--discount">일반 요금 할인</span> A 요금표로 계산한 금액에서 % 할인</li>
         <li><span class="spc__kind spc__kind--fixed">고정가</span> 무게와 관계없이 적힌 금액 (조건 안에서)</li>
       </ul>
-      <div class="specials__list" id="spc-list" data-m-more="4" data-m-more-label="이벤트 전체 보기"></div>
+      <div class="specials__list" id="spc-list"></div>
       <p class="specials__src small muted">근거: 고배송 신청서 화면의 이벤트 옵션. 운영 투입 전 관리자 기준 요금·종료일과 다시 대조해야 합니다. 옵션 요금(정밀검수·재포장 등)은 별도입니다.</p>
     </div>
   </section>
@@ -414,7 +412,7 @@
   <!-- Volumetric -->
   <section class="section vol on-navy" aria-labelledby="vol-title">
     <div class="wrap grid12">
-      <div class="vol__art" data-m-fold="상자 치수 그림 보기">
+      <div class="vol__art">
         <svg viewBox="0 0 420 300" role="img" aria-labelledby="vol-art-t">
           <title id="vol-art-t">가로 14, 세로 10, 높이 5인치 상자의 치수 표시</title>
           <path d="M210 40l130 65-130 65-130-65z" fill="#1D3E68"/>
@@ -447,7 +445,7 @@
         <p class="lead">미국에서 특송으로 들어오는 자가사용 물품은 물품가격 <b class="mono">$200</b> 이하면 목록통관으로 관세·부가세 없이 통과합니다. 1달러라도 넘으면 초과분이 아니라 <b>전체 금액</b>에 세금이 붙습니다.</p>
       </div>
 
-      <ol class="duty__rules" role="list" data-m-fold="면세한도·과세 기준 7가지">
+      <ol class="duty__rules" role="list">
         <li><span class="mono">01</span><div><b>미국발 특송 · 목록통관 <span class="mono">$200</span></b><p>자가사용 목적, 목록통관 대상 품목일 때만 적용됩니다.</p></div></li>
         <li><span class="mono">02</span><div><b>우편물·목록통관 배제 품목 <span class="mono">$150</span></b><p>건강기능식품·식품·의약품·기능성 화장품 등은 미국발이어도 수입신고 대상이며 $150 기준입니다.</p></div></li>
         <li><span class="mono">03</span><div><b>판정 금액 = 물품가 + 미국 판매세 + 미국 내 배송비</b><p>한국까지의 국제 배송비는 판정 금액에서 빠집니다.</p></div></li>
@@ -457,7 +455,7 @@
         <li><span class="mono">07</span><div><b>저가 신고는 관세법 위반</b><p>신청서의 신고 금액은 실제 결제 금액 그대로 적어 주세요.</p></div></li>
       </ol>
 
-      <form class="dutycalc" id="duty-form" novalidate aria-labelledby="duty-form-title" data-m-fold="관부가세 계산기 열기">
+      <form class="dutycalc" id="duty-form" novalidate aria-labelledby="duty-form-title">
         <div class="dutycalc__head">
           <h3 class="mono" id="duty-form-title">CUSTOMS ESTIMATE · 관부가세 계산</h3>
           <span class="mono">참고용</span>
@@ -520,7 +518,7 @@
         <h2 class="h2" id="addons-title">선택 옵션</h2>
         <p class="muted">검수·재포장·안심뷰 사진 2장은 모든 화물에 기본 포함입니다.</p>
       </div>
-      <div class="addons__frame" data-m-fold="선택 옵션 요금표 (6가지)">
+      <div class="addons__frame">
         <table class="table">
           <caption class="sr-only">선택 옵션별 요금</caption>
           <thead><tr><th scope="col">옵션</th><th scope="col">내용</th><th scope="col" class="num">요금</th></tr></thead>
@@ -545,7 +543,7 @@
         <h2 class="h1" id="pp-title">월 100건부터,<br>기본요금 7% 할인.</h2>
         <a class="btn btn--ghost" href="support.html#ask">파트너스 가입 문의</a>
       </div>
-      <dl class="pp__terms" data-m-fold="파트너스 조건·혜택 5가지">
+      <dl class="pp__terms">
         <div><dt>가입 조건</dt><dd>사업자등록증 · 최근 3개월 월평균 100건 이상 또는 예상 물량 제출</dd></div>
         <div><dt>대량 신청</dt><dd>엑셀 템플릿 업로드로 최대 500건 일괄 신청, 오류 행만 다시 표시</dd></div>
         <div><dt>자동결제</dt><dd>검수 완료 즉시 등록 카드로 결제, 출고 대기 없음</dd></div>
@@ -566,7 +564,7 @@
       <a class="btn btn--primary btn--lg" href="apply.html" data-auth="in">간편 신청서 쓰기
         <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 9h13M10 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
     </div>
-    <div class="footer__cols" data-m-fold="전체 메뉴 · 고객센터 · 물류센터 주소">
+    <div class="footer__cols">
       <div class="footer__col">
         <h2>처음이라면</h2>
         <ul>
@@ -673,13 +671,13 @@
 <!-- FOOTER:END -->
 
 <script src="assets/js/hours.js?v=754dcf87"></script>
-<script src="assets/js/common.js?v=8c9efdea"></script>
+<script src="assets/js/common.js?v=526a35ba"></script>
 <script src="assets/js/cselect.js?v=63d6bff8"></script>
 <script src="assets/js/member.js?v=b1edb2fd"></script>
 <script src="assets/js/chat.js?v=2b1108cf"></script>
 <script src="assets/js/specials.js?v=ab1d1c97"></script>
-<script src="assets/js/specials-ui.js?v=a228c162"></script>
+<script src="assets/js/specials-ui.js?v=d4df104a"></script>
 <script src="assets/js/duty.js?v=3378221c"></script>
-<script src="assets/js/pricing.js?v=f6b3d33f"></script>
+<script src="assets/js/pricing.js?v=4a75ac3b"></script>
 </body>
 </html>

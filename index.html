@@ -13,8 +13,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
 <link rel="stylesheet" href="assets/css/tokens.css?v=7f50594a">
-<link rel="stylesheet" href="assets/css/base.css?v=f69b3385">
-<link rel="stylesheet" href="assets/css/index.css?v=a4ae4692">
+<link rel="stylesheet" href="assets/css/base.css?v=5586c786">
+<link rel="stylesheet" href="assets/css/index.css?v=fbaf6df4">
 <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('gb.user'))document.documentElement.classList.add('is-authed')}catch(e){}try{var d=document.documentElement,v=localStorage.getItem('gb.view'),s=Math.min(screen.width,screen.height)<820,f=window.self!==window.top;if(f)d.classList.add('in-frame');if(v==='pc'&&s&&!f){document.querySelector('meta[name=viewport]').setAttribute('content','width=1280');d.classList.add('is-pcview')}if(v==='mobile'&&!s&&!f)d.classList.add('is-framehost')}catch(e){}</script>
 </head>
 <body class="page-index">
@@ -262,7 +262,7 @@
         </dl>
       </div>
       <p class="radar__disclaimer"><span id="radar-lead">가격과 재고는 판매처 사정에 따라 변동될 수 있습니다. 담당자가 매주 월·목 직접 확인해 올리며, 끝난 딜은 바로 내립니다.</span> <b id="radar-affiliate">제휴·광고 링크가 아닙니다.</b> <span class="radar__mock" id="radar-badge">목업 예시 가격</span></p>
-      <div class="radar__rail" id="radar-rail" role="list" aria-label="이번 주 핫딜" data-m-more="4" data-m-more-label="핫딜 전체보기"></div>
+      <div class="radar__rail" id="radar-rail" role="list" aria-label="이번 주 핫딜"></div>
       <div class="radar__foot">
         <p class="small muted" id="radar-count">딜 8개</p>
         <div class="radar__nav">
@@ -296,7 +296,7 @@
           </div>
         </div>
 
-        <aside class="awb reveal" aria-label="고배송 항공 운송장 예시" data-m-fold="항공 운송장 예시 보기">
+        <aside class="awb reveal" aria-label="고배송 항공 운송장 예시">
           <div class="awb__head">
             <span class="mono">AIR WAYBILL</span>
             <span class="mono">No. 180-2609-2804</span>
@@ -398,13 +398,7 @@
           <li><span class="lanes__key lanes__key--you" aria-hidden="true"></span>고객이 하는 일</li>
           <li><span class="lanes__key lanes__key--us" aria-hidden="true"></span>고배송이 하는 일</li>
         </ul>
-        <!-- phones: the 9 stops in 3 lines first; the full two-lane map stays one tap away -->
-        <ol class="process__sum m-only" role="list">
-          <li><span class="mono">01–03</span><b>고객</b> 사서함 발급 → 쇼핑몰 구매 → 신청서 작성</li>
-          <li><span class="mono">04–05</span><b>고배송</b> 현지 배송 추적 → 입고·검수·실측</li>
-          <li><span class="mono">06–09</span><b>고객 결제 후</b> 출고·항공 → 통관 → 국내 배송</li>
-        </ol>
-        <ol class="lanes__steps" role="list" data-m-fold="전체 9단계 자세히 보기">
+        <ol class="lanes__steps" role="list">
           <li class="stop stop--you reveal" style="--i:1">
             <div class="stop__body"><span class="stop__who">고객</span><h3 class="stop__title">사서함 번호 발급</h3><p class="stop__desc">가입과 동시에 <span class="mono">GB-000000</span> 번호와 미국 주소가 나옵니다.</p></div>
             <span class="stop__node mono" aria-hidden="true">01</span>
@@ -460,7 +454,7 @@
           <div><dt>오늘 출고</dt><dd class="mono" id="bt-out">386</dd></div>
         </dl>
       </div>
-      <div class="board__frame" role="region" aria-label="배송 현황표" tabindex="0" data-m-fold="실시간 처리 현황표 보기">
+      <div class="board__frame" role="region" aria-label="배송 현황표" tabindex="0">
         <table class="fids">
           <caption class="sr-only">최근 처리된 화물 8건의 상태. 샘플 데이터이며 몇 초마다 한 줄씩 바뀝니다.</caption>
           <thead>
@@ -536,7 +530,7 @@
         <h2 class="h3" id="spstrip-title">진행 중 배송비 스페셜 <span class="mono" id="spstrip-count"></span></h2>
       </div>
       <ol class="spstrip__list" id="spstrip-list" role="list"></ol>
-      <a class="link-arrow spstrip__all" href="events.html#specials">이벤트 전체보기
+      <a class="link-arrow spstrip__all" href="events.html#specials">전체 보기
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8h12M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
     </div>
   </section>
@@ -574,7 +568,7 @@
         </div>
         <p class="reviews__score"><b class="mono">4.8</b><span>/ 5 · 후기 3,214건 평균</span><span class="reviews__mock">목업 예시 후기</span></p>
       </div>
-      <div class="reviews__grid" data-m-more="1" data-m-more-label="후기 더보기">
+      <div class="reviews__grid">
         <figure class="review review--lead">
           <blockquote>“금요일 밤에 결제했는데 화요일 오후에 현관 앞에 있었어요. 검수 사진에 신발 사이즈 라벨까지 찍혀 있어서 안심했습니다.”</blockquote>
           <figcaption><span class="mono">gd****</span> · 러닝화 · <span class="mono">EWR→서울 4일</span></figcaption>
@@ -602,7 +596,7 @@
         <p class="eyebrow">파트너스 · 사업자 회원</p>
         <h2 class="h2" id="partners-title">한 달 100건이 넘는다면.</h2>
       </div>
-      <ol class="partners__list" role="list" data-m-fold="파트너스 혜택 3가지 보기">
+      <ol class="partners__list" role="list">
         <li><span class="mono">01</span><div><b>대량 신청</b><p>한 번에 최대 500건까지 신청서를 만들고, 오류가 난 줄만 다시 표시합니다.</p></div></li>
         <li><span class="mono">02</span><div><b>엑셀 업로드</b><p>템플릿에 주문 목록을 붙여넣고 올리면 상품·수취인·통관정보가 한 번에 채워집니다.</p></div></li>
         <li><span class="mono">03</span><div><b>자동결제</b><p>검수가 끝나는 즉시 등록한 카드로 결제되어 출고 대기가 생기지 않습니다. 기본요금 7% 할인.</p></div></li>
@@ -621,14 +615,14 @@
           <a class="link-arrow" href="support.html#notice">전체 보기
             <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8h12M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
         </div>
-        <ol class="notices" role="list" data-m-more="2" data-m-more-label="공지 더보기">
+        <ol class="notices" role="list">
           <li><time class="mono" datetime="2026-09-24">2026.09.24</time><span class="badge badge--navy">출고</span><a href="support.html#notice">추석 연휴 인천세관 통관 일정 안내 (10.3–10.9)</a></li>
           <li><time class="mono" datetime="2026-09-19">2026.09.19</time><span class="badge">요금</span><a href="support.html#notice">델라웨어 센터 10월 유류할증료 동결</a></li>
           <li><time class="mono" datetime="2026-09-11">2026.09.11</time><span class="badge">서비스</span><a href="support.html#notice">안심뷰 사진 기본 제공 1장 → 2장으로 변경</a></li>
           <li><time class="mono" datetime="2026-09-02">2026.09.02</time><span class="badge">통관</span><a href="support.html#notice">건강기능식품은 $150 기준 · 6병 초과 시 수입 요건 확인</a></li>
         </ol>
       </div>
-      <aside class="desk__help" aria-labelledby="help-title" data-m-fold="상담 창구 · 전화 · 운영시간">
+      <aside class="desk__help" aria-labelledby="help-title">
         <p class="eyebrow">상담 창구</p>
         <h2 class="h3" id="help-title">운송장번호만 알려주시면 됩니다.</h2>
         <p class="desk__tel mono">1588-0000</p>
@@ -653,7 +647,7 @@
       <a class="btn btn--primary btn--lg" href="apply.html" data-auth="in">간편 신청서 쓰기
         <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 9h13M10 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
     </div>
-    <div class="footer__cols" data-m-fold="전체 메뉴 · 고객센터 · 물류센터 주소">
+    <div class="footer__cols">
       <div class="footer__col">
         <h2>처음이라면</h2>
         <ul>
@@ -760,12 +754,12 @@
 <!-- FOOTER:END -->
 
 <script src="assets/js/hours.js?v=754dcf87"></script>
-<script src="assets/js/common.js?v=8c9efdea"></script>
+<script src="assets/js/common.js?v=526a35ba"></script>
 <script src="assets/js/cselect.js?v=63d6bff8"></script>
 <script src="assets/js/member.js?v=b1edb2fd"></script>
 <script src="assets/js/chat.js?v=2b1108cf"></script>
 <script src="assets/js/deals-data.js?v=bd6d3735"></script>
 <script src="assets/js/specials.js?v=ab1d1c97"></script>
-<script src="assets/js/index.js?v=68416989"></script>
+<script src="assets/js/index.js?v=f9cb52f5"></script>
 </body>
 </html>

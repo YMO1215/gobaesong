@@ -262,14 +262,3 @@
   .evsel { padding: var(--s-4); }
   .evsel__grid { grid-template-columns: 1fr; }
 }
-
-/* ---------- M-08 mobile (≤767px): step form stays; the boarding pass follows the current step as a folded summary ---------- */
-@media (max-width: 767px) {
-  .bpass { grid-row: 2; margin: var(--s-5) 0 0; }
-  .bpass > .m-fold { margin: 0; border-width: 0 0 1px; border-radius: 0; }
-  .bpass__grid { grid-template-columns: 1fr 1fr; }
-  .bpass__route { padding: 12px 16px; }
-  .bpass__route b { font-size: 1.5rem; }
-  .bpass__bar { display: none; } /* decorative barcode */
-  .bpass__stub { padding: 10px 16px; }
-}

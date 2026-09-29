@@ -13,8 +13,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
 <link rel="stylesheet" href="assets/css/tokens.css?v=7f50594a">
-<link rel="stylesheet" href="assets/css/base.css?v=f69b3385">
-<link rel="stylesheet" href="assets/css/mypage.css?v=55eb6281">
+<link rel="stylesheet" href="assets/css/base.css?v=5586c786">
+<link rel="stylesheet" href="assets/css/mypage.css?v=960ef925">
 <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('gb.user'))document.documentElement.classList.add('is-authed')}catch(e){}try{var d=document.documentElement,v=localStorage.getItem('gb.view'),s=Math.min(screen.width,screen.height)<820,f=window.self!==window.top;if(f)d.classList.add('in-frame');if(v==='pc'&&s&&!f){document.querySelector('meta[name=viewport]').setAttribute('content','width=1280');d.classList.add('is-pcview')}if(v==='mobile'&&!s&&!f)d.classList.add('is-framehost')}catch(e){}</script>
 </head>
 <body class="page-mypage">
@@ -297,8 +297,7 @@
           <ol class="journey__steps" id="j-steps" role="list"></ol>
         </div>
       </div>
-      <button type="button" class="m-more journey__all" id="j-all" aria-controls="j-steps" aria-expanded="false"><span>전체 여정 7단계 보기</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
-      <dl class="journeycard__facts" id="j-facts" data-m-fold="이 화물 상세 (무게·요금·일정)"></dl>
+      <dl class="journeycard__facts" id="j-facts"></dl>
     </section>
 
     <!-- Side: photos, points, address -->
@@ -308,7 +307,7 @@
           <h2 class="h3" id="safeview-title">안심뷰 검수 사진</h2>
           <span class="mono small muted" id="sv-count">3장</span>
         </header>
-        <div class="safeview__grid" id="safeview" data-m-fold="안심뷰 사진 보기"></div>
+        <div class="safeview__grid" id="safeview"></div>
         <p class="small muted" id="sv-note">뉴저지 센터 검수대 · 촬영 시각은 현지 기준</p>
       </section>
 
@@ -318,7 +317,7 @@
           <span class="mono small muted">결제액의 1%</span>
         </header>
         <p class="points__total"><b class="mono" id="point-side">12,480</b>P <span class="small muted">= ₩12,480</span></p>
-        <ul class="points__log" role="list" id="point-log" data-m-fold="포인트 내역 보기">
+        <ul class="points__log" role="list" id="point-log">
           <li><span>GB-000416-12 거래완료</span><b class="mono plus">+276</b></li>
           <li><span>GB-000416-09 배송비 사용</span><b class="mono minus">−3,000</b></li>
           <li><span>검수 사진 후기 작성</span><b class="mono plus">+150</b></li>
@@ -345,7 +344,7 @@ Edison, NJ 08800 USA</address>
           <button type="button" aria-pressed="false" data-filter="done">완료</button>
         </div>
       </header>
-      <div class="shipments__frame" data-m-fold="이전·진행 중 화물 전체 목록">
+      <div class="shipments__frame">
         <table class="table shiptable">
           <caption class="sr-only">내 화물 목록. 행을 선택하면 위 여정 지도가 바뀝니다.</caption>
           <thead><tr><th scope="col">신청번호</th><th scope="col">상품</th><th scope="col" class="num">무게</th><th scope="col" class="num">배송비</th><th scope="col">상태</th><th scope="col"><span class="sr-only">보기</span></th></tr></thead>
@@ -402,7 +401,7 @@ Edison, NJ 08800 USA</address>
       <a class="btn btn--primary btn--lg" href="apply.html" data-auth="in">간편 신청서 쓰기
         <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 9h13M10 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
     </div>
-    <div class="footer__cols" data-m-fold="전체 메뉴 · 고객센터 · 물류센터 주소">
+    <div class="footer__cols">
       <div class="footer__col">
         <h2>처음이라면</h2>
         <ul>
@@ -509,10 +508,10 @@ Edison, NJ 08800 USA</address>
 <!-- FOOTER:END -->
 
 <script src="assets/js/hours.js?v=754dcf87"></script>
-<script src="assets/js/common.js?v=8c9efdea"></script>
+<script src="assets/js/common.js?v=526a35ba"></script>
 <script src="assets/js/cselect.js?v=63d6bff8"></script>
 <script src="assets/js/member.js?v=b1edb2fd"></script>
 <script src="assets/js/chat.js?v=2b1108cf"></script>
-<script src="assets/js/mypage.js?v=a2d491f9"></script>
+<script src="assets/js/mypage.js?v=8e59a501"></script>
 </body>
 </html>

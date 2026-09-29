@@ -59,7 +59,6 @@
       });
       $('#faq-count').textContent = (q ? `‘${query}’ 검색 결과 ` : (cat === 'all' ? '전체 ' : '')) + n + '개';
       $('#faq-none').hidden = n > 0;
-      GB.mMore($('#faq-list')); // phones: first 5 of the current results, the rest behind "FAQ 전체보기"
     }
 
     // Filter state lives in the URL (?cat=&q=#faq) so Back steps through filters instead of leaving the page
