@@ -87,3 +87,24 @@
   .errtable tr { padding: 14px 12px; border-bottom: 1px solid var(--line); display: grid; gap: 6px; }
   .errtable th[scope="row"], .errtable td { border: 0; padding: 0; white-space: normal; }
 }
+
+/* Shortcuts: 4 anchors under the page head (every width — long page, P2 anchors) */
+.cus-jump { grid-column: 1 / span 7; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: var(--s-5); }
+.cus-jump a { display: grid; gap: 2px; align-content: center; min-height: 56px; padding: 8px 12px; background: var(--white); border: 1px solid var(--navy); text-decoration: none; font-weight: 700; font-size: var(--fs-small); line-height: 1.3; }
+.cus-jump a .mono { font-size: 11px; color: var(--orange-ink); letter-spacing: .06em; }
+.cus-jump a:hover { background: var(--navy); color: var(--paper); }
+.cus-jump a:hover .mono { color: var(--orange); }
+.pass-card { grid-row: 1 / span 2; align-self: start; }
+.cus-sum { display: none; }
+
+/* ---------- M-04 mobile compression (≤767px): 2-line summary + key values, details folded ---------- */
+@media (max-width: 767px) {
+  .cus-jump { grid-column: 1 / -1; grid-template-columns: 1fr 1fr; }
+  .pass-card { grid-row: auto; }
+  .cus-head__title .lead { font-size: 1rem; }
+  .cus-sum { display: block; grid-column: 1 / -1; margin: 0; font-size: .9375rem; line-height: 1.6; }
+  .on-navy .cus-sum { color: var(--paper); }
+  .cus-side { margin-bottom: 0; }
+  .cus-side .h2 { margin-bottom: var(--s-2); }
+  .grid12 > .cus-sum + .m-fold, .cus-side + .m-fold { margin-top: var(--s-3); }
+}

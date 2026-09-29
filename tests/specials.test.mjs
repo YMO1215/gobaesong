@@ -36,7 +36,7 @@ test('failing conditions fall back to the general rate with reasons', () => {
   const r = S.evaluate('vacuum', { type: 'vacuum_lgsamsung', weight: 19, trackings: 1 }, 50, TODAY);
   assert.equal(r.ok, false);
   assert.equal(r.final, 50);
-  assert.match(r.reasons.join(), /18lb 초과/);
+  assert.match(r.reasons.join(), /18 LB 초과/);
   assert.equal(S.evaluate('clothing', { type: 'hat_bag' }, 20, TODAY).ok, false);
   assert.equal(S.evaluate('shoe1', { type: 'boots', qty: 1, trackings: 1 }, 20, TODAY).ok, false);
   assert.equal(S.evaluate('vitamin', { type: 'supplement', qty: 7, weight: 3 }, 20, TODAY).ok, false);

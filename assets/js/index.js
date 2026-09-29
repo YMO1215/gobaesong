@@ -69,10 +69,12 @@
   const pad = (n) => String(n).padStart(2, '0');
   const tiles = (s) => '<span class="tiles" aria-label="' + s + '">' + s.split('').map((ch) => ch === ':' ? ':' : '<i aria-hidden="true">' + ch + '</i>').join('') + '</span>';
 
+  const refNow = () => GB.clockNow || new Date();
   function nyNow() {
-    const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).formatToParts(new Date());
-    const get = (t) => parts.find((p) => p.type === t).value;
-    return { h: Number(get('hour')), m: Number(get('minute')), s: get('second'), label: `${get('hour')}:${get('minute')}:${get('second')}` };
+    const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', hour12: false, timeZoneName: 'short' }).formatToParts(refNow());
+    const get = (t) => (parts.find((p) => p.type === t) || {}).value || '';
+    // EDT in summer, EST in winter: take the zone name from the same instant instead of hard-coding EST
+    return { h: Number(get('hour')) % 24, m: Number(get('minute')), label: `${get('hour')}:${get('minute')}`, tz: get('timeZoneName') };
   }
 
   function makeRow(i, now) {
@@ -91,7 +93,7 @@
 
   function rowHTML(r) {
     return `<td>${tiles(r.time)}</td><td>${r.box}</td><td class="item">${r.name}<span>${r.shop}</span></td>` +
-      `<td class="num">${r.lb}lb</td><td class="hide-md">${r.flight}</td><td><span class="flap">${GB.stamp(r.status)}</span></td>`;
+      `<td class="num">${r.lb}\u00A0LB</td><td class="hide-md">${r.flight}</td><td><span class="flap">${GB.stamp(r.status)}</span></td>`;
   }
 
   function initBoard() {
@@ -104,7 +106,8 @@
     let rows = Array.from({ length: 8 }, (_, i) => makeRow(i, now));
 
     body.innerHTML = rows.map((r) => `<tr>${rowHTML(r)}</tr>`).join('');
-    const stamp = () => { if (timeEl) timeEl.textContent = `기준 ${now.label} EST`; };
+    const stamp = () => { if (timeEl) timeEl.textContent = `기준 시각 뉴저지 ${now.label} ${now.tz}`; };
+    document.addEventListener('gb:clock', () => { now = nyNow(); stamp(); });
     stamp();
 
     if (GB.reduceMotion) return;
@@ -148,9 +151,8 @@
   function initCalc() {
     const form = $('#calc-form');
     if (!form) return;
-    const d = new Date();
     const dateEl = $('#calc-date');
-    if (dateEl) dateEl.textContent = `${d.getFullYear()}.${pad(d.getMonth() + 1)}.${pad(d.getDate())}`;
+    if (dateEl) dateEl.textContent = refNow().toLocaleDateString('sv-SE', { timeZone: 'Asia/Seoul' }).replace(/-/g, '.');
     const out = {
       actual: $('#q-actual'), vol: $('#q-vol'), bill: $('#q-bill'), base: $('#q-base'),
       extra: $('#q-extra'), total: $('#q-total'), krw: $('#q-krw'), points: $('#q-points'),
@@ -163,9 +165,9 @@
         l: fd.get('l'), w: fd.get('w'), h: fd.get('h'), partner: !!fd.get('partner'),
         options: { consolidate: !!fd.get('consolidate'), inspect: !!fd.get('inspect'), repack: !!fd.get('repack') },
       });
-      set(out.actual, q.actualLb.toFixed(2) + 'lb');
-      set(out.vol, q.volLb ? q.volLb.toFixed(2) + 'lb' : '—');
-      set(out.bill, q.billable + 'lb' + (q.usesVolume ? ' · 부피 적용' : ''));
+      set(out.actual, q.actualLb.toFixed(2) + '\u00A0LB');
+      set(out.vol, q.volLb ? q.volLb.toFixed(2) + '\u00A0LB' : '상자 크기 입력 전');
+      set(out.bill, q.billable + '\u00A0LB' + (q.usesVolume ? ' · 부피 적용' : ''));
       set(out.base, GB.usd(q.base));
       set(out.extra, GB.usd(q.extras));
       set(out.total, GB.usd(q.total));
@@ -182,7 +184,7 @@
   function initDesk() {
     const el = $('[data-open-status]');
     if (!el) return;
-    const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Seoul', weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(new Date());
+    const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Seoul', weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(refNow());
     const get = (t) => parts.find((p) => p.type === t).value;
     const wd = get('weekday');
     const mins = Number(get('hour')) * 60 + Number(get('minute'));
@@ -236,7 +238,7 @@
         <p class="deal__price"><b class="mono">${GB.usd(d.price)}</b><s class="mono" aria-label="정가">${GB.usd(d.was)}</s></p>
         ${d.currency ? `<p class="deal__fx mono">${escH(d.currency)} ${d.priceLocal.toFixed(2)} → 약 ${GB.usd(d.price)}</p>` : ''}
         <dl class="deal__ship">
-          <div><dt>예상 배송비</dt><dd class="mono">${GB.usd(q.total)} · ${d.lbEstimated ? '약 ' : ''}${d.lb}lb · ${d.center}</dd></div>
+          <div><dt>예상 배송비</dt><dd class="mono">${GB.usd(q.total)} · ${d.lbEstimated ? '약 ' : ''}${d.lb}\u00A0LB · ${d.center}</dd></div>
           <div><dt>딜 종료</dt><dd class="mono">${d.expires ? d.expires.slice(5).replace('-', '.') + '까지' : '재고 소진 시'}</dd></div>
         </dl>
         ${(() => {
@@ -247,10 +249,11 @@
         })()}
         <div class="deal__cta">
           <a class="deal__src" href="${escH(d.url)}" target="_blank" rel="noopener noreferrer">원문 보기<span class="sr-only"> (${escH(d.shop)}, 새 창)</span> ↗</a>
-          <a class="btn btn--primary btn--sm" href="${escH(link)}">이 상품으로 신청서</a>
+          <a class="btn btn--ghost btn--sm" href="${escH(link)}">이 상품으로 신청서</a>
         </div>
       </article>`;
     }).join('');
+    GB.mMore(rail);
     $$('[data-rail]').forEach((b) => b.addEventListener('click', () => {
       const card = rail.querySelector('.deal');
       const step = card ? card.getBoundingClientRect().width + 16 : 300;

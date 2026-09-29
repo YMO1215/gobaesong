@@ -68,3 +68,27 @@
   .shipform__row--split { grid-template-columns: auto 1fr; }
   .shipform__row em { justify-self: start; }
 }
+
+/* GATE body (guide.js wraps prep · example · buttons) keeps the gate's own rhythm */
+.gate__body { display: grid; gap: var(--s-4); min-width: 0; }
+
+/* ---------- M-03 mobile compression (≤767px): compact index + one GATE open at a time ---------- */
+@media (max-width: 767px) {
+  .checkin { padding: var(--s-4); }
+  .checkin__count { margin-top: var(--s-2); }
+  .checkin__count b { font-size: 1.75rem; }
+  .checkin__bar { margin: 8px 0 var(--s-3); }
+  .checkin__gates { margin-bottom: var(--s-2); }
+  .checkin__gates a { min-height: 44px; padding: 0; }
+  .checkin__gates a.is-here { padding-left: 6px; }
+  .gates { margin-top: var(--s-5); gap: var(--s-5); }
+  .gate { gap: var(--s-3); padding-top: var(--s-3); }
+  /* titles stay whole at 320px (GATE 03 is the longest) */
+  .gate .h2 { font-size: 1.375rem; line-height: 1.3; overflow-wrap: anywhere; }
+  .gate__head { flex-wrap: wrap; row-gap: 2px; }
+  /* folded gate: the lead reads as one short line (full text stays in the DOM) */
+  .gate:has(> .m-fold[aria-expanded="false"]) > p { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .gate > .m-fold { margin-top: 0; }
+}
+/* 320px: the three head facts ("평균 4일", "GB · P") stay on one line each */
+@media (max-width: 380px) { .guide-head__facts dd { font-size: 1.0625rem; white-space: nowrap; } .guide-head__facts > div { padding-inline: 8px 0; } }

@@ -12,9 +12,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
-<link rel="stylesheet" href="assets/css/tokens.css?v=af816627">
-<link rel="stylesheet" href="assets/css/base.css?v=03c2d1dc">
-<link rel="stylesheet" href="assets/css/apply.css?v=e03d320d">
+<link rel="stylesheet" href="assets/css/tokens.css?v=7f50594a">
+<link rel="stylesheet" href="assets/css/base.css?v=f69b3385">
+<link rel="stylesheet" href="assets/css/apply.css?v=93e5491b">
 <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('gb.user'))document.documentElement.classList.add('is-authed')}catch(e){}try{var d=document.documentElement,v=localStorage.getItem('gb.view'),s=Math.min(screen.width,screen.height)<820,f=window.self!==window.top;if(f)d.classList.add('in-frame');if(v==='pc'&&s&&!f){document.querySelector('meta[name=viewport]').setAttribute('content','width=1280');d.classList.add('is-pcview')}if(v==='mobile'&&!s&&!f)d.classList.add('is-framehost')}catch(e){}</script>
 </head>
 <body class="page-apply">
@@ -326,12 +326,12 @@
         <div class="form-grid">
           <div class="field">
             <label class="field__label" for="f-shop">쇼핑몰 <span class="req">필수</span></label>
-            <input class="input" id="f-shop" name="shop" list="shops" required placeholder="Amazon">
+            <input class="input" id="f-shop" name="shop" list="shops" required placeholder="예: Amazon">
             <datalist id="shops"><option value="Amazon"><option value="Nike"><option value="iHerb"><option value="Target"><option value="Best Buy"><option value="Sephora"><option value="J.Crew"><option value="Walmart"></datalist>
           </div>
           <div class="field">
             <label class="field__label" for="f-order">주문번호 <span class="req">필수</span></label>
-            <input class="input mono" id="f-order" name="order" required placeholder="112-4455120-7781">
+            <input class="input mono" id="f-order" name="order" required placeholder="예: 112-4455120-7781">
           </div>
           <div class="field span-2">
             <label class="field__label" for="f-track">트래킹번호 <span class="opt">모르면 비워 두세요</span></label>
@@ -447,7 +447,7 @@
 
         <div class="form-grid">
           <div class="field">
-            <label class="field__label" for="o-weight">예상 무게 <span class="opt">lb · 견적용</span></label>
+            <label class="field__label" for="o-weight">예상 무게 <span class="opt">LB · 견적용</span></label>
             <input class="input mono" id="o-weight" name="estWeight" type="number" min="0.1" step="0.1" inputmode="decimal" value="3">
             <p class="field__hint">확정 금액은 입고 후 실측 무게로 정해집니다.</p>
           </div>
@@ -511,11 +511,11 @@
         <svg viewBox="0 0 80 24" aria-hidden="true"><path d="M2 20 C 22 2, 58 2, 78 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/><circle cx="40" cy="6.6" r="3" fill="#FF5C1A"/></svg>
         <div class="to"><b class="mono">ICN</b><span>인천</span></div>
       </div>
-      <dl class="bpass__grid">
-        <div><dt>PASSENGER · 수취인</dt><dd id="sum-name">—</dd></div>
+      <dl class="bpass__grid" id="bpass-grid" data-m-fold="신청 요약 펼치기 (수취인·상품·신고·옵션)">
+        <div><dt>PASSENGER · 수취인</dt><dd id="sum-name">입력 전</dd></div>
         <div><dt>MAILBOX · 사서함</dt><dd class="mono" id="sum-box">GB-000417</dd></div>
-        <div><dt>ITEMS · 상품</dt><dd id="sum-items">0개</dd></div>
-        <div><dt>DECLARED · 신고</dt><dd class="mono" id="sum-declared">$0.00</dd></div>
+        <div><dt>ITEMS · 상품</dt><dd id="sum-items">입력 전</dd></div>
+        <div><dt>DECLARED · 신고</dt><dd class="mono" id="sum-declared">입력 전</dd></div>
         <div class="full"><dt>CLASS · 옵션</dt><dd id="sum-opts">기본 검수 · 기본 재포장</dd></div>
       </dl>
       <div class="bpass__fee">
@@ -537,7 +537,7 @@
       <div class="item__grid">
         <div class="field item__name">
           <label class="field__label">상품명 (영문) <span class="req">필수</span></label>
-          <input class="input" data-k="name" required data-rule="product" placeholder="Nike Pegasus 41 Running Shoes">
+          <input class="input" data-k="name" required data-rule="product" placeholder="예: Nike Pegasus 41 Running Shoes">
         </div>
         <div class="field">
           <label class="field__label">품목 <span class="req">필수</span></label>
@@ -549,7 +549,7 @@
         </div>
         <div class="field">
           <label class="field__label">단가 <span class="opt">USD</span> <span class="req">필수</span></label>
-          <input class="input mono" data-k="price" required data-rule="money" inputmode="decimal" placeholder="129.99">
+          <input class="input mono" data-k="price" required data-rule="money" inputmode="decimal" placeholder="예: 129.99">
         </div>
         <div class="field">
           <label class="field__label">수량 <span class="req">필수</span></label>
@@ -574,7 +574,7 @@
       <a class="btn btn--primary btn--lg" href="apply.html" data-auth="in">간편 신청서 쓰기
         <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 9h13M10 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
     </div>
-    <div class="footer__cols">
+    <div class="footer__cols" data-m-fold="전체 메뉴 · 고객센터 · 물류센터 주소">
       <div class="footer__col">
         <h2>처음이라면</h2>
         <ul>
@@ -681,12 +681,12 @@
 <!-- FOOTER:END -->
 
 <script src="assets/js/hours.js?v=754dcf87"></script>
-<script src="assets/js/common.js?v=ed41ee8c"></script>
+<script src="assets/js/common.js?v=8c9efdea"></script>
 <script src="assets/js/cselect.js?v=63d6bff8"></script>
-<script src="assets/js/member.js?v=a5d9f972"></script>
-<script src="assets/js/chat.js?v=4cc07a87"></script>
-<script src="assets/js/specials.js?v=7341765c"></script>
-<script src="assets/js/specials-ui.js?v=83d5c023"></script>
-<script src="assets/js/apply.js?v=c719e6c5"></script>
+<script src="assets/js/member.js?v=b1edb2fd"></script>
+<script src="assets/js/chat.js?v=2b1108cf"></script>
+<script src="assets/js/specials.js?v=ab1d1c97"></script>
+<script src="assets/js/specials-ui.js?v=a228c162"></script>
+<script src="assets/js/apply.js?v=6532c6d8"></script>
 </body>
 </html>

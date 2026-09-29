@@ -85,7 +85,7 @@
     </svg>`;
   }
   function svScale(s) {
-    return `<svg viewBox="0 0 200 150" role="img" aria-label="실측 무게 ${s.weighed}lb">
+    return `<svg viewBox="0 0 200 150" role="img" aria-label="실측 무게 ${s.weighed}\u00A0LB">
       ${corners(200, 150)}
       <path class="face" d="M30 104l70-32 70 32-70 32z"/>
       <path class="l" d="M30 104l70-32 70 32-70 32zM30 104v6l70 32 70-32v-6"/>
@@ -133,7 +133,9 @@
       const time = k <= i ? (s.times[k] || '') : '';
       const stamp = k <= i ? GB.stamp(name, '', 'j-stamp') : '';
       const cur = k === i ? ' aria-current="step"' : '';
-      return `<li class="journey__step ${state}"${cur}><span class="journey__dot" aria-hidden="true"></span><span class="journey__name">${name}</span><span class="journey__time">${time}</span><span class="journey__stamp">${stamp}</span></li>`;
+      // phones show only the last done · current · next step until "전체 여정 보기" (mypage.css)
+      const near = Math.abs(k - i) <= 1 ? ' is-near' : '';
+      return `<li class="journey__step ${state}${near}"${cur}><span class="journey__dot" aria-hidden="true"></span><span class="journey__name">${name}</span><span class="journey__time">${time}</span><span class="journey__stamp">${stamp}</span></li>`;
     }).join('');
     $('#j-progress').style.setProperty('--f', String(f));
 
@@ -158,7 +160,7 @@
     const q = quoteOf(s);
     const feeKnown = i >= 2;
     const facts = [
-      ['실측 무게', i >= 1 ? `${s.weighed}lb → 적용 ${s.lb}lb` : '검수 후 확정'],
+      ['실측 무게', i >= 1 ? `${s.weighed}\u00A0LB → 적용 ${s.lb}\u00A0LB` : '검수 후 확정'],
       ['배송비', feeKnown ? `${GB.usd(q.total)} · ${GB.krw(q.krw)}` : '검수 후 확정'],
       ['신고 금액', GB.usd(s.declared) + (s.declared > 200 ? ' · 일반통관' : ' · 목록통관')],
       ['국내 운송장', s.kr ? `우체국 ${s.kr}` : '출고 후 발급'],
@@ -180,10 +182,10 @@
     $('#ship-empty').hidden = rows.length > 0;
     $('#ship-body').innerHTML = rows.map((s) => {
       const q = quoteOf(s);
-      const fee = idxOf(s) >= 2 ? GB.usd(q.total) : '—';
+      const fee = idxOf(s) >= 2 ? GB.usd(q.total) : '<span class="muted small">검수 후 확정</span>';
       const sel = selected === s ? ' class="is-selected"' : '';
       return `<tr data-no="${s.no}"${sel}><td>${s.no}</td><td><span class="title">${esc(s.title)}</span><span class="shop">${esc(s.shop)}</span></td>` +
-        `<td class="num">${idxOf(s) >= 1 ? s.lb + 'lb' : '—'}</td><td class="num">${fee}</td><td>${GB.stamp(s.status)}</td>` +
+        `<td class="num">${idxOf(s) >= 1 ? s.lb + '\u00A0LB' : '<span class="muted small">입고 후 실측</span>'}</td><td class="num">${fee}</td><td>${GB.stamp(s.status)}</td>` +
         `<td><button class="btn-text" type="button" data-pick="${s.no}" aria-label="${s.no} 여정 보기">여정 보기</button></td></tr>`;
     }).join('');
   }
@@ -219,7 +221,7 @@
       $('.stamp', alert).dataset.status = '완료';
       $('.stamp', alert).textContent = '결제완료';
       $('#payalert-title').innerHTML = '결제할 배송비가 없습니다.';
-      $('.payalert__txt .small', alert).textContent = '다음 출고편: 수요일 18:40 EST · 결제한 화물은 여정 지도에서 확인하세요.';
+      $('.payalert__txt .small', alert).textContent = '다음 출고편: 수요일 18:40 ET · 결제한 화물은 여정 지도에서 확인하세요.';
       $('#pay-open').hidden = true;
     } else {
       $('#payalert-fee').textContent = GB.usd(quoteOf(target).total);
@@ -247,7 +249,7 @@
     if (!paying) return;
     const q = quoteOf(paying);
     $('#pay-no').textContent = paying.no;
-    const lines = [[`기본요금 · ${paying.lb}lb`, GB.usd(q.base)]].concat(q.lines.map((l) => [l.label, GB.usd(l.price)]));
+    const lines = [[`기본요금 · ${paying.lb}\u00A0LB`, GB.usd(q.base)]].concat(q.lines.map((l) => [l.label, GB.usd(l.price)]));
     lines.push(['합계 (USD)', GB.usd(q.total)], ['원화 환산', GB.krw(q.krw)]);
     $('#pay-lines').innerHTML = lines.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
     $('#pay-pt-have').textContent = GB.num(points);
@@ -287,6 +289,13 @@
 
   /* ---------- Boot ---------- */
   renderCounts();
+  // phones: journey shows last done · current · next; the button opens all steps
+  const jAll = $('#j-all');
+  if (jAll) jAll.addEventListener('click', () => {
+    const open = $('#journey').classList.toggle('is-all');
+    jAll.setAttribute('aria-expanded', String(open));
+    jAll.firstElementChild.textContent = open ? '현재 단계만 보기' : `전체 여정 ${S.length}단계 보기`;
+  });
   select(SHIPS.find((s) => s.status === '결제대기') || SHIPS[0], false);
   setPoints(points);
 })();

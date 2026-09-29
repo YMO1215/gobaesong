@@ -12,9 +12,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
-<link rel="stylesheet" href="assets/css/tokens.css?v=af816627">
-<link rel="stylesheet" href="assets/css/base.css?v=03c2d1dc">
-<link rel="stylesheet" href="assets/css/events.css?v=ec488b6e">
+<link rel="stylesheet" href="assets/css/tokens.css?v=7f50594a">
+<link rel="stylesheet" href="assets/css/base.css?v=f69b3385">
+<link rel="stylesheet" href="assets/css/events.css?v=4221ee82">
 <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('gb.user'))document.documentElement.classList.add('is-authed')}catch(e){}try{var d=document.documentElement,v=localStorage.getItem('gb.view'),s=Math.min(screen.width,screen.height)<820,f=window.self!==window.top;if(f)d.classList.add('in-frame');if(v==='pc'&&s&&!f){document.querySelector('meta[name=viewport]').setAttribute('content','width=1280');d.classList.add('is-pcview')}if(v==='mobile'&&!s&&!f)d.classList.add('is-framehost')}catch(e){}</script>
 </head>
 <body class="page-events">
@@ -258,7 +258,7 @@
           <button type="button" aria-pressed="false" data-pf="ended">종료</button>
         </div>
       </div>
-      <div class="promos" id="promos"></div>
+      <div class="promos" id="promos" data-m-more="3" data-m-more-label="프로모션 더보기"></div>
     </div>
   </section>
 
@@ -276,7 +276,7 @@
           <button type="button" aria-pressed="false" data-spk="fixed">고정가</button>
         </div>
       </div>
-      <div class="spc-grid" id="spc-cards"></div>
+      <div class="spc-grid" id="spc-cards" data-m-more="3" data-m-more-step="3"></div>
       <p class="small muted ev-sp-src">근거: 고배송 신청서 화면의 이벤트 옵션. 운영 투입 전 관리자 기준 요금·종료일과 다시 대조해야 합니다.</p>
     </div>
   </section>
@@ -290,7 +290,7 @@
           <p class="muted small">쿠폰은 한 화물에 한 장만 쓸 수 있고, 포인트와는 함께 쓸 수 있습니다. 받은 쿠폰은 이 브라우저에 보관됩니다(목업).</p>
         </div>
       </div>
-      <div class="coupons" id="coupons-list" role="list"></div>
+      <div class="coupons" id="coupons-list" role="list" data-m-more="2" data-m-more-label="쿠폰 전체보기"></div>
     </div>
   </section>
 
@@ -304,7 +304,7 @@
         </div>
         <p class="ev-next" id="ev-next" aria-live="polite"></p>
       </div>
-      <div class="ev-board" role="region" aria-labelledby="cal-title" tabindex="0">
+      <div class="ev-board" role="region" aria-labelledby="cal-title" tabindex="0" data-m-fold="세일 일정 전체 보기 (10건)">
         <table class="salet">
           <caption class="sr-only">미국 주요 세일 일정. 날짜가 발표되지 않은 행사는 예상으로 표시합니다.</caption>
           <thead><tr><th scope="col">날짜</th><th scope="col">세일</th><th scope="col">어디서</th><th scope="col">고배송 팁</th><th scope="col" class="num">남은 날</th></tr></thead>
@@ -326,7 +326,7 @@
       <a class="btn btn--primary btn--lg" href="apply.html" data-auth="in">간편 신청서 쓰기
         <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 9h13M10 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
     </div>
-    <div class="footer__cols">
+    <div class="footer__cols" data-m-fold="전체 메뉴 · 고객센터 · 물류센터 주소">
       <div class="footer__col">
         <h2>처음이라면</h2>
         <ul>
@@ -433,12 +433,12 @@
 <!-- FOOTER:END -->
 
 <script src="assets/js/hours.js?v=754dcf87"></script>
-<script src="assets/js/common.js?v=ed41ee8c"></script>
+<script src="assets/js/common.js?v=8c9efdea"></script>
 <script src="assets/js/cselect.js?v=63d6bff8"></script>
-<script src="assets/js/member.js?v=a5d9f972"></script>
-<script src="assets/js/chat.js?v=4cc07a87"></script>
-<script src="assets/js/specials.js?v=7341765c"></script>
-<script src="assets/js/specials-ui.js?v=83d5c023"></script>
-<script src="assets/js/events.js?v=275cf407"></script>
+<script src="assets/js/member.js?v=b1edb2fd"></script>
+<script src="assets/js/chat.js?v=2b1108cf"></script>
+<script src="assets/js/specials.js?v=ab1d1c97"></script>
+<script src="assets/js/specials-ui.js?v=a228c162"></script>
+<script src="assets/js/events.js?v=acf5497d"></script>
 </body>
 </html>

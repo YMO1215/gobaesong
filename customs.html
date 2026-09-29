@@ -12,9 +12,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
-<link rel="stylesheet" href="assets/css/tokens.css?v=af816627">
-<link rel="stylesheet" href="assets/css/base.css?v=03c2d1dc">
-<link rel="stylesheet" href="assets/css/customs.css?v=bab50720">
+<link rel="stylesheet" href="assets/css/tokens.css?v=7f50594a">
+<link rel="stylesheet" href="assets/css/base.css?v=f69b3385">
+<link rel="stylesheet" href="assets/css/customs.css?v=d87235a7">
 <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('gb.user'))document.documentElement.classList.add('is-authed')}catch(e){}try{var d=document.documentElement,v=localStorage.getItem('gb.view'),s=Math.min(screen.width,screen.height)<820,f=window.self!==window.top;if(f)d.classList.add('in-frame');if(v==='pc'&&s&&!f){document.querySelector('meta[name=viewport]').setAttribute('content','width=1280');d.classList.add('is-pcview')}if(v==='mobile'&&!s&&!f)d.classList.add('is-framehost')}catch(e){}</script>
 </head>
 <body class="page-customs">
@@ -250,7 +250,14 @@
       </div>
 
       <!-- Signature: passport data page -->
-      <figure class="pass-card" aria-label="개인통관고유부호 예시 카드">
+      <!-- phones: 4 shortcuts first -->
+      <nav class="cus-jump" aria-label="통관 가이드 바로가기">
+        <a href="#steps-title"><span class="mono">PCCC</span>발급 순서</a>
+        <a href="pricing.html#duty"><span class="mono">$200</span>면세한도</a>
+        <a href="#y2026-title"><span class="mono">2026</span>달라진 것</a>
+        <a href="#errors"><span class="mono">ERR</span>자주 막히는 이유</a>
+      </nav>
+      <figure class="pass-card" aria-label="개인통관고유부호 예시 카드" data-m-fold="부호 예시 카드 보기">
         <div class="pass-card__top"><span class="mono">REPUBLIC OF KOREA · CUSTOMS</span><span class="mono">PCCC</span></div>
         <div class="pass-card__body">
           <div class="pass-card__photo" aria-hidden="true"><svg viewBox="0 0 60 72"><circle cx="30" cy="26" r="12" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 68c2-14 12-20 22-20s20 6 22 20" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
@@ -271,8 +278,8 @@
   <!-- 01 why -->
   <section class="section cus-why" aria-labelledby="why-title">
     <div class="wrap grid12">
-      <div class="cus-side"><span class="cus-no mono">01</span><h2 class="h2" id="why-title">왜 필요한가</h2></div>
-      <ol class="cus-list" role="list">
+      <div class="cus-side"><span class="cus-no mono">01</span><h2 class="h2" id="why-title">왜 필요한가</h2><p class="cus-sum m-only">세관이 물건 주인을 확인하는 번호로, 목록통관·수입신고에 반드시 들어갑니다. 없거나 틀리면 인천에 도착한 상자가 세관에서 멈춥니다.</p></div>
+      <ol class="cus-list" role="list" data-m-fold="자세히 보기 · 3가지">
         <li><b>세관이 물건 주인을 확인하는 번호</b><p>주민등록번호를 쇼핑몰·배송대행지에 넘기지 않도록 만든 대체 번호입니다.</p></li>
         <li><b>목록통관·수입신고에 반드시 들어갑니다</b><p>번호가 없거나 틀리면 인천에 도착한 상자가 세관에서 멈춥니다.</p></li>
         <li><b>도용되면 내 이름으로 남의 물건이 들어옵니다</b><p>의심되면 유니패스에서 바로 재발급받을 수 있습니다(연 5회까지).</p></li>
@@ -283,8 +290,8 @@
   <!-- 02 prep -->
   <section class="section cus-prep band" aria-labelledby="prep-title">
     <div class="wrap grid12">
-      <div class="cus-side"><span class="cus-no mono">02</span><h2 class="h2" id="prep-title">발급 전 준비물</h2></div>
-      <dl class="cus-prep__list">
+      <div class="cus-side"><span class="cus-no mono">02</span><h2 class="h2" id="prep-title">발급 전 준비물</h2><p class="cus-sum m-only">본인 명의 휴대폰(또는 인증서)과 택배를 실제로 받을 주소가 필요합니다. <b>2026년 2월 2일</b>부터 배송지 우편번호까지 대조합니다.</p></div>
+      <dl class="cus-prep__list" data-m-fold="준비물 3가지 보기">
         <div><dt>본인인증 수단</dt><dd>본인 명의 휴대폰, 또는 공동·금융인증서</dd></div>
         <div><dt>휴대폰 번호</dt><dd>신청서의 수취인 휴대폰과 같은 번호로 등록</dd></div>
         <div><dt>주소·우편번호</dt><dd>택배를 실제로 받을 주소. 2026년 2월 2일부터 배송지 우편번호까지 대조합니다</dd></div>
@@ -299,7 +306,8 @@
         <span class="cus-no mono">03</span><h2 class="h2" id="steps-title">발급 순서</h2>
         <p class="muted small">관세청 유니패스 기준. 메뉴 이름과 화면은 개편에 따라 달라질 수 있습니다.</p>
       </div>
-      <ol class="cus-flow" role="list">
+      <p class="cus-sum m-only">유니패스 접속 → 본인인증 → 휴대폰·주소 입력 → 부호 확인, 4단계입니다. <b class="mono">P</b>로 시작하는 13자리가 나옵니다.</p>
+      <ol class="cus-flow" role="list" data-m-fold="발급 4단계 자세히">
         <li><span class="mono">1</span><div><b>관세청 유니패스 접속</b><p>개인통관고유부호 발급 화면으로 들어갑니다. <a href="https://unipass.customs.go.kr/csp/persIndexRectOnslCrtf.do?qryIssTp=2" target="_blank" rel="noopener noreferrer">바로가기 ↗</a></p></div></li>
         <li><span class="mono">2</span><div><b>본인인증</b><p>휴대폰 또는 인증서로 본인임을 확인합니다.</p></div></li>
         <li><span class="mono">3</span><div><b>휴대폰·주소 입력, 약관 동의</b><p>택배를 받을 주소와 휴대폰 번호를 정확히 적습니다. 이 값이 통관 때 대조됩니다.</p></div></li>
@@ -311,8 +319,8 @@
   <!-- 04 2026 changes -->
   <section class="section cus-2026 on-navy" aria-labelledby="y2026-title">
     <div class="wrap grid12">
-      <div class="cus-side"><span class="cus-no mono">04</span><h2 class="h2" id="y2026-title">2026년에 달라진 것</h2></div>
-      <dl class="cus-2026__list">
+      <div class="cus-side"><span class="cus-no mono">04</span><h2 class="h2" id="y2026-title">2026년에 달라진 것</h2><p class="cus-sum m-only"><b>2026년 기준</b> · 새로 발급한 부호는 유효기간 <b class="mono">1년</b>, 기존 발급자는 <b class="mono">2027년</b> 본인 생일이 만료일입니다. 만료 전후 <b class="mono">30일</b> 안에 갱신하면 번호가 그대로입니다.</p></div>
+      <dl class="cus-2026__list" data-m-fold="2026 변경 4가지 자세히">
         <div><dt class="mono">1년</dt><dd><b>유효기간 도입</b>2026년 이후 발급받은 부호는 발급일부터 1년간 유효하고, 매년 갱신합니다.</dd></div>
         <div><dt class="mono">2027</dt><dd><b>기존 발급자</b>2026년 전에 발급받았다면 2027년 본인 생일이 만료일입니다.</dd></div>
         <div><dt class="mono">±30일</dt><dd><b>갱신</b>만료일 전후 30일 안에 갱신하면 기존 번호를 그대로 씁니다. 정확한 기간은 유니패스 안내를 확인하세요.</dd></div>
@@ -329,7 +337,7 @@
         <p class="muted">배송대행 신청서 <b>GATE 02 수취인·통관</b>에 넣습니다. 세 칸이 유니패스 등록 정보와 같아야 합니다.</p>
         <a class="btn btn--ghost btn--sm" href="apply.html">신청서 열기</a>
       </div>
-      <figure class="formshot" aria-label="신청서의 통관정보 입력 칸 예시">
+      <figure class="formshot" aria-label="신청서의 통관정보 입력 칸 예시" data-m-fold="입력 칸 예시 보기">
         <p class="formshot__gate mono">GATE 02 · 수취인·통관정보</p>
         <div class="formshot__grid">
           <div class="formshot__f is-hot"><span>수취인 이름 <em>= 부호 명의</em></span><b>홍길동</b></div>
@@ -357,7 +365,8 @@
           <p class="pchk__out" id="pchk-out" role="status">형식만 확인합니다. 번호는 이 화면 밖으로 전송되지 않습니다.</p>
         </form>
       </div>
-      <div class="cus-errors__frame" role="region" aria-labelledby="errors-title" tabindex="0">
+      <p class="cus-sum m-only">성명·휴대폰·우편번호 불일치, 부호 만료, 형식 오류, 도용 의심이 대부분입니다. 증상별 해결 방법은 아래 표에 있습니다.</p>
+      <div class="cus-errors__frame" role="region" aria-labelledby="errors-title" tabindex="0" data-m-fold="증상별 해결 방법 6가지">
         <table class="table errtable">
           <caption class="sr-only">통관 보류 증상, 원인, 해결 방법</caption>
           <thead><tr><th scope="col">증상</th><th scope="col">원인</th><th scope="col">해결</th></tr></thead>
@@ -386,7 +395,7 @@
       <a class="btn btn--primary btn--lg" href="apply.html" data-auth="in">간편 신청서 쓰기
         <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 9h13M10 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
     </div>
-    <div class="footer__cols">
+    <div class="footer__cols" data-m-fold="전체 메뉴 · 고객센터 · 물류센터 주소">
       <div class="footer__col">
         <h2>처음이라면</h2>
         <ul>
@@ -493,10 +502,10 @@
 <!-- FOOTER:END -->
 
 <script src="assets/js/hours.js?v=754dcf87"></script>
-<script src="assets/js/common.js?v=ed41ee8c"></script>
+<script src="assets/js/common.js?v=8c9efdea"></script>
 <script src="assets/js/cselect.js?v=63d6bff8"></script>
-<script src="assets/js/member.js?v=a5d9f972"></script>
-<script src="assets/js/chat.js?v=4cc07a87"></script>
+<script src="assets/js/member.js?v=b1edb2fd"></script>
+<script src="assets/js/chat.js?v=2b1108cf"></script>
 <script src="assets/js/customs.js?v=5ba43f56"></script>
 </body>
 </html>

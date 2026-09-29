@@ -6,6 +6,7 @@
 
   const MAX_LB = 50;
   const TABLE_WEIGHTS = Array.from({ length: 20 }, (_, i) => i + 1).concat([22, 25, 28, 30, 35, 40, 45, 50]);
+  const SHORT_WEIGHTS = [1, 3, 5, 10, 20]; // phones: representative rows before the full table
   const KG_PER_LB = 0.45359237;
 
   const state = { center: 'NJ', partner: false, unit: 'lb', lb: 5 };
@@ -75,12 +76,12 @@
     const total = Math.round((shipping + q.extras) * 100) / 100;
     const pending = res && res.ok && res.final == null;
 
-    $('#tag-w').textContent = (state.unit === 'kg' ? (state.lb * KG_PER_LB).toFixed(1) + 'kg' : fmtLb(state.lb) + 'lb');
+    $('#tag-w').textContent = (state.unit === 'kg' ? (state.lb * KG_PER_LB).toFixed(1) + 'kg' : fmtLb(state.lb) + '\u00A0LB');
     $('#tag-p').textContent = GB.usd(q.total);
     const rows = [
-      ['실무게', q.actualLb.toFixed(2) + 'lb'],
-      ['부피무게', q.volLb ? q.volLb.toFixed(2) + 'lb' : '—'],
-      ['적용무게', q.billable + 'lb' + (q.usesVolume ? ' · 부피' : ''), true],
+      ['실무게', q.actualLb.toFixed(2) + '\u00A0LB'],
+      ['부피무게', q.volLb ? q.volLb.toFixed(2) + '\u00A0LB' : '상자 크기 입력 전'],
+      ['적용무게', q.billable + '\u00A0LB' + (q.usesVolume ? ' · 부피' : ''), true],
       [`① 기본요금${state.partner ? ' · 파트너스' : ''}`, GB.usd(q.base)],
     ];
     if (res && res.ok && res.kind !== 'from') rows.push([`② ${res.name} ${res.kind === 'fixed' ? '고정가 적용' : '할인'}`, (shipping - q.base < 0 ? '−' : '+') + GB.usd(Math.abs(shipping - q.base)), true]);
@@ -126,11 +127,11 @@
       const e = S.byId(sel.value);
       $('#p-event-hint').textContent = e ? `${e.name} — ${e.core.join(' · ')}` : '이벤트를 고르면 판정에 필요한 칸만 켜집니다. 조건 설명은 아래 B 구획에 모두 있습니다.';
     };
-    sel.addEventListener('change', () => { toggle(); render(); });
+    sel.addEventListener('change', () => { toggle(); render(); openOnly(sel.value); });
     document.addEventListener('click', (ev) => {
       const b = ev.target.closest('[data-pick-special]');
       if (!b) return;
-      sel.value = b.dataset.pickSpecial; toggle(); render();
+      sel.value = b.dataset.pickSpecial; toggle(); render(); openOnly(sel.value);
     });
     toggle();
 
@@ -139,7 +140,26 @@
     const draw = (kind) => {
       list.innerHTML = S.EVENTS.filter((e) => kind === 'all' || e.kind === kind)
         .map((e) => GB.specialHTML(e, 'table')).join('');
+      GB.mMore(list);
+      openOnly(sel.value);
     };
+    // phones: only the event picked in the calculator shows its conditions; the rest show name + price
+    function openOnly(id) {
+      $$('.spc--row', list).forEach((a) => setRow(a, a.dataset.id === id));
+      const picked = id && $(`.spc--row[data-id="${id}"]`, list);
+      if (picked) GB.mReveal(picked);
+    }
+    function setRow(a, open) {
+      const b = $('.spc__toggle', a);
+      if (!b) return;
+      b.setAttribute('aria-expanded', String(open));
+      b.firstChild.textContent = open ? '조건 접기' : '조건 보기';
+      $('.spc__facts', a).classList.toggle('m-cut', !open);
+    }
+    list.addEventListener('click', (ev) => {
+      const b = ev.target.closest('.spc__toggle');
+      if (b) setRow(b.closest('.spc'), b.getAttribute('aria-expanded') !== 'true');
+    });
     $$('[data-sk]').forEach((b) => b.addEventListener('click', () => {
       $$('[data-sk]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
       draw(b.dataset.sk);
@@ -156,7 +176,8 @@
       const n = GB.baseRate(state.center, w, false);
       const p = GB.baseRate(state.center, w, true);
       const cls = w % 5 === 0 ? ' class="is-step"' : '';
-      return `<tr data-w="${w}"${cls}><td>${w}lb</td><td class="num">${GB.usd(n)}</td><td class="num">${GB.usd(p)}</td><td class="num">${GB.krw(Math.round(n * GB.KRW_PER_USD / 10) * 10)}</td></tr>`;
+      const key = SHORT_WEIGHTS.includes(w) ? ' data-key' : '';
+      return `<tr data-w="${w}"${cls}${key}><td class="num">${w}</td><td class="num">${GB.usd(n)}</td><td class="num">${GB.usd(p)}</td><td class="num">${GB.krw(Math.round(n * GB.KRW_PER_USD / 10) * 10)}</td></tr>`;
     }).join('');
   }
   let lastHit = null;
@@ -173,7 +194,7 @@
     state.lb = Math.max(0.1, Math.min(200, lb || 0.1));
     if (from !== 'range') range.value = String(Math.min(MAX_LB, Math.max(1, state.lb)));
     if (from !== 'input') input.value = state.unit === 'kg' ? (state.lb * KG_PER_LB).toFixed(1) : fmtLb(state.lb);
-    range.setAttribute('aria-valuetext', `${fmtLb(state.lb)}lb`);
+    range.setAttribute('aria-valuetext', `${fmtLb(state.lb)}\u00A0LB`);
     render();
   }
   range.addEventListener('input', () => setLb(Number(range.value), 'range'));
@@ -231,6 +252,17 @@
 
   drawRuler();
   renderTable();
+  // phones: short table (1·3·5·10·20 LB + the row the calculator points at) ↔ full 1–50 LB
+  const rateTable = $('.ratetable');
+  const allBtn = $('#rates-all');
+  if (rateTable && allBtn) {
+    rateTable.classList.add('is-short');
+    allBtn.addEventListener('click', () => {
+      const full = rateTable.classList.toggle('is-short') === false;
+      allBtn.setAttribute('aria-expanded', String(full));
+      allBtn.firstElementChild.textContent = full ? '대표 행만 보기' : '전체 표 보기 (1–50 LB)';
+    });
+  }
   initSpecials();
   setLb(5);
   initDuty();

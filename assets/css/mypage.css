@@ -138,3 +138,14 @@
   .shipments__filter { width: 100%; }
   .shipments__filter button { flex: 1; padding-inline: 6px; }
 }
+
+/* ---------- M-07 mobile compression (≤767px): current parcel + pay first, the rest folded ---------- */
+.journey__all { display: none; }
+@media (max-width: 767px) {
+  .journey:not(.is-all) .journey__step:not(.is-near) { display: none; }
+  .journey__all { display: flex; }
+  .journey:not(.is-all) .journey__progress { display: none; } /* bar length is for all 7 steps */
+  .my-side__head { margin-bottom: 0; }
+  .my-side { gap: var(--s-5); }
+  .my-body { row-gap: var(--s-6); }
+}

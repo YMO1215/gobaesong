@@ -34,8 +34,11 @@
 
   function renderPromos(filter) {
     const box = $('#promos');
+    const ORDER = ['live', 'soon', 'ended'];
+    const endKey = (p) => (p.st === 'soon' ? p.start : p.end) || '9999-12-31';
+    // live first, ending soonest first (no end date last); then upcoming by start; ended last
     const list = PROMOS.map((p) => ({ ...p, st: statusOf(p.start, p.end) }))
-      .sort((a, b) => ['live', 'soon', 'ended'].indexOf(a.st) - ['live', 'soon', 'ended'].indexOf(b.st));
+      .sort((a, b) => ORDER.indexOf(a.st) - ORDER.indexOf(b.st) || (a.st === 'ended' ? endKey(b).localeCompare(endKey(a)) : endKey(a).localeCompare(endKey(b))));
     const shown = list.filter((p) => filter === 'all' || p.st === filter);
     box.innerHTML = shown.length ? shown.map((p, i) => `
       <article class="promo promo--${p.st}${i === 0 && filter === 'all' ? ' promo--lead' : ''}" aria-labelledby="pr-${p.id}">
@@ -52,6 +55,7 @@
         </dl>
         ${p.code && p.st !== 'ended' ? `<a class="link-arrow" href="#cp-${p.code}">쿠폰 받으러 가기</a>` : ''}
       </article>`).join('') : '<p class="muted">해당하는 프로모션이 없습니다.</p>';
+    GB.mMore(box);
   }
   $$('[data-pf]').forEach((b) => b.addEventListener('click', () => {
     $$('[data-pf]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
@@ -71,14 +75,17 @@
 
   function renderCoupons() {
     const wallet = GB.store.get(walletKey(), []);
-    $('#coupons-list').innerHTML = COUPONS.map((c) => {
+    const list = $('#coupons-list');
+    const groupOf = (c) => { const st = statusOf(c.start, c.end); return st === 'ended' ? 2 : st === 'live' && c.target === '전체' ? 0 : 1; };
+    const GROUP = ['사용 가능', '조건부', '종료'];
+    list.innerHTML = COUPONS.slice().sort((a, b) => groupOf(a) - groupOf(b)).map((c) => {
       const st = statusOf(c.start, c.end);
       const got = wallet.includes(c.code);
       const action = st === 'ended' ? '<span class="coupon__ended">기간이 끝났습니다</span>'
         : got ? '<span class="coupon__got">받음 · 결제 때 선택</span>'
-        : `<button type="button" class="btn btn--primary btn--sm" data-get="${c.code}">${st === 'soon' ? '미리 받기' : '쿠폰 받기'}</button>`;
+        : `<button type="button" class="btn btn--ghost btn--sm" data-get="${c.code}">${st === 'soon' ? '미리 받기' : '쿠폰 받기'}</button>`;
       return `<article class="coupon coupon--${st}" id="cp-${c.code}" role="listitem" aria-label="${esc(c.what)} 쿠폰">
-        <div class="coupon__value"><b class="mono">${esc(c.benefit)}</b><span>${esc(c.what)}</span></div>
+        <div class="coupon__value"><span class="coupon__group coupon__group--${groupOf(c)}">${GROUP[groupOf(c)]}</span><b class="mono">${esc(c.benefit)}</b><span>${esc(c.what)}</span></div>
         <div class="coupon__body">
           <p class="coupon__code"><span class="mono">${c.code}</span><button type="button" class="btn-text" data-copy="${c.code}">코드 복사</button><span class="stamp" data-status="${STAMP[st]}">${LABEL[st]}</span></p>
           <dl class="coupon__terms">
@@ -90,6 +97,7 @@
         <div class="coupon__act">${action}</div>
       </article>`;
     }).join('');
+    GB.mMore(list);
   }
   document.addEventListener('click', (e) => {
     const b = e.target.closest('[data-get]');
@@ -153,6 +161,7 @@
     const list = S.EVENTS.filter((e) => kind === 'all' || e.kind === kind)
       .slice().sort((a, b) => S.isEnded(a, TODAY) - S.isEnded(b, TODAY)); // kind order from specials.js, ended last
     box.innerHTML = list.map((e) => GB.specialHTML(e, 'card')).join('');
+    GB.mMore(box);
   }
   $$('[data-spk]').forEach((b) => b.addEventListener('click', () => {
     $$('[data-spk]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));

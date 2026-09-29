@@ -360,10 +360,11 @@
     const center = GB.RATES[f.center.value] || GB.RATES.NJ;
     $('#sum-from').textContent = center.code;
     $('#sum-from-name').textContent = center.name;
-    $('#sum-name').textContent = f.rname.value.trim() || '—';
+    $('#sum-name').textContent = f.rname.value.trim() || '입력 전';
     const count = items.filter((i) => i.name).reduce((s, i) => s + (Number(i.qty) || 0), 0);
-    $('#sum-items').textContent = count + '개';
-    $('#sum-declared').textContent = GB.usd(declared);
+    // summary shows only what was actually entered (placeholders are examples, not values)
+    $('#sum-items').textContent = count ? count + '개' : '입력 전';
+    $('#sum-declared').textContent = declared ? GB.usd(declared) : '입력 전';
     syncType();
     renderEventPanel();
     const q = currentQuote();
@@ -371,7 +372,7 @@
     const ev = SP && SP.byId(selectedEvent());
     $('#sum-opts').textContent = (ev ? ev.name + (sp.r && sp.r.ok ? '' : '(조건 미충족)') + ' · ' : '') + optionLabels().join(' · ');
     $('#sum-fee').textContent = GB.usd(sp.total) + (sp.pending ? '부터' : '');
-    $('#sum-fee-krw').textContent = sp.pending ? '입고 후 실측으로 확정' : '약 ' + GB.krw(Math.round(sp.total * GB.KRW_PER_USD / 10) * 10) + ' · ' + q.billable + 'lb 기준';
+    $('#sum-fee-krw').textContent = sp.pending ? '입고 후 실측으로 확정' : '약 ' + GB.krw(Math.round(sp.total * GB.KRW_PER_USD / 10) * 10) + ' · ' + q.billable + '\u00A0LB 기준';
     const insLine = q.lines.find((l) => l.label.includes('보험'));
     $('#ins-price').textContent = '+' + GB.usd(insLine ? insLine.price : Math.max(1, declared * 0.02));
 
@@ -489,7 +490,7 @@
     const block = (no, title, body, step) => `<div class="review__block"><h3><span>${no}</span>${title}</h3><div>${body}</div><button type="button" class="btn-text" data-edit="${step}">수정</button></div>`;
     const sp = feeWithSpecial(q);
     const ev = SP && SP.byId(selectedEvent());
-    const lines = [['① 기본요금 · ' + q.billable + 'lb', q.base]];
+    const lines = [['① 기본요금 · ' + q.billable + '\u00A0LB', q.base]];
     if (sp.r && sp.r.ok && !sp.pending) lines.push([`② ${ev.name} ${ev.kind === 'fixed' ? '고정가' : '할인'}`, sp.ship - q.base]);
     q.lines.forEach((l) => lines.push(['옵션 · ' + l.label, l.price]));
     const agree = $('#ev-agree');

@@ -59,6 +59,7 @@
       });
       $('#faq-count').textContent = (q ? `‘${query}’ 검색 결과 ` : (cat === 'all' ? '전체 ' : '')) + n + '개';
       $('#faq-none').hidden = n > 0;
+      GB.mMore($('#faq-list')); // phones: first 5 of the current results, the rest behind "FAQ 전체보기"
     }
 
     // Filter state lives in the URL (?cat=&q=#faq) so Back steps through filters instead of leaving the page
@@ -116,7 +117,7 @@
   function initAsk() {
     const form = $('#ask-form');
     if (!form) return;
-    $('#ask-date').textContent = `No. Q-${ymd}-————`;
+    $('#ask-date').textContent = '접수 후 번호가 발급됩니다';
     const body = $('#q-body');
     const len = $('#q-len');
     body.addEventListener('input', () => { len.textContent = `${body.value.length}/1000`; });
@@ -155,7 +156,7 @@
       form.reset();
       form.classList.remove('is-sent');
       $('#ask-done').hidden = true;
-      $('#ask-date').textContent = `No. Q-${ymd}-————`;
+      $('#ask-date').textContent = '접수 후 번호가 발급됩니다';
       len.textContent = '0/1000';
       list.textContent = '파손 부위나 라벨 사진이 있으면 답이 빨라집니다.';
       $('#q-type').focus();
@@ -168,7 +169,7 @@
     { d: '2026.09.19', c: '요금', t: '델라웨어 센터 10월 유류할증료 동결', b: ['10월 유류할증료는 9월과 같으며 요금표 금액에 이미 포함되어 있습니다.'] },
     { d: '2026.09.11', c: '서비스', t: '안심뷰 사진 기본 제공 1장 → 2장으로 변경', b: ['9월 15일 입고분부터 외관과 개봉 사진 2장을 기본으로 제공합니다. 추가 5장 옵션 요금은 그대로 $1.00입니다.'] },
     { d: '2026.09.02', c: '통관', t: '건강기능식품은 $150 기준 · 6병 초과 시 수입 요건 확인', b: ['건강기능식품은 목록통관 배제 품목이라 미국발이어도 $150 기준으로 수입신고합니다. 6병을 넘으면 금액과 관계없이 요건 확인과 과세 대상입니다. 신청서에 병 수를 정확히 적어 주세요.'] },
-    { d: '2026.08.27', c: '출고', t: '9월 항공 출고편 월·수·금 18:40 EST 고정', b: ['9월부터 국적기 직항 출고편을 주 3회로 고정합니다. 결제 마감은 각 출고일 12:00 EST입니다.'] },
+    { d: '2026.08.27', c: '출고', t: '9월 항공 출고편 월·수·금 18:40 ET 고정', b: ['9월부터 국적기 직항 출고편을 주 3회로 고정합니다. 결제 마감은 각 출고일 12:00 ET입니다.'] },
     { d: '2026.08.14', c: '서비스', t: '마이페이지 여정 지도 업데이트', b: ['입고부터 완료까지 일곱 단계가 한 줄로 보이도록 마이페이지를 바꿨습니다. 단계마다 시각이 함께 표시됩니다.'] },
     { d: '2026.08.05', c: '요금', t: '파트너스 기본요금 할인율 5% → 7% 상향', b: ['8월 결제분부터 파트너스 회원의 기본요금 할인율이 7%로 오릅니다.'] },
     { d: '2026.07.22', c: '통관', t: '개인통관고유부호 명의 불일치 보류 건 증가 안내', b: ['수취인 이름과 통관부호 명의가 다른 경우 세관 보류가 늘고 있습니다. 신청서의 명의 확인 항목을 꼭 체크해 주세요.'] },

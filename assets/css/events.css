@@ -113,3 +113,29 @@
   .spc-grid { grid-template-columns: 1fr; }
   .spc__cta { align-self: stretch; }
 }
+
+/* Coupon groups: 사용 가능 → 조건부 → 종료 (label on the ticket stub) */
+.coupon__value .coupon__group { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .08em; padding: 1px 6px; border: 1px solid currentColor; color: var(--paper); margin-bottom: 4px; }
+.coupon__value .coupon__group--1 { color: var(--steel); }
+.coupon__value .coupon__group--2 { color: var(--steel); border-style: dashed; }
+
+/* ---------- M-05 mobile compression (≤767px) ---------- */
+@media (max-width: 767px) {
+  .ev-sec-head { gap: var(--s-3); }
+  .ev-sec-head .seg { width: 100%; overflow-x: auto; }
+  .promos { gap: var(--s-4); }
+}
+
+/* "전체 조건 보기": the UA ▶ marker renders as a broken glyph on some phones — same chevron SVG as the site accordions */
+.spc__more summary { list-style: none; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0; }
+.spc__more summary::-webkit-details-marker { display: none; }
+.spc__more summary::before {
+  content: ""; width: 14px; height: 14px; flex: none; background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 6l5 5 5-5' fill='none' stroke='black' stroke-width='2'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 6l5 5 5-5' fill='none' stroke='black' stroke-width='2'/%3E%3C/svg%3E") center / contain no-repeat;
+  transform: rotate(-90deg); transition: transform var(--dur-1) var(--ease);
+}
+.spc__more[open] summary::before { transform: none; }
+/* Korean price labels ("일반 요금 20% 할인") read badly in the mono face */
+.spc[data-kind="discount"] .spc__price { font-family: var(--font-sans); letter-spacing: -0.01em; }
+@media (prefers-reduced-motion: reduce) { .spc__more summary::before { transition: none; } }

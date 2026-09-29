@@ -56,7 +56,7 @@
   --s-10: 160px;
 
   /* Layout */
-  --maxw: 1312px;
+  --maxw: 1280px;          /* P2: body max width 1200–1280 */
   --gutter: clamp(16px, 4.4vw, 64px);
   --col-gap: clamp(12px, 2vw, 24px);
   --header-h: 72px;

@@ -43,7 +43,7 @@
     addr: () => GB.auth && GB.auth.user
       ? `${GB.auth.user.id} 님 사서함은 ${GB.auth.user.mailbox} 입니다. 화면 맨 위 '뉴저지 주소 / 델라웨어 주소' 버튼에서 칸마다 복사할 수 있어요.`
       : '화면 맨 위 \'뉴저지 주소 / 델라웨어 주소\' 버튼을 눌러 보세요. 로그인하면 Street Address 2 에 개인 사서함 번호가 채워집니다.',
-    fee: () => { const q = GB.quote({ center: 'NJ', weight: 3, unit: 'lb' }); return `뉴저지 기준 첫 1lb $8.90, 이후 1lb마다 $2.30 입니다. 3lb 상자라면 ${GB.usd(q.total)}(약 ${GB.krw(q.krw)}). 상세 계산은 요금 페이지에서 할 수 있어요.`; },
+    fee: () => { const q = GB.quote({ center: 'NJ', weight: 3, unit: 'lb' }); return `뉴저지 기준 첫 1\u00A0LB $8.90, 이후 1\u00A0LB마다 $2.30 입니다. 3\u00A0LB 상자라면 ${GB.usd(q.total)}(약 ${GB.krw(q.krw)}). 상세 계산은 요금 페이지에서 할 수 있어요.`; },
     pccc: () => '개인통관고유부호는 P로 시작하는 13자리입니다. 2026년부터 유효기간 1년이 생겼고, 이름·전화번호·배송지 우편번호가 모두 맞아야 통관됩니다. 통관 가이드에 발급 순서가 있습니다.',
     track: () => GB.auth && GB.auth.user
       ? '마이페이지 여정 지도에서 입고부터 국내 배송까지 단계별 시각을 볼 수 있습니다.'
@@ -113,4 +113,34 @@
 
   paintState();
   setInterval(paintState, 60000);
+
+  /* P0-02: never sit on top of a primary action (pay, next step, apply CTAs, view switch).
+     When one of them passes under the button, lift the button just above it. */
+  const AVOID = '#pay-open, #next, .step__nav .btn, .deal__cta .btn, .spc__cta, .receipt__link, #p-apply, .footer__view, .coupon__act .btn, [data-fab-avoid]';
+  const GAP = 12;
+  const MAX_LIFT = 220;
+  let lift = 0;
+  let ticking = false;
+  function avoid() {
+    ticking = false;
+    if (!panel.hidden) return;
+    const r = btn.getBoundingClientRect();
+    const baseTop = r.top + lift;              // where the button sits without any lift
+    const baseBottom = r.bottom + lift;
+    let need = 0;
+    $$(AVOID).forEach((el) => {
+      const b = el.getBoundingClientRect();
+      if (!b.width || !b.height || el.offsetParent === null) return;
+      const overlapX = b.left < r.right + GAP && b.right > r.left - GAP;
+      const overlapY = b.top < baseBottom + GAP && b.bottom > baseTop - GAP;
+      if (overlapX && overlapY) need = Math.max(need, baseBottom - b.top + GAP);
+    });
+    const next = Math.min(MAX_LIFT, Math.max(0, Math.round(need)));
+    if (next !== lift) { lift = next; fab.style.setProperty('--fab-lift', lift + 'px'); }
+  }
+  const schedule = () => { if (!ticking) { ticking = true; requestAnimationFrame(avoid); } };
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule);
+  document.addEventListener('click', () => setTimeout(schedule, 50));
+  setTimeout(schedule, 300);
 })();

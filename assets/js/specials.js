@@ -36,9 +36,9 @@
       core: ['비검수 · 상품 확인 없음', '부피무게 면제', '트래킹 1개만'],
       more: ['부피가 커지지 않도록 재포장합니다.', '최종 금액은 입고 후 실측으로 확정됩니다.'] },
     { id: 'vacuum', name: 'LG 삼성 청소기', kind: 'fixed', price: 30, featured: null,
-      inspect: '검수', target: 'LG·삼성 무선청소기', weight: '18lb 이하', qty: '1대',
+      inspect: '검수', target: 'LG·삼성 무선청소기', weight: '18\u00A0LB 이하', qty: '1대',
       tracking: '정확한 트래킹번호 필수', consolidate: '불가',
-      core: ['LG·삼성 무선청소기', '18lb 이하', '합배송 불가'],
+      core: ['LG·삼성 무선청소기', '18\u00A0LB 이하', '합배송 불가'],
       more: ['정확한 트래킹번호가 있어야 합니다.'] },
     { id: 'consolidate', name: '합배송 스페셜', kind: 'discount', rate: 0.10, featured: 3,
       inspect: '수량 확인', target: '모든 상품', weight: '일반 요금 기준', qty: '제한 없음',
@@ -56,14 +56,14 @@
       core: ['신발 1켤레 · 부츠 제외', '브랜드 신발박스 포함', '정확한 트래킹번호 필수'],
       more: ['폴리백(파우치)으로 포장합니다.', '비검수입니다.'] },
     { id: 'watch', name: '시계', kind: 'fixed', price: 7.30, featured: null,
-      inspect: '비검수', target: '시계(손목시계 포함)', weight: '4lb 이하', qty: '단품 1개',
+      inspect: '비검수', target: '시계(손목시계 포함)', weight: '4\u00A0LB 이하', qty: '단품 1개',
       tracking: '정확한 트래킹번호 필수', consolidate: '불가(단품)',
-      core: ['단품 1개', '4lb 이하', '정확한 트래킹번호 필수'],
+      core: ['단품 1개', '4\u00A0LB 이하', '정확한 트래킹번호 필수'],
       more: ['손목시계를 포함합니다.', '비검수입니다.'] },
     { id: 'headphone', name: '헤드폰', kind: 'fixed', price: 8.30, featured: null,
-      inspect: '비검수', target: '헤드폰', weight: '4lb 이하', qty: '단품 1개',
+      inspect: '비검수', target: '헤드폰', weight: '4\u00A0LB 이하', qty: '단품 1개',
       tracking: '정확한 트래킹번호 1개 필수', consolidate: '불가(단품)',
-      core: ['단품 1개', '4lb 이하', '트래킹번호 1개'],
+      core: ['단품 1개', '4\u00A0LB 이하', '트래킹번호 1개'],
       more: ['비검수입니다.'] },
     { id: 'shoes2', name: '신발 2개 이상', kind: 'discount', rate: 0.20, featured: null,
       inspect: '검수', target: '신발 2개 이상(부츠 포함)', weight: '일반 요금 기준', qty: '2개 이상',
@@ -71,14 +71,14 @@
       core: ['신발 2개 이상 · 일반 요금 20% 할인', '부츠류 포함', '신발박스 포함'],
       more: [] },
     { id: 'tablet', name: '태블릿', kind: 'fixed', price: 7.30, featured: null,
-      inspect: '비검수', target: '모든 태블릿', weight: '4lb 이하', qty: '단품',
+      inspect: '비검수', target: '모든 태블릿', weight: '4\u00A0LB 이하', qty: '단품',
       tracking: '정확한 트래킹번호 필수', consolidate: '불가(단품)',
-      core: ['모든 태블릿', '4lb 이하', '정확한 트래킹번호 필수'],
+      core: ['모든 태블릿', '4\u00A0LB 이하', '정확한 트래킹번호 필수'],
       more: ['추가 상품 조건은 이벤트 상세에서 확인하세요.', '비검수입니다.'] },
     { id: 'vitamin', name: '비타민', kind: 'fixed', price: 7.30, featured: null,
-      inspect: '수량 확인', target: '건강보조식품(파우더·액상 제외)', weight: '총 4lb 이하', qty: '최대 6병',
+      inspect: '수량 확인', target: '건강보조식품(파우더·액상 제외)', weight: '총 4\u00A0LB 이하', qty: '최대 6병',
       tracking: '제한 없음', consolidate: '가능',
-      core: ['최대 6병', '총 4lb 이하', '파우더·액상 제외'],
+      core: ['최대 6병', '총 4\u00A0LB 이하', '파우더·액상 제외'],
       more: ['모든 건강보조식품에 적용합니다.', '수량을 확인합니다.'] },
   ];
 
@@ -130,7 +130,7 @@
         break;
       case 'vacuum':
         if (t !== 'vacuum_lgsamsung') r.push('LG·삼성 무선청소기만 됩니다');
-        if (w > 18) r.push(`18lb 초과(${w}lb) — 일반 요금으로 계산됩니다`);
+        if (w > 18) r.push(`18\u00A0LB 초과(${w}\u00A0LB) — 일반 요금으로 계산됩니다`);
         exactTracking();
         if (i.consolidate) r.push('청소기 이벤트는 합배송이 안 됩니다');
         break;
@@ -148,12 +148,12 @@
         break;
       case 'watch':
         if (t !== 'watch') r.push('시계에만 적용됩니다');
-        if (w > 4) r.push(`4lb 초과(${w}lb)`);
+        if (w > 4) r.push(`4\u00A0LB 초과(${w}\u00A0LB)`);
         noInspect(); exactTracking(); single();
         break;
       case 'headphone':
         if (t !== 'headphone') r.push('헤드폰에만 적용됩니다');
-        if (w > 4) r.push(`4lb 초과(${w}lb)`);
+        if (w > 4) r.push(`4\u00A0LB 초과(${w}\u00A0LB)`);
         if (tr !== 1) r.push(tr < 1 ? '트래킹번호 1개가 필요합니다' : '트래킹번호는 1개만 됩니다');
         noInspect(); single();
         break;
@@ -163,7 +163,7 @@
         break;
       case 'tablet':
         if (t !== 'tablet') r.push('태블릿에만 적용됩니다');
-        if (w > 4) r.push(`4lb 초과(${w}lb)`);
+        if (w > 4) r.push(`4\u00A0LB 초과(${w}\u00A0LB)`);
         noInspect(); exactTracking();
         if (i.consolidate) r.push('단품 이벤트라 합배송할 수 없습니다');
         break;
@@ -171,7 +171,7 @@
         if (t === 'supplement_powder') r.push('파우더·액상은 비타민 이벤트에서 빠집니다');
         else if (t !== 'supplement') r.push('건강보조식품에만 적용됩니다');
         if (q > 6) r.push(`최대 6병입니다(지금 ${q}병)`);
-        if (w > 4) r.push(`총 4lb 초과(${w}lb)`);
+        if (w > 4) r.push(`총 4\u00A0LB 초과(${w}\u00A0LB)`);
         break;
       default:
         r.push('알 수 없는 이벤트입니다');

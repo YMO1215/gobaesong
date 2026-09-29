@@ -12,9 +12,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Serif+KR:wght@600;700;900&display=swap">
-<link rel="stylesheet" href="assets/css/tokens.css?v=af816627">
-<link rel="stylesheet" href="assets/css/base.css?v=03c2d1dc">
-<link rel="stylesheet" href="assets/css/support.css?v=113a5ef4">
+<link rel="stylesheet" href="assets/css/tokens.css?v=7f50594a">
+<link rel="stylesheet" href="assets/css/base.css?v=f69b3385">
+<link rel="stylesheet" href="assets/css/support.css?v=f39be9dd">
 <script>document.documentElement.classList.add('js');try{if(sessionStorage.getItem('gb.user'))document.documentElement.classList.add('is-authed')}catch(e){}try{var d=document.documentElement,v=localStorage.getItem('gb.view'),s=Math.min(screen.width,screen.height)<820,f=window.self!==window.top;if(f)d.classList.add('in-frame');if(v==='pc'&&s&&!f){document.querySelector('meta[name=viewport]').setAttribute('content','width=1280');d.classList.add('is-pcview')}if(v==='mobile'&&!s&&!f)d.classList.add('is-framehost')}catch(e){}</script>
 </head>
 <body class="page-support">
@@ -252,6 +252,12 @@
           <button type="button" class="btn-text" data-q="포인트">포인트</button>
           <button type="button" class="btn-text" data-q="반품">반품</button>
         </p>
+        <!-- M-06: contact first, then the FAQ -->
+        <div class="sup-cta">
+          <a class="btn btn--primary" href="#ask">1:1 문의 남기기</a>
+          <button type="button" class="btn btn--ghost" data-chat-open>채팅 상담</button>
+          <a class="btn btn--ghost" href="tel:15880000">전화 <span class="mono">1588-0000</span></a>
+        </div>
       </div>
 
       <!-- Signature: counter sign with split-flap state -->
@@ -289,7 +295,7 @@
 
       <div class="faq__main">
         <div class="faq__bar"><p class="faq__count small" id="faq-count" role="status">전체 17개</p><button type="button" class="faq__reset" data-faq-reset hidden><span aria-hidden="true">×</span> 검색·분류 지우고 전체 보기</button></div>
-        <div class="faq__list" id="faq-list">
+        <div class="faq__list" id="faq-list" data-m-more="5" data-m-more-label="FAQ 전체보기">
           <details class="qa" data-cat="box"><summary><span class="qa__q mono">Q</span>사서함 번호는 쇼핑몰 주소 어디에 적나요?</summary><div class="qa__a"><p>배송지의 두 번째 줄(Address 2)에 <b class="mono">GB-000000</b> 형식 그대로 적습니다. 두 번째 줄이 없는 쇼핑몰은 받는 사람 이름 뒤에 한 칸 띄우고 붙여도 됩니다.</p></div></details>
           <details class="qa" data-cat="box"><summary><span class="qa__q mono">Q</span>뉴저지와 델라웨어 중 어디로 받아야 하나요?</summary><div class="qa__a"><p>델라웨어는 판매세가 없는 주라 전자기기와 고가품에 유리합니다. 의류·신발은 뉴저지도 판매세 면제 품목이 많아 차이가 작고, 당일 입고 마감이 17:00로 빠릅니다.</p></div></details>
           <details class="qa" data-cat="box"><summary><span class="qa__q mono">Q</span>사서함 번호를 바꿀 수 있나요?</summary><div class="qa__a"><p>번호는 계정마다 하나로 고정됩니다. 가족 명의로 따로 받으려면 각자 가입해 주세요.</p></div></details>
@@ -299,7 +305,7 @@
           <details class="qa" data-cat="check"><summary><span class="qa__q mono">Q</span>검수는 어디까지 해 주나요?</summary><div class="qa__a"><p>모든 상자를 열어 수량과 외관 파손을 확인합니다. 정밀검수(<span class="mono">$2.00</span>)를 고르면 사이즈·색상·구성품까지 주문 내역과 대조합니다.</p></div></details>
           <details class="qa" data-cat="check"><summary><span class="qa__q mono">Q</span>안심뷰 사진은 언제 볼 수 있나요?</summary><div class="qa__a"><p>검수가 끝나는 즉시 마이페이지 여정 지도 옆에 올라옵니다. 기본 2장이며 옵션으로 5장을 더 받을 수 있습니다.</p></div></details>
           <details class="qa" data-cat="check"><summary><span class="qa__q mono">Q</span>입고 후 무료 보관 기간은 얼마인가요?</summary><div class="qa__a"><p>입고일부터 30일 무료입니다. 이후에는 하루 <span class="mono">$0.50</span>가 배송비에 합산됩니다.</p></div></details>
-          <details class="qa" data-cat="pay"><summary><span class="qa__q mono">Q</span>배송비는 언제 확정되나요?</summary><div class="qa__a"><p>입고·검수 뒤 실무게와 부피무게 중 큰 값을 1lb 단위로 올려 확정하고 알림을 보냅니다. <a href="pricing.html">요금표</a>에서 미리 계산해 볼 수 있습니다.</p></div></details>
+          <details class="qa" data-cat="pay"><summary><span class="qa__q mono">Q</span>배송비는 언제 확정되나요?</summary><div class="qa__a"><p>입고·검수 뒤 실무게와 부피무게 중 큰 값을 1&nbsp;LB 단위로 올려 확정하고 알림을 보냅니다. <a href="pricing.html">요금표</a>에서 미리 계산해 볼 수 있습니다.</p></div></details>
           <details class="qa" data-cat="pay"><summary><span class="qa__q mono">Q</span>포인트는 어떻게 쌓이고 쓰나요?</summary><div class="qa__a"><p>거래완료 시 결제액의 1%가 적립되고, 배송비 결제 때 <span class="mono">1P = ₩1</span>로 씁니다. 유효기간은 적립일부터 2년입니다.</p></div></details>
           <details class="qa" data-cat="customs"><summary><span class="qa__q mono">Q</span>목록통관과 일반통관은 무엇이 다른가요?</summary><div class="qa__a"><p>미국에서 온 자가사용 물품은 물품가격 <span class="mono">$200</span> 이하면 목록통관으로 관·부가세 없이 통과합니다. 한도를 넘거나 건강기능식품·의약품이면 일반통관으로 신고합니다.</p></div></details>
           <details class="qa" data-cat="customs"><summary><span class="qa__q mono">Q</span>개인통관고유부호 명의와 수취인 이름이 달라요.</summary><div class="qa__a"><p>이름이 다르면 인천세관에서 보류됩니다. 출고 전이라면 마이페이지에서 수취인 정보를 고쳐 주세요. 출고 후라면 1:1 문의로 알려 주시면 세관 정정을 대신 요청합니다.</p></div></details>
@@ -325,7 +331,7 @@
       <form class="declare" id="ask-form" novalidate aria-labelledby="ask-form-title">
         <div class="declare__head">
           <h3 class="mono" id="ask-form-title">INQUIRY DECLARATION · 문의 신고서</h3>
-          <span class="mono" id="ask-date">No. Q-—</span>
+          <span class="mono" id="ask-date">접수 후 번호가 발급됩니다</span>
         </div>
         <div class="declare__grid">
           <div class="field declare__cell">
@@ -410,7 +416,7 @@
       <a class="btn btn--primary btn--lg" href="apply.html" data-auth="in">간편 신청서 쓰기
         <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 9h13M10 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
     </div>
-    <div class="footer__cols">
+    <div class="footer__cols" data-m-fold="전체 메뉴 · 고객센터 · 물류센터 주소">
       <div class="footer__col">
         <h2>처음이라면</h2>
         <ul>
@@ -517,10 +523,10 @@
 <!-- FOOTER:END -->
 
 <script src="assets/js/hours.js?v=754dcf87"></script>
-<script src="assets/js/common.js?v=ed41ee8c"></script>
+<script src="assets/js/common.js?v=8c9efdea"></script>
 <script src="assets/js/cselect.js?v=63d6bff8"></script>
-<script src="assets/js/member.js?v=a5d9f972"></script>
-<script src="assets/js/chat.js?v=4cc07a87"></script>
-<script src="assets/js/support.js?v=06e7abac"></script>
+<script src="assets/js/member.js?v=b1edb2fd"></script>
+<script src="assets/js/chat.js?v=2b1108cf"></script>
+<script src="assets/js/support.js?v=7694230d"></script>
 </body>
 </html>

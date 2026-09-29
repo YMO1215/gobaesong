@@ -336,12 +336,13 @@
   function switchView() {
     if (viewIsMobileLayout()) {
       // → PC
-      if (inFrame) { setView(null); window.top.location.href = window.location.href; return; }
+      if (inFrame) { setView(null); savePos(); window.top.location.href = window.location.href; return; }
       if (isPhone()) {
+        const pos = { ratio: scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight) };
         setView('pc');
         document.querySelector('meta[name=viewport]').setAttribute('content', 'width=1280');
         root.classList.add('is-pcview');
-        window.scrollTo(0, 0);
+        restorePos(window, pos);
         paintViewButtons();
       } else {
         GB.toast('이미 넓은 화면입니다. 창 폭을 넓히면 PC 배치로 보입니다');
@@ -350,14 +351,16 @@
     }
     // → mobile
     if (isPhone()) {
+      const pos = { ratio: scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight) };
       setView(null);
       document.querySelector('meta[name=viewport]').setAttribute('content', 'width=device-width, initial-scale=1');
       root.classList.remove('is-pcview');
-      window.scrollTo(0, 0);
+      restorePos(window, pos);
       paintViewButtons();
       return;
     }
     setView('mobile');
+    savePos();
     root.classList.add('is-framehost');
     buildFrameHost();
   }
@@ -369,21 +372,160 @@
       <button type="button" class="btn btn--primary btn--sm" data-framehost-exit>PC 화면으로 돌아가기</button></div>
       <div class="framehost__device"><iframe title="고배송 모바일 화면" src="${location.href.replace(/"/g, '&quot;')}"></iframe></div>`;
     document.body.appendChild(host);
+    const pos = takePos();
+    host.querySelector('iframe').addEventListener('load', (e) => { try { restorePos(e.target.contentWindow, pos); } catch (err) { /* cross-origin */ } }, { once: true });
     host.querySelector('[data-framehost-exit]').addEventListener('click', () => {
       setView(null);
       // follow the page the visitor navigated to inside the phone frame
       let target = location.href;
-      try { target = host.querySelector('iframe').contentWindow.location.href; } catch (e) { /* cross-origin: keep current */ }
+      try {
+        const w = host.querySelector('iframe').contentWindow;
+        target = w.location.href;
+        w.GB.viewPos.savePos();
+      } catch (e) { /* cross-origin: keep current */ }
       window.location.href = target;
     });
   }
   document.addEventListener('click', (e) => { if (e.target.closest('[data-view-toggle]')) { e.preventDefault(); switchView(); } });
   window.addEventListener('resize', paintViewButtons);
 
+  /* ---------- Mobile compression (≤767px): "더보기" lists and folded sections ----------
+     Nothing is removed. On phones the extra items / details start collapsed behind a real button
+     (aria-expanded + aria-controls); at ≥768px CSS hides the buttons and ignores .m-cut.
+       data-m-more="N"         show the first N children; the button reveals the rest
+       data-m-more-step="K"    reveal K more per press instead of all at once
+       data-m-more-label="…"   button text (default 전체보기)
+       data-m-fold="…"         collapse this element behind a button labelled "…"
+       data-m-fold-open        start open · data-m-fold-group="g": one open per group */
+  let mUid = 0;
+  const ensureId = (el, prefix) => el.id || (el.id = prefix + '-' + (++mUid));
+  const CHEV = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>';
+  const mState = new WeakMap();
+
+  function mMore(list) {
+    let st = mState.get(list);
+    const first = Number(list.dataset.mMore) || 3;
+    if (!st) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'm-more';
+      btn.setAttribute('aria-controls', ensureId(list, 'mlist'));
+      list.insertAdjacentElement('afterend', btn);
+      st = { btn, shown: first };
+      mState.set(list, st);
+      btn.addEventListener('click', () => {
+        const total = items().length;
+        const step = Number(list.dataset.mMoreStep) || 0;
+        if (st.shown >= total) {
+          st.shown = first;
+          if (list.getBoundingClientRect().top < 0) list.scrollIntoView({ block: 'start' });
+        } else {
+          st.shown = step ? st.shown + step : total;
+        }
+        paint();
+      });
+    } else {
+      st.shown = first; // re-rendered or re-filtered: start over from the first N
+    }
+    function items() {
+      return Array.from(list.children).filter((c) => !c.hidden && c.tagName !== 'TEMPLATE' && !c.classList.contains('is-filtered'));
+    }
+    function paint() {
+      const all = items();
+      Array.from(list.children).forEach((c) => c.classList.remove('m-cut'));
+      all.forEach((c, i) => c.classList.toggle('m-cut', i >= st.shown));
+      const rest = all.length - Math.min(st.shown, all.length);
+      const step = Number(list.dataset.mMoreStep) || 0;
+      st.btn.hidden = all.length <= first;
+      st.btn.setAttribute('aria-expanded', String(rest === 0));
+      const label = list.dataset.mMoreLabel || '전체보기';
+      st.btn.innerHTML = '';
+      const t = document.createElement('span');
+      t.textContent = rest === 0 ? '접기' : step ? `더보기 (${Math.min(step, rest)}/${rest})` : `${label} (+${rest})`;
+      st.btn.appendChild(t);
+      st.btn.insertAdjacentHTML('beforeend', CHEV);
+    }
+    st.paint = paint;
+    paint();
+  }
+  GB.mMore = (list) => { if (list && list.hasAttribute('data-m-more')) mMore(list); };
+
+  function mFold(el) {
+    if (mState.has(el)) return;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'm-fold';
+    btn.setAttribute('aria-controls', ensureId(el, 'mfold'));
+    const t = document.createElement('span');
+    t.textContent = el.dataset.mFold || '자세히 보기';
+    btn.appendChild(t);
+    btn.insertAdjacentHTML('beforeend', CHEV);
+    el.insertAdjacentElement('beforebegin', btn);
+    const set = (open) => { btn.setAttribute('aria-expanded', String(open)); el.classList.toggle('m-cut', !open); };
+    mState.set(el, { btn, set });
+    set(el.hasAttribute('data-m-fold-open'));
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') !== 'true';
+      const group = el.dataset.mFoldGroup;
+      if (open && group) {
+        GB.$$(`[data-m-fold-group="${group}"]`).forEach((o) => { if (o !== el && mState.has(o)) mState.get(o).set(false); });
+      }
+      set(open);
+    });
+  }
+
+  // A link or hash pointing inside collapsed content opens it first
+  GB.mReveal = function (target) {
+    for (let n = target; n && n !== document.body; n = n.parentElement) {
+      if (!n.classList.contains('m-cut')) continue;
+      const s = mState.get(n);
+      if (s && s.set) { s.set(true); continue; }
+      const list = n.parentElement;
+      const ls = list && mState.get(list);
+      if (ls && ls.paint) { ls.shown = Infinity; ls.paint(); }
+    }
+  };
+  function revealHash() {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const t = id && document.getElementById(id);
+    if (t) GB.mReveal(t);
+  }
+  function initCompress() {
+    GB.$$('[data-m-more]').forEach(mMore);
+    GB.$$('[data-m-fold]').forEach(mFold);
+    revealHash();
+    window.addEventListener('hashchange', revealHash);
+  }
+
+  /* View switch keeps the reading position: remember how far down the page was (as a ratio,
+     since the two layouts have different heights) and restore it after the switch. */
+  const POS_KEY = 'gb.view.pos';
+  function savePos() {
+    const h = document.documentElement.scrollHeight - innerHeight;
+    try { sessionStorage.setItem(POS_KEY, JSON.stringify({ path: location.pathname, ratio: h > 0 ? scrollY / h : 0 })); } catch (e) { /* no storage: switch still works */ }
+  }
+  function takePos() {
+    try {
+      const p = JSON.parse(sessionStorage.getItem(POS_KEY) || 'null');
+      sessionStorage.removeItem(POS_KEY);
+      return p;
+    } catch (e) { return null; }
+  }
+  function restorePos(win, pos) {
+    if (!pos) return;
+    const d = win.document.documentElement;
+    const go = () => win.scrollTo({ top: Math.round(pos.ratio * (d.scrollHeight - win.innerHeight)), behavior: 'instant' });
+    win.requestAnimationFrame(() => win.requestAnimationFrame(go));
+    setTimeout(go, 400); // late images / fonts change the height once more
+  }
+  GB.viewPos = { savePos, takePos, restorePos };
+
   /* ---------- Boot ---------- */
   function boot() {
+    initCompress();
     paintViewButtons();
     if (root.classList.contains('is-framehost') && !inFrame) buildFrameHost();
+    else if (!inFrame) { const pos = takePos(); if (pos && pos.path === location.pathname) restorePos(window, pos); }
     initMenu();
     renderBarcodes();
     observeInView();

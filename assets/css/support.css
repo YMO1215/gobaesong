@@ -133,3 +133,13 @@
 .faq__reset:hover { background: var(--navy); color: var(--paper); }
 .faq__reset span { font-size: 16px; line-height: 1; }
 .faq__none .btn-text { color: var(--navy); font-weight: 700; }
+
+/* Contact first (M-06): 1:1 문의 · 채팅 · 전화 above the FAQ */
+.sup-cta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: var(--s-5); }
+@media (max-width: 767px) {
+  .sup-cta { display: grid; grid-template-columns: 1fr 1fr; }
+  .sup-cta .btn:first-child { grid-column: 1 / -1; }
+  .sup-cta .btn { padding-inline: 12px; }
+  .counter { margin-top: var(--s-5); }
+  .faq__side .h2 { margin-bottom: var(--s-3); }
+}

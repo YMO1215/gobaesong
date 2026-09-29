@@ -210,3 +210,37 @@
   .p-event__grid { grid-template-columns: 1fr 1fr; }
   .p-event__grid .field:nth-of-type(2) { grid-column: 1 / -1; }
 }
+
+/* ---------- M-02 mobile compression (≤767px) ----------
+   order: calculator → result → key rules → rate table; details behind accordions */
+.spc__toggle { display: none; }
+.rates__all { display: none; }
+@media (max-width: 767px) {
+  .scale-calc { margin-top: var(--s-6); }
+  .scale-calc__form { gap: var(--s-2); }
+  .scale-calc__form > .m-fold { margin-top: 0; }
+  /* heading → key rules → table: the main column dissolves so the rules can sit between */
+  .rates__main { display: contents; }
+  .rates__head { grid-column: 1 / -1; order: -2; margin-bottom: 0; }
+  .rates__notes { order: -1; margin: 0; }
+  .rates__frame, .rates__all { grid-column: 1 / -1; }
+  .rates__notes, .rates__frame { margin-top: var(--s-4); }
+  .rates__frame { max-height: none; }
+  .ratetable.is-short tbody tr:not([data-key]):not(.is-hit) { display: none; }
+  .rates__all { display: flex; }
+  .rules li { padding-block: 10px; }
+  /* B: titles + price; only the event picked in the calculator shows its conditions */
+  #spc-list .spc__lead { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; }
+  #spc-list .spc__lead > :not(.spc__toggle) { grid-column: 1; }
+  #spc-list .spc__toggle {
+    display: inline-flex; grid-column: 2; grid-row: 1 / span 3; align-self: center; align-items: center; gap: 6px;
+    min-height: 44px; padding: 0 12px; background: transparent; border: 1px solid var(--navy); border-radius: var(--r-1);
+    font: 700 13px/1 var(--font-sans); color: var(--ink); cursor: pointer; white-space: nowrap;
+  }
+  #spc-list .spc__toggle svg { width: 14px; height: 14px; }
+  #spc-list .spc__toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+  #spc-list .spc--row { padding: 12px 0; gap: 8px; }
+  .specials__legend:not(.m-cut) { margin-top: var(--s-3); }
+  .vol__art svg { max-width: 240px; margin-inline: auto; display: block; }
+  .duty__copy .lead { font-size: 1rem; }
+}

@@ -13,7 +13,10 @@
   /* ======================= Center hours timer ======================= */
   function tickHours() {
     if (!window.GBHours) return;
+    // one reference instant per tick: every clock on the page (NJ bar, board, KST desk) reads GB.clockNow
     const now = new Date();
+    GB.clockNow = now;
+    document.dispatchEvent(new CustomEvent('gb:clock', { detail: now }));
     const nj = window.GBHours.status('NJ', now);
     const t = $('#ctimer');
     if (t) {
